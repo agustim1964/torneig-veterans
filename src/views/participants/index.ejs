@@ -1,0 +1,134 @@
+<%- include('../partials/header', { title: category.nom }) %>
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+  <div>
+    <a href="/categories" class="text-decoration-none">← Categories</a>
+    <h1 class="mt-2"><%= category.nom %></h1>
+  </div>
+  <a class="btn btn-outline-primary"
+     href="/groups/category/<%= category.idcategoria %>">
+    Veure grups
+  </a>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-header">
+        Participants
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Rànquing</th>
+              <th>Participant</th>
+              <th>Estat</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% participants.forEach(p => { %>
+              <tr class="<%= p.actiu ? '' : 'table-light text-muted' %>">
+                <td style="width:120px">
+                  <form action="/participants/<%= p.idparticipant %>/update" method="post"
+                        class="d-flex gap-2">
+                    <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
+                    <input class="form-control form-control-sm"
+                           type="number"
+                           name="ranking"
+                           value="<%= p.ranking %>">
+                </td>
+                <td>
+                    <input class="form-control form-control-sm"
+                           name="nom_mostrar"
+                           value="<%= p.nom_mostrar %>">
+                </td>
+                <td>
+                  <% if (p.actiu && !p.baixa) { %>
+                    <span class="badge text-bg-success">Actiu</span>
+                  <% } else { %>
+                    <span class="badge text-bg-secondary">Inactiu</span>
+                  <% } %>
+                </td>
+                <td class="text-end text-nowrap">
+                    <button class="btn btn-sm btn-outline-success">Desar</button>
+                  </form>
+
+                  <form action="/participants/<%= p.idparticipant %>/toggle"
+                        method="post" class="d-inline">
+                    <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
+                    <button class="btn btn-sm btn-outline-secondary mt-1">
+                      <%= p.actiu ? 'Desactivar' : 'Activar' %>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">Afegir participant</div>
+      <div class="card-body">
+        <form action="/participants/category/<%= category.idcategoria %>" method="post">
+          <div class="mb-3">
+            <label class="form-label">Nom a mostrar</label>
+            <input class="form-control" name="nom_mostrar" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Rànquing</label>
+            <input class="form-control" type="number" name="ranking" value="0">
+          </div>
+
+          <button class="btn btn-primary w-100">Afegir</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">Importar Excel / CSV</div>
+      <div class="card-body">
+        <form action="/participants/category/<%= category.idcategoria %>/import"
+              method="post"
+              enctype="multipart/form-data">
+          <input class="form-control mb-3"
+                 type="file"
+                 name="fitxer"
+                 accept=".xlsx,.xls,.csv"
+                 required>
+          <button class="btn btn-outline-primary w-100">Importar</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card shadow-sm border-primary">
+      <div class="card-header">Sorteig</div>
+      <div class="card-body">
+        <p class="small text-muted">
+          Ordena per rànquing, barreja cada bloc de quatre i aplica el sistema serp.
+        </p>
+
+        <div class="d-grid gap-2">
+  <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
+        onsubmit="return confirm('Esborrar el sorteig actual i generar-lo de nou amb serp 2x2?')">
+    <input type="hidden" name="snakeBlockSize" value="2">
+    <button class="btn btn-outline-primary w-100">Sorteig serp 2 × 2</button>
+  </form>
+  <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
+        onsubmit="return confirm('Esborrar el sorteig actual i generar-lo de nou amb serp 4x4?')">
+    <input type="hidden" name="snakeBlockSize" value="4">
+    <button class="btn btn-primary w-100">Sorteig serp 4 × 4</button>
+  </form>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

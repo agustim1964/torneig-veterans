@@ -1,0 +1,159 @@
+<%- include('../partials/header', { title: 'Partits - ' + category.nom }) %>
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+  <div>
+    <a href="/groups/category/<%= category.idcategoria %>"
+       class="text-decoration-none">← Grups</a>
+    <h1 class="mt-2">Partits i classificació · <%= category.nom %></h1>
+    <p class="text-muted"><%= category.competicio_nom %></p>
+  </div>
+
+  <form action="/matches/category/<%= category.idcategoria %>/generate-groups"
+        method="post"
+        onsubmit="return confirm('Generar o regenerar els partits pendents de grup?')">
+    <button class="btn btn-primary">
+      Generar partits i horari
+    </button>
+  </form>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-header">Partits de grup</div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>Hora</th>
+          <th>Taula</th>
+          <th>Grup</th>
+          <th>Partit</th>
+          <th>Resultat</th>
+          <th>Estat</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% matches.forEach(m => { %>
+        <tr>
+          <td>
+            <%= m.data_hora
+              ? new Date(m.data_hora).toLocaleTimeString('ca-ES', {hour:'2-digit', minute:'2-digit'})
+              : '' %>
+          </td>
+          <td><%= m.taula_nom || ('Taula ' + (m.taula_numero || '')) %></td>
+          <td>Grup <%= m.grup_numero %></td>
+          <td>
+            <strong><%= m.participant1_nom %></strong>
+            <span class="text-muted"> vs </span>
+            <strong><%= m.participant2_nom %></strong>
+          </td>
+          <td style="min-width:440px">
+            <form action="/matches/<%= m.idpartit %>/result"
+                  method="post"
+                  class="d-flex flex-wrap gap-1 align-items-center">
+              <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
+
+              <% for (let joc = 1; joc <= 5; joc++) {
+                   const saved = (m.jocs || []).find(x => Number(x.numero_joc) === joc);
+              %>
+                <div class="d-flex align-items-center gap-1 border rounded px-1 py-1">
+                  <span class="small text-muted">J<%= joc %></span>
+                  <input class="form-control form-control-sm text-center"
+                         style="width:48px"
+                         type="number" min="0" max="99"
+                         name="joc<%= joc %>_p1"
+                         value="<%= saved ? saved.punts1 : '' %>">
+                  <span>-</span>
+                  <input class="form-control form-control-sm text-center"
+                         style="width:48px"
+                         type="number" min="0" max="99"
+                         name="joc<%= joc %>_p2"
+                         value="<%= saved ? saved.punts2 : '' %>">
+                </div>
+              <% } %>
+
+              <button class="btn btn-sm btn-outline-success">Desar</button>
+
+              <% if (m.resultat1 !== null && m.resultat2 !== null) { %>
+                <strong class="ms-1"><%= m.resultat1 %>-<%= m.resultat2 %></strong>
+              <% } %>
+            </form>
+          </td>
+          <td>
+            <% if (m.estat === 'FINALITZAT') { %>
+              <span class="badge text-bg-success">Finalitzat</span>
+            <% } else { %>
+              <span class="badge text-bg-secondary"><%= m.estat %></span>
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+
+      <% if (!matches.length) { %>
+        <tr>
+          <td colspan="6" class="text-center text-muted py-4">
+            Encara no s'han generat els partits.
+          </td>
+        </tr>
+      <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h2 class="mb-3">Classificació provisional</h2>
+
+<div class="row g-4">
+  <% Object.values(groupedStandings).forEach(rows => { %>
+    <div class="col-md-6 col-xl-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header">
+          <strong>Grup <%= rows[0]?.grup_numero %></strong>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-sm mb-0">
+            <thead>
+              <tr>
+                <th>Pos.</th>
+                <th>Participant</th>
+                <th>V</th>
+                <th>D</th>
+                <th>F. jocs</th>
+                <th>F. punts</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% rows.forEach((r, index) => { %>
+                <tr>
+                  <td><strong><%= index + 1 %></strong></td>
+                  <td><%= r.nom_mostrar %></td>
+                  <td><%= r.victories %></td>
+                  <td><%= r.derrotes %></td>
+                  <td>
+                    <%= r.factor_jocs === null || r.factor_jocs === undefined
+                      ? ''
+                      : (r.factor_jocs === Infinity ? '∞' : Number(r.factor_jocs).toFixed(3)) %>
+                  </td>
+                  <td>
+                    <%= r.factor_punts === null || r.factor_punts === undefined
+                      ? ''
+                      : (r.factor_punts === Infinity ? '∞' : Number(r.factor_punts).toFixed(3)) %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+<div class="alert alert-info mt-4">
+  En cas d'empat a victòries, només es tenen en compte els partits disputats
+  entre els participants empatats. Primer s'aplica el factor
+  <strong>jocs guanyats / jocs perduts</strong> i, si continua l'empat,
+  el factor <strong>punts guanyats / punts perduts</strong>.
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,89 @@
+<%- include('../partials/header', { title: 'Categories' }) %>
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+  <div>
+    <a href="/competitions" class="text-decoration-none">← Competicions</a>
+    <h1 class="mt-2">Categories</h1>
+    <% if (competition) { %><p class="text-muted"><%= competition.nom %></p><% } %>
+  </div>
+  <% if (competitions.length > 1) { %>
+    <form method="get">
+      <select class="form-select" name="competitionId" onchange="this.form.submit()">
+        <% competitions.forEach(c => { %>
+          <option value="<%= c.idcompeticio %>"
+            <%= Number(c.idcompeticio) === Number(competitionId) ? 'selected' : '' %>>
+            <%= c.nom %>
+          </option>
+        <% }) %>
+      </select>
+    </form>
+  <% } %>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="row g-3">
+      <% categories.forEach(category => { %>
+        <div class="col-md-6">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5><%= category.nom %></h5>
+              <div class="small text-muted mb-3">
+                <%= category.tipus %> · <%= category.sexe %>
+                <% if (category.edat_minima) { %> · +<%= category.edat_minima %><% } %>
+              </div>
+              <p><strong><%= category.participants %></strong> participants actius</p>
+              <span class="badge text-bg-secondary"><%= category.estat %></span>
+            </div>
+            <div class="card-footer bg-white d-flex gap-2">
+              <a class="btn btn-primary btn-sm"
+                 href="/participants/category/<%= category.idcategoria %>">Participants</a>
+              <a class="btn btn-outline-primary btn-sm"
+                 href="/groups/category/<%= category.idcategoria %>">Grups</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <% if (competition) { %>
+    <div class="card shadow-sm">
+      <div class="card-header">Nova categoria</div>
+      <div class="card-body">
+        <form action="/categories" method="post">
+          <input type="hidden" name="idcompeticio" value="<%= competition.idcompeticio %>">
+          <div class="mb-3">
+            <label class="form-label">Nom</label>
+            <input class="form-control" name="nom" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Tipus</label>
+            <select class="form-select" name="tipus">
+              <option value="INDIVIDUAL">Individual</option>
+              <option value="DOBLES">Dobles</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Sexe</label>
+            <select class="form-select" name="sexe">
+              <option value="MASCULI">Masculí</option>
+              <option value="FEMENI">Femení</option>
+              <option value="MIXT">Mixt</option>
+              <option value="OBERT">Obert</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Edat mínima</label>
+            <input class="form-control" type="number" name="edat_minima">
+          </div>
+          <button class="btn btn-primary w-100">Crear categoria</button>
+        </form>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
