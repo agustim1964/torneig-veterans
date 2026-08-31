@@ -56,7 +56,7 @@ Exemple:
 
 | nom | cognoms | club | sexe | llicencia | ranking |
 | --- | --- | --- | --- | --- | --- |
-| Joan | Masip | CTT Exemple | M | 12345 | 950 |
+| Joan | Kimbo | CTT Exemple | M | 12345 | 950 |
 
 ## Sorteig
 
