@@ -6,6 +6,21 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 18mm; color: #111; }
     h1,h2,p { margin: 0 0 6px; }
+    .capcalera-fctt {
+      width: 100%;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #999;
+    }
+    .capcalera-fctt img {
+      display: block;
+      width: 100%;
+      max-width: 490px;
+      height: auto;
+    }
+    .titol-acta { margin-top: 4px; }
+    .titol-acta h1 { font-size: 22px; margin-bottom: 4px; }
+    .titol-acta h2 { font-size: 17px; font-weight: 600; }
     .meta { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0; }
     .box { border:1px solid #999; padding:7px; }
     table { width:100%; border-collapse:collapse; margin-top:14px; }
@@ -21,8 +36,14 @@
 <body>
   <button class="no-print" onclick="window.print()">Imprimir</button>
 
-  <h1><%= group.competicio_nom %></h1>
-  <h2><%= group.categoria_nom %> · Grup <%= group.numero %></h2>
+  <div class="capcalera-fctt">
+    <img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula">
+  </div>
+
+  <div class="titol-acta">
+    <h1><%= group.competicio_nom %></h1>
+    <h2><%= group.categoria_nom %> · Grup <%= group.numero %></h2>
+  </div>
 
   <div class="meta">
     <div class="box"><strong>Data</strong><br><%= group.data ? new Date(group.data).toLocaleDateString('ca-ES') : '—' %></div>
