@@ -1,80 +1,86 @@
 <%- include('../partials/header', { title: 'Grups - ' + category.nom }) %>
 
-<div class="d-flex justify-content-between align-items-start mb-4">
+<div class="d-flex justify-content-between align-items-start mb-4 flex-wrap gap-2">
   <div>
-    <a href="/participants/category/<%= category.idcategoria %>"
-       class="text-decoration-none">← Participants</a>
+    <a href="/participants/category/<%= category.idcategoria %>" class="text-decoration-none">← Participants</a>
     <h1 class="mt-2">Grups · <%= category.nom %></h1>
   </div>
-  <a class="btn btn-outline-success"
-     href="/matches/category/<%= category.idcategoria %>">
-    Partits i classificació
-  </a>
 
-  <div class="d-flex gap-2">
-  <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
-        onsubmit="return confirm('Tornar a sortejar amb serp 2x2?')">
-    <input type="hidden" name="snakeBlockSize" value="2">
-    <button class="btn btn-outline-primary">Serp 2 × 2</button>
-  </form>
-  <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
-        onsubmit="return confirm('Tornar a sortejar amb serp 4x4?')">
-    <input type="hidden" name="snakeBlockSize" value="4">
-    <button class="btn btn-primary">Serp 4 × 4</button>
-  </form>
+  <div class="d-flex gap-2 flex-wrap">
+    <a class="btn btn-outline-success" href="/matches/category/<%= category.idcategoria %>">
+      Partits i classificació
+    </a>
+    <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
+          onsubmit="return confirm('Tornar a sortejar amb serp 2x2?')">
+      <input type="hidden" name="snakeBlockSize" value="2">
+      <button class="btn btn-outline-primary">Serp 2 × 2</button>
+    </form>
+    <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
+          onsubmit="return confirm('Tornar a sortejar amb serp 4x4?')">
+      <input type="hidden" name="snakeBlockSize" value="4">
+      <button class="btn btn-primary">Serp 4 × 4</button>
+    </form>
+  </div>
 </div>
+
+<div class="alert alert-secondary">
+  El sorteig respecta els blocs de rànquing i intenta minimitzar coincidències de <strong>club</strong> i després de <strong>país</strong> dins de cada bloc.
 </div>
 
 <% if (!groups.length) { %>
-  <div class="alert alert-info">
-    Encara no hi ha cap sorteig creat.
-  </div>
+  <div class="alert alert-info">Encara no hi ha cap sorteig creat.</div>
 <% } %>
 
 <div class="row g-4">
-  <% groups.forEach(group => { %>
-    <div class="col-md-6 col-xl-4">
-      <div class="card shadow-sm h-100">
-        <div class="card-header d-flex justify-content-between">
-          <strong>Grup <%= group.numero %></strong>
+<% groups.forEach(group => { %>
+  <div class="col-md-6 col-xl-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <strong>Grup <%= group.numero %></strong>
+        <div class="d-flex gap-2 align-items-center">
           <span class="badge text-bg-secondary"><%= group.participants.length %></span>
-        </div>
-
-        <div class="list-group list-group-flush">
-          <% group.participants.forEach((p, index) => { %>
-            <div class="list-group-item">
-              <div class="d-flex justify-content-between gap-3">
-                <div>
-                  <strong><%= index + 1 %>. <%= p.nom_mostrar %></strong>
-                  <div class="small text-muted">
-                    Rànquing: <%= p.ranking %>
-                  </div>
-                </div>
-
-                <form action="/groups/move" method="post">
-                  <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
-                  <input type="hidden" name="participantId" value="<%= p.idparticipant %>">
-
-                  <select name="targetGroupId"
-                          class="form-select form-select-sm"
-                          onchange="this.form.submit()">
-                    <option value="">Moure...</option>
-                    <% groups.forEach(target => { %>
-                      <% if (target.idgrup !== group.idgrup) { %>
-                        <option value="<%= target.idgrup %>">
-                          Grup <%= target.numero %>
-                        </option>
-                      <% } %>
-                    <% }) %>
-                  </select>
-                </form>
-              </div>
-            </div>
-          <% }) %>
+          <a class="btn btn-sm btn-outline-dark" target="_blank" href="/groups/<%= group.idgrup %>/print">Imprimir</a>
         </div>
       </div>
+
+      <% if (group.warnings && group.warnings.length) { %>
+        <div class="px-3 pt-2">
+          <% group.warnings.forEach(w => { %>
+            <div class="alert alert-warning py-1 px-2 mb-1 small">⚠ <%= w %></div>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <div class="list-group list-group-flush">
+      <% group.participants.forEach((p, index) => { %>
+        <div class="list-group-item">
+          <div class="d-flex justify-content-between gap-3">
+            <div>
+              <strong><%= index + 1 %>. <%= p.nom_mostrar %></strong>
+              <div class="small text-muted">Rànquing: <%= p.ranking %></div>
+              <div class="small">
+                <% if (p.pais) { %><span class="badge text-bg-light border"><%= p.pais %></span><% } %>
+                <% if (p.club) { %><span class="text-muted"><%= p.club %></span><% } %>
+              </div>
+            </div>
+
+            <form action="/groups/move" method="post">
+              <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
+              <input type="hidden" name="participantId" value="<%= p.idparticipant %>">
+              <select name="targetGroupId" class="form-select form-select-sm" onchange="this.form.submit()">
+                <option value="">Moure...</option>
+                <% groups.forEach(target => { if (target.idgrup !== group.idgrup) { %>
+                  <option value="<%= target.idgrup %>">Grup <%= target.numero %></option>
+                <% } }) %>
+              </select>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+      </div>
     </div>
-  <% }) %>
+  </div>
+<% }) %>
 </div>
 
 <%- include('../partials/footer') %>

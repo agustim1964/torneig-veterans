@@ -188,3 +188,53 @@ es calcula automàticament.
 
 ## Versió 0.7
 Executa `mysql/005_master_programacio_grups.sql`. Màster general, una taula fixa per grup, darrer partit 2-3 en grup de 4 i 1-2 en grup de 5, grup únic per 5 participants.
+
+## Versió 0.8 - Màster multidia, àrbitres i sorteig per club/país
+
+### Migració obligatòria
+
+Abans de desplegar la v0.8 sobre una BBDD v0.7 existent, executa **una sola vegada**:
+
+```sql
+mysql/006_v08_master_arbitres_pais.sql
+```
+
+Aquesta migració:
+
+- afegeix `pais` a `jugadors`;
+- afegeix `club` i `pais` a `participants`;
+- afegeix `idarbitre_participant` a `partits`;
+- recupera el club dels participants existents quan és possible.
+
+### Novetats
+
+- Màster amb **data + hora + taula**.
+- Els grups es poden distribuir entre diversos dies.
+- Els grups bloquejats no es recalculen.
+- Cada partit de grup rep un **àrbitre del mateix grup** que no disputa aquell partit.
+- Els arbitratges s'intenten repartir equitativament.
+- Full A4 imprimible per grup amb participants, taula, horari, ordre de partits, àrbitre i espais per resultats.
+- Club i país visibles a participants i grups.
+- La importació Excel/CSV accepta també la columna `pais` (també `country` o `nacio`).
+- Sorteig serp 2x2 i 4x4 mantingut.
+- Dins de cada bloc de rànquing, el sorteig intenta minimitzar primer coincidències de club i després de país.
+- Avisos visuals si un grup acaba amb 3 o més participants del mateix club o país.
+
+### Desplegament GitHub + Render + Aiven
+
+1. Fes còpia de seguretat de la BBDD Aiven.
+2. Executa `mysql/006_v08_master_arbitres_pais.sql` a Aiven.
+3. Copia/substitueix els fitxers de la v0.8 al projecte local.
+4. Prova localment amb `npm start`.
+5. Quan sigui correcte:
+
+```bat
+git status
+git add .
+git commit -m "Versio 0.8 - master multidia, arbitres i actes de grup"
+git push origin main
+```
+
+6. Render farà el desplegament automàtic des de GitHub.
+
+No tornis a executar l'script complet d'instal·lació v0.7 sobre Aiven.

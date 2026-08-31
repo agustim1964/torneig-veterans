@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const { drawGroups } = require('../services/drawService');
+const { drawGroups, groupWarnings } = require('../services/drawService');
 
 async function loadCategory(categoryId) {
   const [[category]] = await db.query(
@@ -29,7 +29,9 @@ exports.showByCategory = async (req, res) => {
         gp.ordre_visual,
         p.idparticipant,
         p.nom_mostrar,
-        p.ranking
+        p.ranking,
+        p.club,
+        p.pais
       FROM grup_participants gp
       INNER JOIN participants p
         ON p.idparticipant = gp.idparticipant
@@ -38,6 +40,7 @@ exports.showByCategory = async (req, res) => {
     `, [group.idgrup]);
 
     group.participants = participants;
+    group.warnings = groupWarnings(group);
   }
 
   res.render('groups/index', { category, groups });
@@ -47,7 +50,7 @@ exports.draw = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
 
   const [participants] = await db.query(`
-    SELECT idparticipant, nom_mostrar, ranking
+    SELECT idparticipant, nom_mostrar, ranking, club, pais
     FROM participants
     WHERE idcategoria = ?
       AND actiu = 1
@@ -195,4 +198,60 @@ exports.moveParticipant = async (req, res) => {
   } finally {
     connection.release();
   }
+};
+
+
+exports.printGroup = async (req, res) => {
+  const groupId = Number(req.params.id);
+
+  const [[group]] = await db.query(`
+    SELECT
+      g.*,
+      c.nom AS categoria_nom,
+      comp.nom AS competicio_nom,
+      pg.data,
+      pg.hora_inici,
+      pg.hora_final,
+      pg.durada_partit,
+      t.numero AS taula_numero,
+      t.nom AS taula_nom
+    FROM grups g
+    INNER JOIN categories c ON c.idcategoria = g.idcategoria
+    INNER JOIN competicions comp ON comp.idcompeticio = c.idcompeticio
+    LEFT JOIN programacio_grups pg ON pg.idgrup = g.idgrup
+    LEFT JOIN taules t ON t.idtaula = pg.idtaula
+    WHERE g.idgrup = ?
+  `, [groupId]);
+
+  if (!group) return res.status(404).send('Grup no trobat.');
+
+  const [participants] = await db.query(`
+    SELECT
+      gp.ordre_visual,
+      p.idparticipant,
+      p.nom_mostrar,
+      p.ranking,
+      p.club,
+      p.pais
+    FROM grup_participants gp
+    INNER JOIN participants p ON p.idparticipant = gp.idparticipant
+    WHERE gp.idgrup = ?
+    ORDER BY gp.ordre_visual
+  `, [groupId]);
+
+  const [matches] = await db.query(`
+    SELECT
+      pa.*,
+      p1.nom_mostrar AS participant1_nom,
+      p2.nom_mostrar AS participant2_nom,
+      arb.nom_mostrar AS arbitre_nom
+    FROM partits pa
+    LEFT JOIN participants p1 ON p1.idparticipant = pa.participant1
+    LEFT JOIN participants p2 ON p2.idparticipant = pa.participant2
+    LEFT JOIN participants arb ON arb.idparticipant = pa.idarbitre_participant
+    WHERE pa.idgrup = ?
+    ORDER BY pa.data_hora, pa.numero_partit
+  `, [groupId]);
+
+  res.render('groups/print', { group, participants, matches });
 };

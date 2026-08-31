@@ -10,20 +10,99 @@ function shuffle(items) {
 function calculateGroupSizes(total) {
   if (total < 3) throw new Error('Calen com a mínim 3 participants per fer grups.');
   if (total === 5) return [5];
-  const r = total % 4; const sizes=[];
-  if (r===0) { for(let i=0;i<total/4;i++) sizes.push(4); return sizes; }
-  if (r===1 && total>=9) { sizes.push(5); for(let i=0;i<(total-5)/4;i++) sizes.push(4); return sizes; }
-  if (r===2) { for(let i=0;i<(total-6)/4;i++) sizes.push(4); sizes.push(3,3); return sizes; }
-  if (r===3) { for(let i=0;i<(total-3)/4;i++) sizes.push(4); sizes.push(3); return sizes; }
+
+  const r = total % 4;
+  const sizes = [];
+
+  if (r === 0) {
+    for (let i = 0; i < total / 4; i++) sizes.push(4);
+    return sizes;
+  }
+
+  if (r === 1 && total >= 9) {
+    sizes.push(5);
+    for (let i = 0; i < (total - 5) / 4; i++) sizes.push(4);
+    return sizes;
+  }
+
+  if (r === 2) {
+    for (let i = 0; i < (total - 6) / 4; i++) sizes.push(4);
+    sizes.push(3, 3);
+    return sizes;
+  }
+
+  if (r === 3) {
+    for (let i = 0; i < (total - 3) / 4; i++) sizes.push(4);
+    sizes.push(3);
+    return sizes;
+  }
+
   return [total];
 }
 
-function randomizeInBlocks(items, blockSize) {
-  const result = [];
-  for (let i = 0; i < items.length; i += blockSize) {
-    result.push(...shuffle(items.slice(i, i + blockSize)));
+function normalizeText(value) {
+  return String(value || '').trim().toUpperCase();
+}
+
+function placementPenalty(participant, group) {
+  const club = normalizeText(participant.club);
+  const country = normalizeText(participant.pais);
+  let penalty = 0;
+
+  for (const existing of group.participants) {
+    if (club && club === normalizeText(existing.club)) penalty += 100;
+    if (country && country === normalizeText(existing.pais)) penalty += 25;
   }
+
+  return penalty;
+}
+
+function permutations(items) {
+  if (items.length <= 1) return [items];
+  const result = [];
+  items.forEach((item, i) => {
+    const rest = [...items.slice(0, i), ...items.slice(i + 1)];
+    for (const tail of permutations(rest)) result.push([item, ...tail]);
+  });
   return result;
+}
+
+function bestPermutationForSlots(block, slotGroupIndexes, groups) {
+  const candidates = shuffle(permutations(block));
+  let best = candidates[0];
+  let bestPenalty = Number.POSITIVE_INFINITY;
+
+  for (const candidate of candidates) {
+    let penalty = 0;
+    for (let i = 0; i < candidate.length; i++) {
+      penalty += placementPenalty(candidate[i], groups[slotGroupIndexes[i]]);
+    }
+
+    if (penalty < bestPenalty) {
+      bestPenalty = penalty;
+      best = candidate;
+    }
+  }
+
+  return best;
+}
+
+function buildSnakeSlots(groups) {
+  const slots = [];
+  const maxSize = Math.max(...groups.map(g => g.size));
+
+  // La primera fila ja està ocupada pels caps de sèrie.
+  for (let position = 2; position <= maxSize; position++) {
+    const indexes = groups
+      .map((g, i) => ({ g, i }))
+      .filter(x => x.g.size >= position)
+      .map(x => x.i);
+
+    if (position % 2 === 0) indexes.reverse(); // 2n i 4t jugador: sentit invers
+    slots.push(...indexes);
+  }
+
+  return slots;
 }
 
 function drawGroups(participants, blockSize = 4) {
@@ -38,68 +117,63 @@ function drawGroups(participants, blockSize = 4) {
   });
 
   const sizes = calculateGroupSizes(sorted.length);
-  const numGroups = sizes.length;
   const groups = sizes.map((size, i) => ({
     number: i + 1,
     size,
     participants: []
   }));
 
-  // CAPS DE SÈRIE: sense sorteig
-  // 1r ranking -> grup 1, 2n -> grup 2, etc.
-  const seeds = sorted.slice(0, numGroups);
-  seeds.forEach((p, i) => groups[i].participants.push(p));
+  // Caps de sèrie: directes, sense sorteig.
+  sorted.slice(0, groups.length).forEach((p, i) => {
+    groups[i].participants.push(p);
+  });
 
-  // La serp comença amb el segon jugador de cada grup.
-  const remaining = sorted.slice(numGroups);
-  const randomized = randomizeInBlocks(remaining, blockSize);
+  const remaining = sorted.slice(groups.length);
+  const slots = buildSnakeSlots(groups);
 
-  let row = 1;      // segon jugador del grup
-  let indexInRow = 0;
+  let cursor = 0;
+  for (let start = 0; start < remaining.length; start += blockSize) {
+    const block = remaining.slice(start, start + blockSize);
+    const blockSlots = slots.slice(cursor, cursor + block.length);
+    const chosen = bestPermutationForSlots(block, blockSlots, groups);
 
-  for (const p of randomized) {
-    let order;
-    if (row % 2 === 1) {
-      // Segona fila: de l'últim grup al primer.
-      order = Array.from({ length: numGroups }, (_, i) => numGroups - 1 - i);
-    } else {
-      // Tercera fila: del primer grup a l'últim.
-      order = Array.from({ length: numGroups }, (_, i) => i);
-    }
+    chosen.forEach((participant, i) => {
+      groups[blockSlots[i]].participants.push(participant);
+    });
 
-    // Saltar grups que ja estan plens (casos de grups de 3).
-    let assigned = false;
-    let attempts = 0;
-
-    while (!assigned && attempts < numGroups) {
-      const gi = order[indexInRow % numGroups];
-      indexInRow++;
-      attempts++;
-
-      if (groups[gi].participants.length < groups[gi].size) {
-        groups[gi].participants.push(p);
-        assigned = true;
-      }
-
-      if (indexInRow >= numGroups) {
-        indexInRow = 0;
-        row++;
-      }
-    }
-
-    if (!assigned) {
-      const fallback = groups.find(g => g.participants.length < g.size);
-      if (!fallback) throw new Error('No hi ha espai disponible als grups.');
-      fallback.participants.push(p);
-    }
+    cursor += block.length;
   }
 
   return groups;
 }
 
+function groupWarnings(group) {
+  const warnings = [];
+  const countBy = (field) => {
+    const map = new Map();
+    for (const p of group.participants) {
+      const value = normalizeText(p[field]);
+      if (!value) continue;
+      map.set(value, (map.get(value) || 0) + 1);
+    }
+    return [...map.entries()].filter(([, count]) => count >= 3);
+  };
+
+  for (const [club, count] of countBy('club')) {
+    warnings.push(`${count} participants del mateix club (${club})`);
+  }
+  for (const [pais, count] of countBy('pais')) {
+    warnings.push(`${count} participants del mateix país (${pais})`);
+  }
+
+  return warnings;
+}
+
 module.exports = {
   shuffle,
   calculateGroupSizes,
-  randomizeInBlocks,
-  drawGroups
+  placementPenalty,
+  buildSnakeSlots,
+  drawGroups,
+  groupWarnings
 };

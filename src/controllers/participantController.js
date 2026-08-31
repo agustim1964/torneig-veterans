@@ -29,15 +29,17 @@ exports.listByCategory = async (req, res) => {
 
 exports.create = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
-  const { nom_mostrar, ranking } = req.body;
+  const { nom_mostrar, ranking, club, pais } = req.body;
 
   await db.query(`
     INSERT INTO participants
-      (idcategoria, nom_mostrar, ranking)
-    VALUES (?, ?, ?)
+      (idcategoria, nom_mostrar, club, pais, ranking)
+    VALUES (?, ?, ?, ?, ?)
   `, [
     categoryId,
     String(nom_mostrar || '').trim(),
+    String(club || '').trim() || null,
+    String(pais || '').trim().toUpperCase() || null,
     Number(ranking || 0)
   ]);
 
@@ -46,14 +48,16 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   const id = Number(req.params.id);
-  const { nom_mostrar, ranking, categoryId } = req.body;
+  const { nom_mostrar, ranking, club, pais, categoryId } = req.body;
 
   await db.query(`
     UPDATE participants
-    SET nom_mostrar = ?, ranking = ?
+    SET nom_mostrar = ?, club = ?, pais = ?, ranking = ?
     WHERE idparticipant = ?
   `, [
     String(nom_mostrar || '').trim(),
+    String(club || '').trim() || null,
+    String(pais || '').trim().toUpperCase() || null,
     Number(ranking || 0),
     id
   ]);
@@ -202,6 +206,7 @@ exports.importFile = async (req, res) => {
         const cognoms = String(row.cognoms || '').trim();
         const club = String(row.club || '').trim();
         const sexe = String(row.sexe || '').trim().toUpperCase();
+        const pais = String(row.pais || row.country || row.nacio || '').trim().toUpperCase();
         const llicencia = String(row.llicencia || row.num_llicencia || '').trim();
         const ranking = Number(String(row.ranking ?? '0').replace(',', '.').trim()) || 0;
         const explicitDisplay = String(row.nom_mostrar || '').trim();
@@ -220,17 +225,26 @@ exports.importFile = async (req, res) => {
               [llicencia]
             );
             playerId = existing?.idjugador || null;
+            if (playerId) {
+              await connection.query(`
+                UPDATE jugadors
+                SET club = COALESCE(NULLIF(?, ''), club),
+                    pais = COALESCE(NULLIF(?, ''), pais)
+                WHERE idjugador = ?
+              `, [club, pais, playerId]);
+            }
           }
 
           if (!playerId) {
             const [result] = await connection.query(`
               INSERT INTO jugadors
-                (nom, cognoms, club, sexe, num_llicencia)
-              VALUES (?, ?, ?, ?, ?)
+                (nom, cognoms, club, pais, sexe, num_llicencia)
+              VALUES (?, ?, ?, ?, ?, ?)
             `, [
               nom,
               cognoms || null,
               club || null,
+              pais || null,
               ['M', 'F'].includes(sexe) ? sexe : null,
               llicencia || null
             ]);
@@ -240,9 +254,9 @@ exports.importFile = async (req, res) => {
 
         const [participantResult] = await connection.query(`
           INSERT INTO participants
-            (idcategoria, nom_mostrar, ranking)
-          VALUES (?, ?, ?)
-        `, [categoryId, nomMostrar, ranking]);
+            (idcategoria, nom_mostrar, club, pais, ranking)
+          VALUES (?, ?, ?, ?, ?)
+        `, [categoryId, nomMostrar, club || null, pais || null, ranking]);
 
         if (playerId) {
           await connection.query(`

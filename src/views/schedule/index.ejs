@@ -1,1 +1,91 @@
-<%- include('../partials/header',{title:'Màster - '+competition.nom}) %><div class="d-flex justify-content-between mb-4"><div><a href="/competitions">← Competicions</a><h1>Màster general d'horaris</h1></div><form action="/schedule/competition/<%= competition.idcompeticio %>/generate" method="post"><button class="btn btn-primary">Generar planificació automàtica</button></form></div><div class="alert alert-info">Una taula fixa per grup. Els grups bloquejats no es recalculen.</div><table class="table"><thead><tr><th>Categoria</th><th>Grup</th><th>Jug.</th><th>Taula</th><th>Inici</th><th>Final</th><th>Durada</th><th>Bloq.</th><th></th></tr></thead><tbody><% rows.forEach(r=>{ %><tr><td><%=r.categoria_nom%></td><td><%=r.grup_numero%></td><td><%=r.participants_grup%></td><form action="/schedule/<%=r.idprogramacio%>/update" method="post"><input type="hidden" name="competitionId" value="<%=competition.idcompeticio%>"><td><select name="idtaula" class="form-select"><% tables.forEach(t=>{ %><option value="<%=t.idtaula%>" <%=Number(t.idtaula)===Number(r.idtaula)?'selected':''%>><%=t.nom||('Taula '+t.numero)%></option><% }) %></select></td><td><input type="time" name="hora_inici" value="<%=String(r.hora_inici).substring(0,5)%>" class="form-control"></td><td><input type="time" name="hora_final" value="<%=String(r.hora_final).substring(0,5)%>" class="form-control"></td><td><%=r.durada_partit%> min</td><td><input type="checkbox" name="bloquejada" value="1" <%=r.bloquejada?'checked':''%>></td><td><button class="btn btn-sm btn-outline-success">Desar</button></td></form></tr><% }) %></tbody></table><%- include('../partials/footer') %>
+<%- include('../partials/header', { title: 'Màster - ' + competition.nom }) %>
+
+<div class="d-flex justify-content-between align-items-start mb-4 gap-3">
+  <div>
+    <a href="/competitions" class="text-decoration-none">← Competicions</a>
+    <h1 class="mt-2">Màster general d'horaris</h1>
+    <p class="text-muted mb-0"><%= competition.nom %></p>
+  </div>
+
+  <form action="/schedule/competition/<%= competition.idcompeticio %>/generate" method="post"
+        class="d-flex gap-2 align-items-end"
+        onsubmit="return confirm('Recalcular tots els grups no bloquejats en aquesta data?')">
+    <div>
+      <label class="form-label small">Data per planificació automàtica</label>
+      <input class="form-control" type="date" name="data" value="<%= defaultDate %>" required>
+    </div>
+    <button class="btn btn-primary">Generar planificació</button>
+  </form>
+</div>
+
+<div class="alert alert-info">
+  Cada grup ocupa una sola taula durant tota la seva franja. Per distribuir la competició en diversos dies,
+  assigna una data als grups que vulguis conservar, marca'ls com <strong>bloquejats</strong> i torna a generar
+  la resta seleccionant un altre dia.
+</div>
+
+<% if (dates.length) { %>
+  <div class="mb-3 d-flex flex-wrap gap-2">
+    <% dates.forEach(d => { %>
+      <span class="badge text-bg-secondary fs-6"><%= new Date(d + 'T12:00:00').toLocaleDateString('ca-ES') %></span>
+    <% }) %>
+  </div>
+<% } %>
+
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Categoria</th>
+          <th>Grup</th>
+          <th>Jug.</th>
+          <th>Taula</th>
+          <th>Inici</th>
+          <th>Final</th>
+          <th>Durada</th>
+          <th>Bloq.</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% rows.forEach(r => { %>
+        <tr>
+          <form action="/schedule/<%= r.idprogramacio %>/update" method="post">
+            <input type="hidden" name="competitionId" value="<%= competition.idcompeticio %>">
+            <td style="min-width:150px">
+              <input class="form-control form-control-sm" type="date" name="data" value="<%= isoDate(r.data) %>" required>
+            </td>
+            <td><%= r.categoria_nom %></td>
+            <td>Grup <%= r.grup_numero %></td>
+            <td><%= r.participants_grup %></td>
+            <td style="min-width:125px">
+              <select name="idtaula" class="form-select form-select-sm">
+                <% tables.forEach(t => { %>
+                  <option value="<%= t.idtaula %>" <%= Number(t.idtaula) === Number(r.idtaula) ? 'selected' : '' %>>
+                    <%= t.nom || ('Taula ' + t.numero) %>
+                  </option>
+                <% }) %>
+              </select>
+            </td>
+            <td><input class="form-control form-control-sm" type="time" name="hora_inici" value="<%= String(r.hora_inici).substring(0,5) %>"></td>
+            <td><input class="form-control form-control-sm" type="time" name="hora_final" value="<%= String(r.hora_final).substring(0,5) %>"></td>
+            <td><%= r.durada_partit %> min</td>
+            <td class="text-center">
+              <input class="form-check-input" type="checkbox" name="bloquejada" value="1" <%= r.bloquejada ? 'checked' : '' %>>
+            </td>
+            <td><button class="btn btn-sm btn-outline-success">Desar</button></td>
+          </form>
+        </tr>
+      <% }) %>
+
+      <% if (!rows.length) { %>
+        <tr><td colspan="10" class="text-center text-muted py-4">Encara no hi ha cap grup programat.</td></tr>
+      <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

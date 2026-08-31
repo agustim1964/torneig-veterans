@@ -23,10 +23,12 @@
     <table class="table table-hover align-middle mb-0">
       <thead>
         <tr>
+          <th>Data</th>
           <th>Hora</th>
           <th>Taula</th>
           <th>Grup</th>
           <th>Partit</th>
+          <th>Àrbitre</th>
           <th>Resultat</th>
           <th>Estat</th>
         </tr>
@@ -34,6 +36,9 @@
       <tbody>
       <% matches.forEach(m => { %>
         <tr>
+          <td>
+            <%= m.data_hora ? new Date(m.data_hora).toLocaleDateString('ca-ES') : '' %>
+          </td>
           <td>
             <%= m.data_hora
               ? new Date(m.data_hora).toLocaleTimeString('ca-ES', {hour:'2-digit', minute:'2-digit'})
@@ -46,6 +51,7 @@
             <span class="text-muted"> vs </span>
             <strong><%= m.participant2_nom %></strong>
           </td>
+          <td><%= m.arbitre_nom || '' %></td>
           <td style="min-width:440px">
             <form action="/matches/<%= m.idpartit %>/result"
                   method="post"
@@ -90,7 +96,7 @@
 
       <% if (!matches.length) { %>
         <tr>
-          <td colspan="6" class="text-center text-muted py-4">
+          <td colspan="8" class="text-center text-muted py-4">
             Encara no s'han generat els partits.
           </td>
         </tr>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <title><%= group.categoria_nom %> - Grup <%= group.numero %></title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 18mm; color: #111; }
+    h1,h2,p { margin: 0 0 6px; }
+    .meta { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0; }
+    .box { border:1px solid #999; padding:7px; }
+    table { width:100%; border-collapse:collapse; margin-top:14px; }
+    th,td { border:1px solid #777; padding:6px; font-size:12px; }
+    th { background:#eee; }
+    .games td { height:28px; }
+    .center { text-align:center; }
+    .nowrap { white-space:nowrap; }
+    .no-print { margin-bottom:12px; }
+    @media print { .no-print { display:none; } body { margin:10mm; } }
+  </style>
+</head>
+<body>
+  <button class="no-print" onclick="window.print()">Imprimir</button>
+
+  <h1><%= group.competicio_nom %></h1>
+  <h2><%= group.categoria_nom %> · Grup <%= group.numero %></h2>
+
+  <div class="meta">
+    <div class="box"><strong>Data</strong><br><%= group.data ? new Date(group.data).toLocaleDateString('ca-ES') : '—' %></div>
+    <div class="box"><strong>Taula</strong><br><%= group.taula_nom || (group.taula_numero ? 'Taula ' + group.taula_numero : '—') %></div>
+    <div class="box"><strong>Inici</strong><br><%= group.hora_inici ? String(group.hora_inici).substring(0,5) : '—' %></div>
+    <div class="box"><strong>Final prevista</strong><br><%= group.hora_final ? String(group.hora_final).substring(0,5) : '—' %></div>
+  </div>
+
+  <table>
+    <thead><tr><th>Pos.</th><th>Participant</th><th>País</th><th>Club</th><th>Rànquing</th></tr></thead>
+    <tbody>
+    <% participants.forEach(p => { %>
+      <tr>
+        <td class="center"><%= p.ordre_visual %></td>
+        <td><%= p.nom_mostrar %></td>
+        <td class="center"><%= p.pais || '' %></td>
+        <td><%= p.club || '' %></td>
+        <td class="center"><%= p.ranking %></td>
+      </tr>
+    <% }) %>
+    </tbody>
+  </table>
+
+  <table class="games">
+    <thead>
+      <tr>
+        <th>Hora</th><th>Partit</th><th>Àrbitre</th>
+        <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>Resultat</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% matches.forEach(m => { %>
+      <tr>
+        <td class="nowrap"><%= m.data_hora ? new Date(m.data_hora).toLocaleTimeString('ca-ES',{hour:'2-digit',minute:'2-digit'}) : '' %></td>
+        <td><%= m.participant1_nom %> — <%= m.participant2_nom %></td>
+        <td><%= m.arbitre_nom || '' %></td>
+        <td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+    <% }) %>
+    <% if (!matches.length) { %>
+      <tr><td colspan="9" class="center">Genera els partits des de “Partits i classificació” abans d’imprimir l’acta.</td></tr>
+    <% } %>
+    </tbody>
+  </table>
+
+  <p style="margin-top:14px;font-size:11px">
+    Desempats: només partits entre els participants empatats; primer factor de jocs guanyats/perduts i després factor de punts guanyats/perduts.
+  </p>
+</body>
+</html>

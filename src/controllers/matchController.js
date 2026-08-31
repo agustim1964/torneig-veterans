@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const { buildGroupMatchOrder } = require('../services/matchService');
+const { buildGroupMatchOrder, assignGroupReferees } = require('../services/matchService');
 const { classifyGroup } = require('../services/classificationService');
 
 async function getCategory(categoryId) {
@@ -25,12 +25,14 @@ exports.listByCategory = async (req, res) => {
       g.numero AS grup_numero,
       p1.nom_mostrar AS participant1_nom,
       p2.nom_mostrar AS participant2_nom,
+      arb.nom_mostrar AS arbitre_nom,
       t.numero AS taula_numero,
       t.nom AS taula_nom
     FROM partits pa
     INNER JOIN grups g ON g.idgrup = pa.idgrup
     LEFT JOIN participants p1 ON p1.idparticipant = pa.participant1
     LEFT JOIN participants p2 ON p2.idparticipant = pa.participant2
+    LEFT JOIN participants arb ON arb.idparticipant = pa.idarbitre_participant
     LEFT JOIN taules t ON t.idtaula = pa.idtaula
     WHERE pa.idcategoria = ?
       AND pa.idgrup IS NOT NULL
@@ -98,7 +100,85 @@ exports.listByCategory = async (req, res) => {
   });
 };
 
-exports.generateGroups = async (req,res)=>{const categoryId=Number(req.params.categoryId),category=await getCategory(categoryId);const [groups]=await db.query(`SELECT g.*,pg.idtaula,pg.data,pg.hora_inici,pg.durada_partit FROM grups g LEFT JOIN programacio_grups pg ON pg.idgrup=g.idgrup WHERE g.idcategoria=? ORDER BY g.numero`,[categoryId]);if(groups.some(g=>!g.idtaula||!g.hora_inici))return res.status(400).send(`<h1>Falta programació</h1><p><a href="/schedule/competition/${category.idcompeticio}">Anar al màster</a></p>`);const cx=await db.getConnection();try{await cx.beginTransaction();await cx.query(`DELETE FROM partits WHERE idcategoria=? AND idgrup IS NOT NULL AND estat='PENDENT'`,[categoryId]);let num=1;for(const g of groups){const [ps]=await cx.query(`SELECT p.idparticipant,gp.ordre_visual FROM grup_participants gp JOIN participants p ON p.idparticipant=gp.idparticipant WHERE gp.idgrup=? ORDER BY gp.ordre_visual`,[g.idgrup]);const order=buildGroupMatchOrder(ps),[hh,mm]=String(g.hora_inici).split(':').map(Number),dt=g.data?new Date(g.data):new Date();dt.setHours(hh,mm,0,0);for(let i=0;i<order.length;i++){const when=new Date(dt.getTime()+i*Number(g.durada_partit||20)*60000);await cx.query(`INSERT INTO partits(idcategoria,idgrup,numero_partit,participant1,participant2,estat,idtaula,data_hora) VALUES(?,?,?,?,?,'PENDENT',?,?)`,[categoryId,g.idgrup,num++,order[i].participant1,order[i].participant2,g.idtaula,when]);}}await cx.commit();res.redirect(`/matches/category/${categoryId}`);}catch(e){await cx.rollback();throw e;}finally{cx.release();}};
+exports.generateGroups = async (req, res) => {
+  const categoryId = Number(req.params.categoryId);
+  const category = await getCategory(categoryId);
+
+  const [groups] = await db.query(`
+    SELECT g.*, pg.idtaula, pg.data, pg.hora_inici, pg.durada_partit
+    FROM grups g
+    LEFT JOIN programacio_grups pg ON pg.idgrup = g.idgrup
+    WHERE g.idcategoria = ?
+    ORDER BY g.numero
+  `, [categoryId]);
+
+  if (groups.some(g => !g.idtaula || !g.hora_inici || !g.data)) {
+    return res.status(400).send(`
+      <h1>Falta programació</h1>
+      <p>Cal assignar data, hora i taula a tots els grups abans de generar els partits.</p>
+      <p><a href="/schedule/competition/${category.idcompeticio}">Anar al màster</a></p>
+    `);
+  }
+
+  const cx = await db.getConnection();
+  try {
+    await cx.beginTransaction();
+
+    await cx.query(`
+      DELETE FROM partits
+      WHERE idcategoria = ? AND idgrup IS NOT NULL AND estat = 'PENDENT'
+    `, [categoryId]);
+
+    let num = 1;
+
+    for (const g of groups) {
+      const [participants] = await cx.query(`
+        SELECT p.idparticipant, p.nom_mostrar, gp.ordre_visual
+        FROM grup_participants gp
+        INNER JOIN participants p ON p.idparticipant = gp.idparticipant
+        WHERE gp.idgrup = ?
+        ORDER BY gp.ordre_visual
+      `, [g.idgrup]);
+
+      const orderedMatches = buildGroupMatchOrder(participants);
+      const matchesWithReferees = assignGroupReferees(orderedMatches, participants);
+
+      const [hh, mm] = String(g.hora_inici).split(':').map(Number);
+      const dt = new Date(g.data);
+      dt.setHours(hh, mm, 0, 0);
+      const duration = Number(g.durada_partit || 20);
+
+      for (let i = 0; i < matchesWithReferees.length; i++) {
+        const match = matchesWithReferees[i];
+        const when = new Date(dt.getTime() + i * duration * 60000);
+
+        await cx.query(`
+          INSERT INTO partits
+            (idcategoria, idgrup, numero_partit, participant1, participant2,
+             idarbitre_participant, estat, idtaula, data_hora)
+          VALUES (?, ?, ?, ?, ?, ?, 'PENDENT', ?, ?)
+        `, [
+          categoryId,
+          g.idgrup,
+          num++,
+          match.participant1,
+          match.participant2,
+          match.idarbitre_participant,
+          g.idtaula,
+          when
+        ]);
+      }
+    }
+
+    await cx.commit();
+    res.redirect(`/matches/category/${categoryId}`);
+  } catch (e) {
+    await cx.rollback();
+    throw e;
+  } finally {
+    cx.release();
+  }
+};
 
 exports.saveResult = async (req, res) => {
   const matchId = Number(req.params.id);
