@@ -246,36 +246,72 @@
     refreshForm(form);
 
     form.querySelectorAll('.game-score').forEach(input => {
-      input.addEventListener('input', function () {
-        const value = this.value === '' ? null : Number(this.value);
-        const game = Number(this.dataset.game);
-        const player = Number(this.dataset.player);
+      let quickEntryTimer = null;
 
-        // Entrada ràpida:
-        // si s'escriu 0..9, es considera la puntuació del perdedor
-        // i l'altre jugador rep automàticament 11.
-        if (value !== null && Number.isInteger(value) && value >= 0 && value <= 9) {
+      input.addEventListener('input', function () {
+        if (quickEntryTimer) {
+          clearTimeout(quickEntryTimer);
+          quickEntryTimer = null;
+        }
+
+        const field = this;
+        const game = Number(field.dataset.game);
+        const player = Number(field.dataset.player);
+
+        refreshForm(form);
+
+        // Entrada ràpida amb una petita espera:
+        // "7" + pausa -> posa 11 a l'altre costat i avança.
+        // "10", "12", "15"... es poden escriure sense que el primer dígit
+        // activi l'autocompletat.
+        if (/^[0-9]$/.test(field.value)) {
+          quickEntryTimer = setTimeout(() => {
+            if (!/^[0-9]$/.test(field.value)) return;
+
+            const otherPlayer = player === 1 ? 2 : 1;
+            const other = form.querySelector(
+              `[data-game="${game}"][data-player="${otherPlayer}"]`
+            );
+
+            other.value = 11;
+
+            const state = refreshForm(form);
+
+            if (state.clinchGame === game) {
+              setTimeout(() => form.requestSubmit(), 60);
+            } else {
+              setTimeout(() => focusNextGame(form, game), 20);
+            }
+          }, 550);
+        }
+      });
+
+      input.addEventListener('keydown', function (event) {
+        // Enter confirma immediatament una entrada ràpida d'un sol dígit.
+        if (event.key === 'Enter' && /^[0-9]$/.test(this.value)) {
+          event.preventDefault();
+
+          if (quickEntryTimer) {
+            clearTimeout(quickEntryTimer);
+            quickEntryTimer = null;
+          }
+
+          const game = Number(this.dataset.game);
+          const player = Number(this.dataset.player);
           const otherPlayer = player === 1 ? 2 : 1;
           const other = form.querySelector(
             `[data-game="${game}"][data-player="${otherPlayer}"]`
           );
-          other.value = 11;
 
+          other.value = 11;
           const state = refreshForm(form);
 
           if (state.clinchGame === game) {
-            // Desem automàticament quan algú arriba a 3 jocs.
-            // requestSubmit respecta la validació HTML i envia el formulari.
-            setTimeout(() => form.requestSubmit(), 60);
+            form.requestSubmit();
           } else {
-            setTimeout(() => focusNextGame(form, game), 20);
+            focusNextGame(form, game);
           }
-          return;
         }
-
-        // Per marcadors 10+, deuce o correccions manuals, no pressuposem res.
-        // Només recalcularem quins jocs són vàlids.
-        refreshForm(form);
       });
 
       input.addEventListener('focus', function () {
