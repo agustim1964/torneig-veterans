@@ -242,13 +242,49 @@
     }
   }
 
+
+  function isValidFinishedGame(a, b) {
+    if (a === null || b === null) return false;
+    if (!Number.isInteger(a) || !Number.isInteger(b)) return false;
+    if (a < 0 || b < 0 || a === b) return false;
+
+    const winner = Math.max(a, b);
+    const loser = Math.min(a, b);
+
+    if (loser <= 9) {
+      return winner === 11;
+    }
+
+    return winner >= 12 && (winner - loser === 2);
+  }
+
+  function markGameValidity(form, game) {
+    const { a, b, va, vb } = readGame(form, game);
+
+    a.classList.remove('is-invalid');
+    b.classList.remove('is-invalid');
+
+    if (va === null || vb === null) return null;
+
+    const valid = isValidFinishedGame(va, vb);
+
+    if (!valid) {
+      a.classList.add('is-invalid');
+      b.classList.add('is-invalid');
+    }
+
+    return valid;
+  }
+
   forms.forEach(form => {
     refreshForm(form);
 
     form.querySelectorAll('.game-score').forEach(input => {
       input.addEventListener('input', function () {
-        // Mentre s'escriu no fem cap salt ni autocompletat.
-        // Només recalcularem l'estat visual.
+        const game = Number(this.dataset.game);
+        const pair = readGame(form, game);
+        pair.a.classList.remove('is-invalid');
+        pair.b.classList.remove('is-invalid');
         refreshForm(form);
       });
 
@@ -264,11 +300,9 @@
         if (field.value === '') return;
 
         const value = Number(field.value);
-        if (!Number.isFinite(value) || value < 0) return;
+        if (!Number.isFinite(value) || value < 0 || !Number.isInteger(value)) return;
 
-        // Si el valor és 0..9, interpretem que és la puntuació del perdedor
-        // i posem 11 automàticament a l'altre jugador.
-        if (Number.isInteger(value) && value >= 0 && value <= 9) {
+        if (value >= 0 && value <= 9) {
           const otherPlayer = player === 1 ? 2 : 1;
           const other = form.querySelector(
             `[data-game="${game}"][data-player="${otherPlayer}"]`
@@ -276,33 +310,36 @@
           other.value = 11;
         }
 
-        // Si és 10 o més, no pressuposem el marcador de l'altre jugador.
-        // L'usuari podrà completar-lo manualment.
+        const current = readGame(form, game);
+
+        if (current.va === null || current.vb === null) {
+          const otherPlayer = player === 1 ? 2 : 1;
+          const other = form.querySelector(
+            `[data-game="${game}"][data-player="${otherPlayer}"]`
+          );
+          if (other && !other.disabled) {
+            other.focus();
+            other.select();
+          }
+          return;
+        }
+
+        if (!isValidFinishedGame(current.va, current.vb)) {
+          markGameValidity(form, game);
+          field.focus();
+          field.select();
+          return;
+        }
+
+        markGameValidity(form, game);
         const state = refreshForm(form);
 
-        // Només desem automàticament quan el partit ja està resolt.
         if (state.clinchGame === game) {
           form.requestSubmit();
           return;
         }
 
-        // Si el joc ja té els dos marcadors, anem al joc següent.
-        const current = readGame(form, game);
-        if (current.va !== null && current.vb !== null) {
-          focusNextGame(form, game);
-          return;
-        }
-
-        // Si encara falta el marcador de l'altre jugador (cas 10+),
-        // movem el focus al camp contrari del mateix joc.
-        const otherPlayer = player === 1 ? 2 : 1;
-        const other = form.querySelector(
-          `[data-game="${game}"][data-player="${otherPlayer}"]`
-        );
-        if (other && !other.disabled) {
-          other.focus();
-          other.select();
-        }
+        focusNextGame(form, game);
       });
 
       input.addEventListener('focus', function () {
