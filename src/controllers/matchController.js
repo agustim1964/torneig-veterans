@@ -210,17 +210,27 @@ exports.saveResult = async (req, res) => {
     }
   }
 
+  // En un partit al millor de 5 només són vàlids els jocs
+  // disputats fins que un participant arriba a 3 jocs guanyats.
   let r1 = 0;
   let r2 = 0;
+  const validGames = [];
 
-  for (const game of games) {
+  for (const game of games.sort((a, b) => a.numero_joc - b.numero_joc)) {
+    if (r1 >= 3 || r2 >= 3) break;
+
+    // No comptem un joc empatat com a joc finalitzat.
+    if (game.punts1 === game.punts2) continue;
+
+    validGames.push(game);
+
     if (game.punts1 > game.punts2) r1++;
-    else if (game.punts2 > game.punts1) r2++;
+    else r2++;
   }
 
   let winner = null;
-  if (r1 >= 3 && r1 > r2) winner = match.participant1;
-  if (r2 >= 3 && r2 > r1) winner = match.participant2;
+  if (r1 === 3) winner = match.participant1;
+  if (r2 === 3) winner = match.participant2;
 
   const connection = await db.getConnection();
 
@@ -232,7 +242,7 @@ exports.saveResult = async (req, res) => {
       WHERE idpartit = ?
     `, [matchId]);
 
-    for (const game of games) {
+    for (const game of validGames) {
       await connection.query(`
         INSERT INTO partit_jocs
           (idpartit, numero_joc, punts1, punts2)

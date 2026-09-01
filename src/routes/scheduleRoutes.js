@@ -1,1 +1,1 @@
-const express=require('express');const c=require('../controllers/scheduleController');const r=express.Router();r.get('/competition/:competitionId',c.show);r.post('/competition/:competitionId/generate',c.generate);r.post('/:id/update',c.update);module.exports=r;
+const express=require('express');const c=require('../controllers/scheduleController');const r=express.Router();r.get('/competition/:competitionId',c.show);r.get('/competition/:competitionId/print',c.print);r.post('/competition/:competitionId/generate',c.generate);r.post('/:id/update',c.update);module.exports=r;

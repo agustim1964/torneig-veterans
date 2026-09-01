@@ -7,15 +7,23 @@
     <p class="text-muted mb-0"><%= competition.nom %></p>
   </div>
 
-  <form action="/schedule/competition/<%= competition.idcompeticio %>/generate" method="post"
-        class="d-flex gap-2 align-items-end"
-        onsubmit="return confirm('Recalcular tots els grups no bloquejats en aquesta data?')">
+  <div class="d-flex gap-2 align-items-end flex-wrap justify-content-end">
+    <a class="btn btn-outline-secondary"
+       target="_blank"
+       href="/schedule/competition/<%= competition.idcompeticio %>/print">
+      Imprimir màster
+    </a>
+
+    <form action="/schedule/competition/<%= competition.idcompeticio %>/generate" method="post"
+          class="d-flex gap-2 align-items-end"
+          onsubmit="return confirm('Recalcular tots els grups no bloquejats en aquesta data?')">
     <div>
       <label class="form-label small">Data per planificació automàtica</label>
       <input class="form-control" type="date" name="data" value="<%= defaultDate %>" required>
     </div>
-    <button class="btn btn-primary">Generar planificació</button>
-  </form>
+      <button class="btn btn-primary">Generar planificació</button>
+    </form>
+  </div>
 </div>
 
 <div class="alert alert-info">

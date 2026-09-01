@@ -55,7 +55,8 @@
           <td style="min-width:440px">
             <form action="/matches/<%= m.idpartit %>/result"
                   method="post"
-                  class="d-flex flex-wrap gap-1 align-items-center">
+                  class="d-flex flex-wrap gap-1 align-items-center match-result-form"
+                  data-match-id="<%= m.idpartit %>">
               <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
 
               <% for (let joc = 1; joc <= 5; joc++) {
@@ -63,25 +64,33 @@
               %>
                 <div class="d-flex align-items-center gap-1 border rounded px-1 py-1">
                   <span class="small text-muted">J<%= joc %></span>
-                  <input class="form-control form-control-sm text-center"
+                  <input class="form-control form-control-sm text-center game-score"
                          style="width:48px"
                          type="number" min="0" max="99"
+                         inputmode="numeric"
+                         data-game="<%= joc %>"
+                         data-player="1"
                          name="joc<%= joc %>_p1"
                          value="<%= saved ? saved.punts1 : '' %>">
                   <span>-</span>
-                  <input class="form-control form-control-sm text-center"
+                  <input class="form-control form-control-sm text-center game-score"
                          style="width:48px"
                          type="number" min="0" max="99"
+                         inputmode="numeric"
+                         data-game="<%= joc %>"
+                         data-player="2"
                          name="joc<%= joc %>_p2"
                          value="<%= saved ? saved.punts2 : '' %>">
                 </div>
               <% } %>
 
-              <button class="btn btn-sm btn-outline-success">Desar</button>
+              <button class="btn btn-sm btn-outline-success save-result">Desar</button>
 
-              <% if (m.resultat1 !== null && m.resultat2 !== null) { %>
-                <strong class="ms-1"><%= m.resultat1 %>-<%= m.resultat2 %></strong>
-              <% } %>
+              <strong class="ms-1 match-summary">
+                <% if (m.resultat1 !== null && m.resultat2 !== null) { %>
+                  <%= m.resultat1 %>-<%= m.resultat2 %>
+                <% } %>
+              </strong>
             </form>
           </td>
           <td>
@@ -161,5 +170,120 @@
   <strong>jocs guanyats / jocs perduts</strong> i, si continua l'empat,
   el factor <strong>punts guanyats / punts perduts</strong>.
 </div>
+
+
+<script>
+(function () {
+  const forms = document.querySelectorAll('.match-result-form');
+
+  function readGame(form, game) {
+    const a = form.querySelector(`[data-game="${game}"][data-player="1"]`);
+    const b = form.querySelector(`[data-game="${game}"][data-player="2"]`);
+    const va = a.value === '' ? null : Number(a.value);
+    const vb = b.value === '' ? null : Number(b.value);
+    return { a, b, va, vb };
+  }
+
+  function completedScore(form) {
+    let wins1 = 0;
+    let wins2 = 0;
+    let clinchGame = null;
+
+    for (let game = 1; game <= 5; game++) {
+      const { va, vb } = readGame(form, game);
+      if (va === null || vb === null || va === vb) continue;
+
+      if (va > vb) wins1++;
+      else wins2++;
+
+      if ((wins1 === 3 || wins2 === 3) && clinchGame === null) {
+        clinchGame = game;
+        break;
+      }
+    }
+
+    return { wins1, wins2, clinchGame };
+  }
+
+  function refreshForm(form) {
+    const { wins1, wins2, clinchGame } = completedScore(form);
+    const summary = form.querySelector('.match-summary');
+
+    for (let game = 1; game <= 5; game++) {
+      const { a, b } = readGame(form, game);
+      const afterMatch = clinchGame !== null && game > clinchGame;
+
+      if (afterMatch) {
+        a.value = '';
+        b.value = '';
+        a.disabled = true;
+        b.disabled = true;
+      } else {
+        a.disabled = false;
+        b.disabled = false;
+      }
+    }
+
+    summary.textContent = clinchGame !== null ? `${wins1}-${wins2}` : '';
+
+    return { wins1, wins2, clinchGame };
+  }
+
+  function focusNextGame(form, currentGame) {
+    const nextGame = currentGame + 1;
+    if (nextGame > 5) return;
+
+    const next = form.querySelector(
+      `[data-game="${nextGame}"][data-player="1"]:not(:disabled)`
+    );
+    if (next) {
+      next.focus();
+      next.select();
+    }
+  }
+
+  forms.forEach(form => {
+    refreshForm(form);
+
+    form.querySelectorAll('.game-score').forEach(input => {
+      input.addEventListener('input', function () {
+        const value = this.value === '' ? null : Number(this.value);
+        const game = Number(this.dataset.game);
+        const player = Number(this.dataset.player);
+
+        // Entrada ràpida:
+        // si s'escriu 0..9, es considera la puntuació del perdedor
+        // i l'altre jugador rep automàticament 11.
+        if (value !== null && Number.isInteger(value) && value >= 0 && value <= 9) {
+          const otherPlayer = player === 1 ? 2 : 1;
+          const other = form.querySelector(
+            `[data-game="${game}"][data-player="${otherPlayer}"]`
+          );
+          other.value = 11;
+
+          const state = refreshForm(form);
+
+          if (state.clinchGame === game) {
+            // Desem automàticament quan algú arriba a 3 jocs.
+            // requestSubmit respecta la validació HTML i envia el formulari.
+            setTimeout(() => form.requestSubmit(), 60);
+          } else {
+            setTimeout(() => focusNextGame(form, game), 20);
+          }
+          return;
+        }
+
+        // Per marcadors 10+, deuce o correccions manuals, no pressuposem res.
+        // Només recalcularem quins jocs són vàlids.
+        refreshForm(form);
+      });
+
+      input.addEventListener('focus', function () {
+        this.select();
+      });
+    });
+  });
+})();
+</script>
 
 <%- include('../partials/footer') %>

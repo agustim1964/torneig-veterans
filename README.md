@@ -56,7 +56,7 @@ Exemple:
 
 | nom | cognoms | club | sexe | llicencia | ranking |
 | --- | --- | --- | --- | --- | --- |
-| Joan | Kimbo | CTT Exemple | M | 12345 | 950 |
+| Joan | Masip | CTT Exemple | M | 12345 | 950 |
 
 ## Sorteig
 
@@ -238,3 +238,20 @@ git push origin main
 6. Render farà el desplegament automàtic des de GitHub.
 
 No tornis a executar l'script complet d'instal·lació v0.7 sobre Aiven.
+
+
+## v0.8.1 - Entrada ràpida i impressió del màster
+
+- Entrada ràpida de resultats al millor de 5:
+  - si s'escriu 0..9 en un dels dos camps d'un joc, l'altre jugador rep 11 automàticament;
+  - el cursor passa al joc següent;
+  - quan un jugador arriba a 3 jocs, els jocs posteriors queden desactivats i s'envia el resultat;
+  - els jocs ja introduïts continuen editables per poder corregir errors;
+  - el servidor descarta qualsevol joc posterior al tercer joc guanyat.
+- Nova impressió del màster en A4 horitzontal:
+  - una pàgina per dia;
+  - taules en columnes;
+  - hores en files;
+  - categoria i grup a cada intersecció.
+- La vista del màster queda preparada conceptualment perquè, quan s'afegeixin eliminatòries,
+  les cel·les puguin mostrar la ronda (1/16, 1/8, 1/4, etc.) en lloc del grup.

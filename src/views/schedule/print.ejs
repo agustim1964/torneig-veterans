@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <title>Màster · <%= competition.nom %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @page { size: A4 landscape; margin: 7mm; }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      color: #111;
+      font-size: 9px;
+    }
+
+    .toolbar {
+      margin-bottom: 8px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      border-bottom: 1px solid #999;
+      padding-bottom: 5px;
+      margin-bottom: 6px;
+    }
+
+    .header img {
+      width: 330px;
+      max-width: 48%;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 17px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 13px;
+      margin: 4px 0;
+    }
+
+    .day {
+      break-after: page;
+    }
+
+    .day:last-child {
+      break-after: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid #777;
+      padding: 2px 3px;
+      text-align: center;
+      vertical-align: middle;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: #eee;
+      font-size: 8px;
+    }
+
+    th.time, td.time {
+      width: 38px;
+      white-space: nowrap;
+      font-weight: bold;
+    }
+
+    td.slot {
+      height: 18px;
+      line-height: 1.05;
+    }
+
+    .cat {
+      font-weight: bold;
+      font-size: 8px;
+    }
+
+    .phase {
+      font-size: 7px;
+    }
+
+    @media print {
+      .toolbar { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="window.print()">Imprimir</button>
+  </div>
+
+  <div class="header">
+    <img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula">
+    <h1><%= competition.nom %> · Màster d'horaris</h1>
+  </div>
+
+  <% if (!days.length) { %>
+    <p>No hi ha cap programació per imprimir.</p>
+  <% } %>
+
+  <% days.forEach(day => { %>
+    <section class="day">
+      <h2><%= new Date(day.date + 'T12:00:00').toLocaleDateString('ca-ES', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      }) %></h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="time">Hora</th>
+            <% tables.forEach(t => { %>
+              <th><%= t.nom || ('Taula ' + t.numero) %></th>
+            <% }) %>
+          </tr>
+        </thead>
+        <tbody>
+          <% day.slots.forEach(slot => { %>
+            <tr>
+              <td class="time"><%= slot.hora %></td>
+              <% slot.cells.forEach(cell => { %>
+                <td class="slot">
+                  <% if (cell) { %>
+                    <div class="cat"><%= cell.categoria %></div>
+                    <div class="phase"><%= cell.fase %></div>
+                  <% } %>
+                </td>
+              <% }) %>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </section>
+  <% }) %>
+</body>
+</html>
