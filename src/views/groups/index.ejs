@@ -10,22 +10,40 @@
     <a class="btn btn-outline-success" href="/matches/category/<%= category.idcategoria %>">
       Partits i classificació
     </a>
-    <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
-          onsubmit="return confirm('Tornar a sortejar amb serp 2x2?')">
-      <input type="hidden" name="snakeBlockSize" value="2">
-      <button class="btn btn-outline-primary">Serp 2 × 2</button>
-    </form>
-    <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
-          onsubmit="return confirm('Tornar a sortejar amb serp 4x4?')">
-      <input type="hidden" name="snakeBlockSize" value="4">
-      <button class="btn btn-primary">Serp 4 × 4</button>
-    </form>
+    <% if (category.format_competicio === 'GRUP_UNIC') { %>
+      <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
+            onsubmit="return confirm('Crear o reconstruir el Top X amb tots els participants actius?')">
+        <button class="btn btn-success">
+          <%= groups.length ? 'Reconstruir Top X' : 'Crear Top X' %>
+        </button>
+      </form>
+    <% } else { %>
+      <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
+            onsubmit="return confirm('Tornar a sortejar amb serp 2x2?')">
+        <input type="hidden" name="snakeBlockSize" value="2">
+        <button class="btn btn-outline-primary">Serp 2 × 2</button>
+      </form>
+      <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
+            onsubmit="return confirm('Tornar a sortejar amb serp 4x4?')">
+        <input type="hidden" name="snakeBlockSize" value="4">
+        <button class="btn btn-primary">Serp 4 × 4</button>
+      </form>
+    <% } %>
   </div>
 </div>
 
-<div class="alert alert-secondary">
-  El sorteig respecta els blocs de rànquing i intenta minimitzar coincidències de <strong>club</strong> i després de <strong>país</strong> dins de cada bloc.
-</div>
+<% if (category.format_competicio === 'GRUP_UNIC') { %>
+  <div class="alert alert-success">
+    <strong>Top X / grup únic.</strong>
+    Tots els participants actius juguen contra tots. L'ordre inicial és per rànquing i
+    la classificació d'aquest grup serà la classificació final de la categoria.
+    No es generarà cap segona fase.
+  </div>
+<% } else { %>
+  <div class="alert alert-secondary">
+    El sorteig respecta els blocs de rànquing i intenta minimitzar coincidències de <strong>club</strong> i després de <strong>país</strong> dins de cada bloc.
+  </div>
+<% } %>
 
 <% if (!groups.length) { %>
   <div class="alert alert-info">Encara no hi ha cap sorteig creat.</div>
@@ -36,7 +54,11 @@
   <div class="col-md-6 col-xl-4">
     <div class="card shadow-sm h-100">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <strong>Grup <%= group.numero %></strong>
+        <strong>
+          <%= category.format_competicio === 'GRUP_UNIC'
+            ? ('Top ' + group.participants.length + ' · Grup únic')
+            : ('Grup ' + group.numero) %>
+        </strong>
         <div class="d-flex gap-2 align-items-center">
           <span class="badge text-bg-secondary"><%= group.participants.length %></span>
           <a class="btn btn-sm btn-outline-dark" target="_blank" href="/groups/<%= group.idgrup %>/print">Imprimir</a>
@@ -64,16 +86,18 @@
               </div>
             </div>
 
-            <form action="/groups/move" method="post">
-              <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
-              <input type="hidden" name="participantId" value="<%= p.idparticipant %>">
-              <select name="targetGroupId" class="form-select form-select-sm" onchange="this.form.submit()">
-                <option value="">Moure...</option>
-                <% groups.forEach(target => { if (target.idgrup !== group.idgrup) { %>
-                  <option value="<%= target.idgrup %>">Grup <%= target.numero %></option>
-                <% } }) %>
-              </select>
-            </form>
+            <% if (category.format_competicio !== 'GRUP_UNIC') { %>
+              <form action="/groups/move" method="post">
+                <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
+                <input type="hidden" name="participantId" value="<%= p.idparticipant %>">
+                <select name="targetGroupId" class="form-select form-select-sm" onchange="this.form.submit()">
+                  <option value="">Moure...</option>
+                  <% groups.forEach(target => { if (target.idgrup !== group.idgrup) { %>
+                    <option value="<%= target.idgrup %>">Grup <%= target.numero %></option>
+                  <% } }) %>
+                </select>
+              </form>
+            <% } %>
           </div>
         </div>
       <% }) %>

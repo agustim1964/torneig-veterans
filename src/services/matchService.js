@@ -1,4 +1,64 @@
-function buildGroupMatchOrder(participants) {
+function buildBergerRoundRobin(participants) {
+  const ordered = [...participants].sort(
+    (a, b) => Number(a.ordre_visual || 0) - Number(b.ordre_visual || 0)
+  );
+
+  const players = ordered.map((p, index) => ({
+    idparticipant: p.idparticipant,
+    posicio: index + 1
+  }));
+
+  // Amb nombre imparell afegim un descans (BYE).
+  if (players.length % 2 === 1) {
+    players.push(null);
+  }
+
+  const n = players.length;
+  const rounds = n - 1;
+  const half = n / 2;
+  let rotation = [...players];
+  const matches = [];
+  let ordre = 1;
+
+  for (let round = 1; round <= rounds; round++) {
+    for (let i = 0; i < half; i++) {
+      const a = rotation[i];
+      const b = rotation[n - 1 - i];
+
+      if (!a || !b) continue;
+
+      // Alternem l'ordre visual dels jugadors per no deixar sempre
+      // el mateix participant al mateix costat de l'acta.
+      const swap = (round + i) % 2 === 0;
+      const p1 = swap ? b : a;
+      const p2 = swap ? a : b;
+
+      matches.push({
+        ordre: ordre++,
+        ronda: round,
+        participant1: p1.idparticipant,
+        participant2: p2.idparticipant,
+        posicio1: p1.posicio,
+        posicio2: p2.posicio
+      });
+    }
+
+    // Mètode del cercle: el primer queda fix.
+    rotation = [
+      rotation[0],
+      rotation[n - 1],
+      ...rotation.slice(1, n - 1)
+    ];
+  }
+
+  return matches;
+}
+
+function buildGroupMatchOrder(participants, options = {}) {
+  if (options.topX) {
+    return buildBergerRoundRobin(participants);
+  }
+
   const ordered = [...participants].sort(
     (a, b) => Number(a.ordre_visual || 0) - Number(b.ordre_visual || 0)
   );
@@ -22,6 +82,7 @@ function buildGroupMatchOrder(participants) {
 
   return pairs.map(([a, b], i) => ({
     ordre: i + 1,
+    ronda: null,
     participant1: pos[a],
     participant2: pos[b],
     posicio1: a,
@@ -56,5 +117,6 @@ function assignGroupReferees(matches, participants) {
 
 module.exports = {
   buildGroupMatchOrder,
+  buildBergerRoundRobin,
   assignGroupReferees
 };

@@ -33,7 +33,8 @@
           <th>Data</th>
           <th>Hora</th>
           <th>Taula</th>
-          <th>Grup</th>
+          <th><%= category.format_competicio === 'GRUP_UNIC' ? 'Format' : 'Grup' %></th>
+          <% if (category.format_competicio === 'GRUP_UNIC') { %><th>Ronda</th><% } %>
           <th>Partit</th>
           <th>Àrbitre</th>
           <th>Resultat</th>
@@ -52,7 +53,10 @@
               : '' %>
           </td>
           <td><%= m.taula_nom || ('Taula ' + (m.taula_numero || '')) %></td>
-          <td>Grup <%= m.grup_numero %></td>
+          <td><%= category.format_competicio === 'GRUP_UNIC' ? 'Top X' : ('Grup ' + m.grup_numero) %></td>
+          <% if (category.format_competicio === 'GRUP_UNIC') { %>
+            <td><strong>R<%= m.ronda_grup || '' %></strong></td>
+          <% } %>
           <td>
             <strong><%= m.participant1_nom %></strong>
             <span class="text-muted"> vs </span>
@@ -122,14 +126,27 @@
   </div>
 </div>
 
-<h2 class="mb-3">Classificació provisional</h2>
+<h2 class="mb-3">
+  <% if (category.format_competicio === 'GRUP_UNIC') { %>
+    <%= topXComplete ? 'Classificació final' : 'Classificació provisional del Top X' %>
+  <% } else { %>
+    Classificació provisional
+  <% } %>
+</h2>
 
 <div class="row g-4">
   <% Object.values(groupedStandings).forEach(rows => { %>
     <div class="col-md-6 col-xl-4">
       <div class="card shadow-sm h-100">
         <div class="card-header">
-          <strong>Grup <%= rows[0]?.grup_numero %></strong>
+          <strong>
+            <%= category.format_competicio === 'GRUP_UNIC'
+              ? ('Top ' + rows.length)
+              : ('Grup ' + rows[0]?.grup_numero) %>
+          </strong>
+          <% if (category.format_competicio === 'GRUP_UNIC' && topXComplete) { %>
+            <span class="badge text-bg-success ms-2">FINAL</span>
+          <% } %>
         </div>
 
         <div class="table-responsive">
@@ -172,6 +189,11 @@
 </div>
 
 <div class="alert alert-info mt-4">
+  <% if (category.format_competicio === 'GRUP_UNIC') { %>
+    <strong>Top X:</strong> aquesta classificació és la classificació final quan s'hagin disputat tots els partits.
+    No hi ha Final A ni Consolació.
+    <br>
+  <% } %>
   En cas d'empat a victòries, només es tenen en compte els partits disputats
   entre els participants empatats. Primer s'aplica el factor
   <strong>jocs guanyats / jocs perduts</strong> i, si continua l'empat,
@@ -284,7 +306,73 @@
   }
 
   forms.forEach(form => {
+    let internalFocusMove = false;
+
     refreshForm(form);
+
+    function moveFocus(target) {
+      if (!target || target.disabled) return;
+      internalFocusMove = true;
+      target.focus();
+      target.select();
+      setTimeout(() => { internalFocusMove = false; }, 0);
+    }
+
+    function confirmEntry(field, source) {
+      if (!field || field.disabled || field.value === '') return;
+
+      const game = Number(field.dataset.game);
+      const player = Number(field.dataset.player);
+      const value = Number(field.value);
+
+      if (!Number.isInteger(value) || value < 0) {
+        field.classList.add('is-invalid');
+        return;
+      }
+
+      const otherPlayer = player === 1 ? 2 : 1;
+      const other = form.querySelector(
+        `[data-game="${game}"][data-player="${otherPlayer}"]`
+      );
+
+      // Entrada ràpida: 0..9 representa la puntuació del perdedor.
+      if (value <= 9) {
+        other.value = 11;
+      }
+
+      const current = readGame(form, game);
+
+      // Amb 10 o més hem d'entrar l'altre marcador manualment.
+      if (current.va === null || current.vb === null) {
+        if (source === 'enter') moveFocus(other);
+        return;
+      }
+
+      if (!isValidFinishedGame(current.va, current.vb)) {
+        markGameValidity(form, game);
+        // Amb Enter retenim el focus per corregir; amb blur no robem
+        // el focus que l'usuari acaba de seleccionar.
+        if (source === 'enter') moveFocus(field);
+        return;
+      }
+
+      markGameValidity(form, game);
+      const state = refreshForm(form);
+
+      if (state.clinchGame === game) {
+        form.requestSubmit();
+        return;
+      }
+
+      const nextGame = game + 1;
+      const next = nextGame <= 5
+        ? form.querySelector(`[data-game="${nextGame}"][data-player="1"]:not(:disabled)`)
+        : null;
+
+      // Tant amb Enter com en perdre el focus, si el joc ja és complet
+      // el cursor salta al primer camp del joc següent.
+      if (next) moveFocus(next);
+    }
 
     form.querySelectorAll('.game-score').forEach(input => {
       input.addEventListener('input', function () {
@@ -297,56 +385,18 @@
 
       input.addEventListener('keydown', function (event) {
         if (event.key !== 'Enter') return;
-
         event.preventDefault();
+        confirmEntry(this, 'enter');
+      });
+
+      input.addEventListener('blur', function () {
+        if (internalFocusMove) return;
 
         const field = this;
-        const game = Number(field.dataset.game);
-        const player = Number(field.dataset.player);
-
-        if (field.value === '') return;
-
-        const value = Number(field.value);
-        if (!Number.isFinite(value) || value < 0 || !Number.isInteger(value)) return;
-
-        if (value >= 0 && value <= 9) {
-          const otherPlayer = player === 1 ? 2 : 1;
-          const other = form.querySelector(
-            `[data-game="${game}"][data-player="${otherPlayer}"]`
-          );
-          other.value = 11;
-        }
-
-        const current = readGame(form, game);
-
-        if (current.va === null || current.vb === null) {
-          const otherPlayer = player === 1 ? 2 : 1;
-          const other = form.querySelector(
-            `[data-game="${game}"][data-player="${otherPlayer}"]`
-          );
-          if (other && !other.disabled) {
-            other.focus();
-            other.select();
-          }
-          return;
-        }
-
-        if (!isValidFinishedGame(current.va, current.vb)) {
-          markGameValidity(form, game);
-          field.focus();
-          field.select();
-          return;
-        }
-
-        markGameValidity(form, game);
-        const state = refreshForm(form);
-
-        if (state.clinchGame === game) {
-          form.requestSubmit();
-          return;
-        }
-
-        focusNextGame(form, game);
+        // Deixem acabar el canvi de focus que ha fet l'usuari i després
+        // apliquem l'entrada ràpida. Ex.: 9 + clic fora => 9-11 i focus
+        // al joc següent.
+        setTimeout(() => confirmEntry(field, 'blur'), 0);
       });
 
       input.addEventListener('focus', function () {

@@ -4,10 +4,13 @@ const { classifyGroup } = require('../services/classificationService');
 
 async function getCategory(categoryId) {
   const [[category]] = await db.query(`
-    SELECT c.*, comp.nom AS competicio_nom, comp.idcompeticio
+    SELECT c.*, comp.nom AS competicio_nom, comp.idcompeticio,
+           cc.tipus_arbitratge
     FROM categories c
     INNER JOIN competicions comp
       ON comp.idcompeticio = c.idcompeticio
+    LEFT JOIN configuracio_competicio cc
+      ON cc.idcompeticio = comp.idcompeticio
     WHERE c.idcategoria = ?
   `, [categoryId]);
   return category;
@@ -93,14 +96,24 @@ exports.listByCategory = async (req, res) => {
     }));
   }
 
+  const totalMatches = matches.length;
+  const finishedMatches = matches.filter(m => m.estat === 'FINALITZAT').length;
+  const topXComplete =
+    category.format_competicio === 'GRUP_UNIC' &&
+    totalMatches > 0 &&
+    finishedMatches === totalMatches;
+
   res.render('matches/index', {
     category,
     matches,
-    groupedStandings
+    groupedStandings,
+    totalMatches,
+    finishedMatches,
+    topXComplete
   });
 };
 
-async function generateOneGroup(cx, categoryId, group, startingNumber = 1) {
+async function generateOneGroup(cx, categoryId, group, startingNumber = 1, isTopX = false, externalReferees = false) {
   const [participants] = await cx.query(`
     SELECT p.idparticipant, p.nom_mostrar, gp.ordre_visual
     FROM grup_participants gp
@@ -109,8 +122,26 @@ async function generateOneGroup(cx, categoryId, group, startingNumber = 1) {
     ORDER BY gp.ordre_visual
   `, [group.idgrup]);
 
-  const orderedMatches = buildGroupMatchOrder(participants);
-  const matchesWithReferees = assignGroupReferees(orderedMatches, participants);
+  const orderedMatches = buildGroupMatchOrder(participants, { topX: isTopX });
+
+  // En Top X amb X/2 taules tots (o gairebé tots) els jugadors juguen
+  // simultàniament. Per tant no assignem un jugador del grup com a àrbitre
+  // perquè podria estar jugant al mateix moment.
+  const matchesWithReferees = (isTopX || externalReferees)
+    ? orderedMatches.map(m => ({ ...m, idarbitre_participant: null }))
+    : assignGroupReferees(orderedMatches, participants);
+
+  const [assignedTables] = await cx.query(`
+    SELECT pgt.idtaula, pgt.ordre
+    FROM programacio_grups pg
+    INNER JOIN programacio_grup_taules pgt ON pgt.idprogramacio = pg.idprogramacio
+    WHERE pg.idgrup = ?
+    ORDER BY pgt.ordre
+  `, [group.idgrup]);
+
+  const tableIds = assignedTables.length
+    ? assignedTables.map(t => Number(t.idtaula))
+    : [Number(group.idtaula)];
 
   const [hh, mm] = String(group.hora_inici).split(':').map(Number);
   const dt = new Date(group.data);
@@ -119,23 +150,38 @@ async function generateOneGroup(cx, categoryId, group, startingNumber = 1) {
 
   let num = startingNumber;
 
+  const roundCounters = new Map();
+
   for (let i = 0; i < matchesWithReferees.length; i++) {
     const match = matchesWithReferees[i];
-    const when = new Date(dt.getTime() + i * duration * 60000);
+    let when;
+    let tableId;
+
+    if (isTopX) {
+      const round = Number(match.ronda || 1);
+      const idx = roundCounters.get(round) || 0;
+      roundCounters.set(round, idx + 1);
+      when = new Date(dt.getTime() + (round - 1) * duration * 60000);
+      tableId = tableIds[idx % tableIds.length];
+    } else {
+      when = new Date(dt.getTime() + i * duration * 60000);
+      tableId = tableIds[0];
+    }
 
     await cx.query(`
       INSERT INTO partits
-        (idcategoria, idgrup, numero_partit, participant1, participant2,
+        (idcategoria, idgrup, numero_partit, ronda_grup, participant1, participant2,
          idarbitre_participant, estat, idtaula, data_hora)
-      VALUES (?, ?, ?, ?, ?, ?, 'PENDENT', ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, 'PENDENT', ?, ?)
     `, [
       categoryId,
       group.idgrup,
       num++,
+      match.ronda || null,
       match.participant1,
       match.participant2,
       match.idarbitre_participant,
-      group.idtaula,
+      tableId,
       when
     ]);
   }
@@ -186,7 +232,7 @@ exports.generateGroups = async (req, res) => {
       // el botó específic "Reiniciar i regenerar partits".
       if (Number(existing.total || 0) > 0) continue;
 
-      num = await generateOneGroup(cx, categoryId, g, num);
+      num = await generateOneGroup(cx, categoryId, g, num, category.format_competicio === 'GRUP_UNIC', category.tipus_arbitratge === 'EXTERNS');
     }
 
     await cx.commit();
@@ -203,9 +249,12 @@ exports.regenerateGroup = async (req, res) => {
   const groupId = Number(req.params.groupId);
 
   const [[group]] = await db.query(`
-    SELECT g.*, c.idcategoria, pg.idtaula, pg.data, pg.hora_inici, pg.durada_partit
+    SELECT g.*, c.idcategoria, c.format_competicio, c.idcompeticio,
+           cc.tipus_arbitratge,
+           pg.idtaula, pg.data, pg.hora_inici, pg.durada_partit
     FROM grups g
     INNER JOIN categories c ON c.idcategoria = g.idcategoria
+    LEFT JOIN configuracio_competicio cc ON cc.idcompeticio = c.idcompeticio
     LEFT JOIN programacio_grups pg ON pg.idgrup = g.idgrup
     WHERE g.idgrup = ?
   `, [groupId]);
@@ -233,7 +282,14 @@ exports.regenerateGroup = async (req, res) => {
       WHERE idcategoria = ? AND idgrup IS NOT NULL
     `, [group.idcategoria]);
 
-    await generateOneGroup(cx, group.idcategoria, group, Number(maxNum.max_num || 0) + 1);
+    await generateOneGroup(
+      cx,
+      group.idcategoria,
+      group,
+      Number(maxNum.max_num || 0) + 1,
+      group.format_competicio === 'GRUP_UNIC',
+      group.tipus_arbitratge === 'EXTERNS'
+    );
 
     await cx.query(`
       INSERT INTO log_canvis
@@ -309,6 +365,29 @@ exports.saveResult = async (req, res) => {
         punts1: Number(raw1),
         punts2: Number(raw2)
       });
+    }
+  }
+
+  function validGameScore(a, b) {
+    if (!Number.isInteger(a) || !Number.isInteger(b) || a < 0 || b < 0 || a === b) {
+      return false;
+    }
+    const winner = Math.max(a, b);
+    const loser = Math.min(a, b);
+    if (loser <= 9) return winner === 11;
+    return winner >= 12 && winner - loser === 2;
+  }
+
+  for (const game of games) {
+    if (!validGameScore(game.punts1, game.punts2)) {
+      return res.status(400).send(`
+        <div style="font-family:Arial;max-width:720px;margin:40px auto">
+          <h1>Resultat de joc no vàlid</h1>
+          <p>Joc ${game.numero_joc}: <strong>${game.punts1}-${game.punts2}</strong>.</p>
+          <p>Fins a 9 punts del perdedor, el guanyador ha de tenir 11. A partir de 10-10 cal guanyar per 2 punts.</p>
+          <p><a href="/matches/category/${categoryId}">Tornar als partits</a></p>
+        </div>
+      `);
     }
   }
 

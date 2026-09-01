@@ -19,26 +19,47 @@
               <form action="/competitions/<%= c.idcompeticio %>/config" method="post"
                     class="border rounded p-2 mb-3 bg-light">
                 <div class="row g-2">
-                  <div class="col-4">
+                  <div class="col-4 col-md-2">
                     <label class="form-label small">Grups (min)</label>
                     <input class="form-control form-control-sm"
                            type="number" min="1"
                            name="durada_partit_grups"
                            value="<%= c.config.durada_partit_grups %>">
                   </div>
-                  <div class="col-4">
+                  <div class="col-4 col-md-2">
                     <label class="form-label small">Elim. (min)</label>
                     <input class="form-control form-control-sm"
                            type="number" min="1"
                            name="durada_partit_eliminatories"
                            value="<%= c.config.durada_partit_eliminatories %>">
                   </div>
-                  <div class="col-4">
+                  <div class="col-4 col-md-2">
                     <label class="form-label small">Hora inici</label>
                     <input class="form-control form-control-sm"
                            type="time"
                            name="hora_inici"
                            value="<%= String(c.config.hora_inici || '09:00').substring(0,5) %>">
+                  </div>
+                  <div class="col-4 col-md-2">
+                    <label class="form-label small">Hora fi</label>
+                    <input class="form-control form-control-sm"
+                           type="time"
+                           name="hora_fi_jornada"
+                           value="<%= String(c.config.hora_fi_jornada || '20:00').substring(0,5) %>">
+                  </div>
+                  <div class="col-4 col-md-2">
+                    <label class="form-label small">Taules</label>
+                    <input class="form-control form-control-sm"
+                           type="number" min="1"
+                           name="nombre_taules_disponibles"
+                           value="<%= c.config.nombre_taules_disponibles || 1 %>">
+                  </div>
+                  <div class="col-4 col-md-2">
+                    <label class="form-label small">Àrbitres</label>
+                    <select class="form-select form-select-sm" name="tipus_arbitratge">
+                      <option value="JUGADORS" <%= c.config.tipus_arbitratge === 'JUGADORS' ? 'selected' : '' %>>Jugadors</option>
+                      <option value="EXTERNS" <%= c.config.tipus_arbitratge === 'EXTERNS' ? 'selected' : '' %>>Externs</option>
+                    </select>
                   </div>
                 </div>
                 <button class="btn btn-sm btn-outline-primary mt-2 w-100">

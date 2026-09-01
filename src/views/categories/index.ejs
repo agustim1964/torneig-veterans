@@ -33,7 +33,29 @@
                 <% if (category.edat_minima) { %> · +<%= category.edat_minima %><% } %>
               </div>
               <p><strong><%= category.participants %></strong> participants actius</p>
-              <span class="badge text-bg-secondary"><%= category.estat %></span>
+              <div class="d-flex gap-2 flex-wrap mb-3">
+                <span class="badge text-bg-secondary"><%= category.estat %></span>
+                <% if (category.format_competicio === 'GRUP_UNIC') { %>
+                  <span class="badge text-bg-success">Top X / grup únic</span>
+                <% } else if (category.format_competicio === 'GRUPS_MES_FINAL') { %>
+                  <span class="badge text-bg-primary">Grups + eliminatòries</span>
+                <% } else { %>
+                  <span class="badge text-bg-light border text-dark">Format automàtic</span>
+                <% } %>
+              </div>
+
+              <form action="/categories/<%= category.idcategoria %>/format" method="post"
+                    onsubmit="return confirm('Canviar el format eliminarà el sorteig actual si encara no hi ha partits. Continuar?')">
+                <label class="form-label small mb-1">Format</label>
+                <div class="input-group input-group-sm">
+                  <select class="form-select" name="format_competicio">
+                    <option value="AUTO" <%= category.format_competicio === 'AUTO' ? 'selected' : '' %>>Automàtic</option>
+                    <option value="GRUPS_MES_FINAL" <%= category.format_competicio === 'GRUPS_MES_FINAL' ? 'selected' : '' %>>Grups + eliminatòries</option>
+                    <option value="GRUP_UNIC" <%= category.format_competicio === 'GRUP_UNIC' ? 'selected' : '' %>>Top X / grup únic</option>
+                  </select>
+                  <button class="btn btn-outline-secondary">Canviar</button>
+                </div>
+              </form>
             </div>
             <div class="card-footer bg-white d-flex gap-2">
               <a class="btn btn-primary btn-sm"
@@ -77,6 +99,17 @@
           <div class="mb-3">
             <label class="form-label">Edat mínima</label>
             <input class="form-control" type="number" name="edat_minima">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Format de competició</label>
+            <select class="form-select" name="format_competicio">
+              <option value="AUTO">Automàtic</option>
+              <option value="GRUPS_MES_FINAL">Grups + eliminatòries</option>
+              <option value="GRUP_UNIC">Top X / grup únic</option>
+            </select>
+            <div class="form-text">
+              Top X crea un únic grup, tots contra tots, i la classificació del grup és la classificació final.
+            </div>
           </div>
           <button class="btn btn-primary w-100">Crear categoria</button>
         </form>

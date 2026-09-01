@@ -1,9 +1,10 @@
 const db = require('../config/db');
-const { generateMaster, isoDate } = require('../services/scheduleService');
+const { generateMaster, generateGlobalMaster, isoDate } = require('../services/scheduleService');
 
 async function getCompetition(id) {
   const [[competition]] = await db.query(`
-    SELECT c.*, cc.durada_partit_grups, cc.hora_inici
+    SELECT c.*, cc.durada_partit_grups, cc.hora_inici, cc.hora_fi_jornada,
+           cc.nombre_taules_disponibles, cc.tipus_arbitratge
     FROM competicions c
     LEFT JOIN configuracio_competicio cc ON cc.idcompeticio = c.idcompeticio
     WHERE c.idcompeticio = ?
@@ -16,16 +17,21 @@ exports.show = async (req, res) => {
   const competition = await getCompetition(id);
   if (!competition) return res.status(404).send('Competició no trobada.');
 
-  const [tables] = await db.query(`SELECT * FROM taules WHERE activa = 1 ORDER BY numero`);
+  const [tables] = await db.query(`SELECT * FROM taules WHERE activa = 1 ORDER BY numero LIMIT ?`, [Number(competition.nombre_taules_disponibles || 1)]);
   const [rows] = await db.query(`
     SELECT
       pg.*,
       g.numero AS grup_numero,
       cat.nom AS categoria_nom,
       cat.idcategoria,
+      cat.format_competicio,
       t.numero AS taula_numero,
       t.nom AS taula_nom,
-      (SELECT COUNT(*) FROM grup_participants x WHERE x.idgrup = g.idgrup) AS participants_grup
+      (SELECT COUNT(*) FROM grup_participants x WHERE x.idgrup = g.idgrup) AS participants_grup,
+      (SELECT GROUP_CONCAT(t2.numero ORDER BY pgt.ordre SEPARATOR ', ')
+         FROM programacio_grup_taules pgt
+         INNER JOIN taules t2 ON t2.idtaula = pgt.idtaula
+        WHERE pgt.idprogramacio = pg.idprogramacio) AS taules_numeros
     FROM programacio_grups pg
     INNER JOIN grups g ON g.idgrup = pg.idgrup
     INNER JOIN categories cat ON cat.idcategoria = g.idcategoria
@@ -46,35 +52,71 @@ exports.generate = async (req, res) => {
   if (!competition) return res.status(404).send('Competició no trobada.');
 
   const planDate = req.body.data || isoDate(competition.data_inici || new Date());
-  const [tables] = await db.query(`SELECT * FROM taules WHERE activa = 1 ORDER BY numero`);
+  const globalMode = req.body.mode === 'global';
+  const [tables] = await db.query(`SELECT * FROM taules WHERE activa = 1 ORDER BY numero LIMIT ?`, [Number(competition.nombre_taules_disponibles || 1)]);
   const [groups] = await db.query(`
     SELECT
       g.idgrup,
-      (COUNT(gp.idparticipant) * (COUNT(gp.idparticipant) - 1)) / 2 AS nombre_partits
+      cat.nom AS categoria_nom,
+      cat.format_competicio,
+      COUNT(gp.idparticipant) AS participants_grup,
+      (COUNT(gp.idparticipant) * (COUNT(gp.idparticipant) - 1)) / 2 AS nombre_partits,
+      CASE
+        WHEN cat.format_competicio = 'GRUP_UNIC' THEN FLOOR(COUNT(gp.idparticipant) / 2)
+        ELSE 1
+      END AS taules_necessaries,
+      CASE
+        WHEN cat.format_competicio = 'GRUP_UNIC' THEN
+          CASE WHEN MOD(COUNT(gp.idparticipant),2)=0
+               THEN COUNT(gp.idparticipant)-1
+               ELSE COUNT(gp.idparticipant)
+          END
+        ELSE 0
+      END AS nombre_rondes
     FROM grups g
     INNER JOIN categories cat ON cat.idcategoria = g.idcategoria
     INNER JOIN grup_participants gp ON gp.idgrup = g.idgrup
     WHERE cat.idcompeticio = ?
-    GROUP BY g.idgrup
+    GROUP BY g.idgrup, cat.nom, cat.format_competicio
     ORDER BY cat.nom, g.numero
   `, [id]);
 
   const [locked] = await db.query(`
-    SELECT pg.*
+    SELECT pg.*,
+           GROUP_CONCAT(pgt.idtaula ORDER BY pgt.ordre) AS taules_ids_csv
     FROM programacio_grups pg
     INNER JOIN grups g ON g.idgrup = pg.idgrup
     INNER JOIN categories cat ON cat.idcategoria = g.idcategoria
+    LEFT JOIN programacio_grup_taules pgt ON pgt.idprogramacio = pg.idprogramacio
     WHERE cat.idcompeticio = ? AND pg.bloquejada = 1
+    GROUP BY pg.idprogramacio
   `, [id]);
 
-  const plan = generateMaster(
-    groups,
-    tables,
-    planDate,
-    competition.hora_inici || '09:00:00',
-    Number(competition.durada_partit_grups || 20),
-    locked
-  );
+  for (const row of locked) {
+    row.taules_ids = row.taules_ids_csv
+      ? String(row.taules_ids_csv).split(',').map(Number)
+      : [Number(row.idtaula)];
+  }
+
+  const plan = globalMode
+    ? generateGlobalMaster(
+        groups,
+        tables,
+        competition.data_inici || planDate,
+        competition.data_fi || competition.data_inici || planDate,
+        competition.hora_inici || '09:00:00',
+        competition.hora_fi_jornada || '20:00:00',
+        Number(competition.durada_partit_grups || 20),
+        locked
+      )
+    : generateMaster(
+        groups,
+        tables,
+        planDate,
+        competition.hora_inici || '09:00:00',
+        Number(competition.durada_partit_grups || 20),
+        locked
+      );
 
   const cx = await db.getConnection();
   try {
@@ -89,11 +131,18 @@ exports.generate = async (req, res) => {
     `, [id]);
 
     for (const row of plan) {
-      await cx.query(`
+      const [inserted] = await cx.query(`
         INSERT INTO programacio_grups
           (idgrup, idtaula, data, hora_inici, hora_final, durada_partit, bloquejada)
         VALUES (?, ?, ?, ?, ?, ?, 0)
       `, [row.idgrup, row.idtaula, row.data, row.hora_inici, row.hora_final, row.durada_partit]);
+
+      for (let i = 0; i < row.taules.length; i++) {
+        await cx.query(`
+          INSERT INTO programacio_grup_taules (idprogramacio, idtaula, ordre)
+          VALUES (?, ?, ?)
+        `, [inserted.insertId, row.taules[i], i + 1]);
+      }
     }
 
     await cx.commit();
@@ -107,18 +156,41 @@ exports.generate = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
+  const idprogramacio = Number(req.params.id);
+  const idtaula = req.body.idtaula ? Number(req.body.idtaula) : null;
+
+  const [[row]] = await db.query(`
+    SELECT cat.format_competicio, pg.idtaula
+    FROM programacio_grups pg
+    INNER JOIN grups g ON g.idgrup = pg.idgrup
+    INNER JOIN categories cat ON cat.idcategoria = g.idcategoria
+    WHERE pg.idprogramacio = ?
+  `, [idprogramacio]);
+
+  const mainTable = row?.format_competicio === 'GRUP_UNIC'
+    ? Number(row.idtaula)
+    : idtaula;
+
   await db.query(`
     UPDATE programacio_grups
     SET data = ?, idtaula = ?, hora_inici = ?, hora_final = ?, bloquejada = ?
     WHERE idprogramacio = ?
   `, [
     req.body.data,
-    Number(req.body.idtaula),
+    mainTable,
     req.body.hora_inici,
     req.body.hora_final,
     req.body.bloquejada ? 1 : 0,
-    Number(req.params.id)
+    idprogramacio
   ]);
+
+  if (row?.format_competicio !== 'GRUP_UNIC' && idtaula) {
+    await db.query('DELETE FROM programacio_grup_taules WHERE idprogramacio = ?', [idprogramacio]);
+    await db.query(`
+      INSERT INTO programacio_grup_taules (idprogramacio, idtaula, ordre)
+      VALUES (?, ?, 1)
+    `, [idprogramacio, idtaula]);
+  }
 
   res.redirect(`/schedule/competition/${Number(req.body.competitionId)}`);
 };
@@ -146,19 +218,23 @@ exports.print = async (req, res) => {
     FROM taules
     WHERE activa = 1
     ORDER BY numero
-  `);
+    LIMIT ?
+  `, [Number(competition.nombre_taules_disponibles || 1)]);
 
   const [rows] = await db.query(`
     SELECT
       pg.*,
       g.numero AS grup_numero,
       cat.nom AS categoria_nom,
+      cat.format_competicio,
+      COALESCE(pgt.idtaula, pg.idtaula) AS idtaula_real,
       t.numero AS taula_numero,
       t.nom AS taula_nom
     FROM programacio_grups pg
     INNER JOIN grups g ON g.idgrup = pg.idgrup
     INNER JOIN categories cat ON cat.idcategoria = g.idcategoria
-    INNER JOIN taules t ON t.idtaula = pg.idtaula
+    LEFT JOIN programacio_grup_taules pgt ON pgt.idprogramacio = pg.idprogramacio
+    INNER JOIN taules t ON t.idtaula = COALESCE(pgt.idtaula, pg.idtaula)
     WHERE cat.idcompeticio = ?
     ORDER BY pg.data, pg.hora_inici, t.numero
   `, [id]);
@@ -190,7 +266,7 @@ exports.print = async (req, res) => {
     for (let minute = start; minute < end; minute += step) {
       const cells = tables.map(table => {
         const item = dayRows.find(r => {
-          if (Number(r.idtaula) !== Number(table.idtaula)) return false;
+          if (Number(r.idtaula_real || r.idtaula) !== Number(table.idtaula)) return false;
           const a = minutesFromTime(r.hora_inici);
           const b = minutesFromTime(r.hora_final);
           return minute >= a && minute < b;
@@ -198,8 +274,8 @@ exports.print = async (req, res) => {
 
         return item ? {
           categoria: item.categoria_nom,
-          fase: `G${item.grup_numero}`,
-          tipus: 'GRUP'
+          fase: item.format_competicio === 'GRUP_UNIC' ? 'TOP X' : `G${item.grup_numero}`,
+          tipus: item.format_competicio === 'GRUP_UNIC' ? 'TOP_X' : 'GRUP'
         } : null;
       });
 

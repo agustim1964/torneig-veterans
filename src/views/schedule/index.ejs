@@ -16,20 +16,25 @@
 
     <form action="/schedule/competition/<%= competition.idcompeticio %>/generate" method="post"
           class="d-flex gap-2 align-items-end"
-          onsubmit="return confirm('Recalcular tots els grups no bloquejats en aquesta data?')">
+          onsubmit="return confirm('Recalcular els grups no bloquejats?')">
     <div>
       <label class="form-label small">Data per planificació automàtica</label>
       <input class="form-control" type="date" name="data" value="<%= defaultDate %>" required>
     </div>
-      <button class="btn btn-primary">Generar planificació</button>
+      <button class="btn btn-outline-primary" name="mode" value="dia">Planificar aquest dia</button>
+      <button class="btn btn-primary" name="mode" value="global"
+              title="Distribueix automàticament totes les categories entre els dies i taules disponibles">
+        Generar màster global
+      </button>
     </form>
   </div>
 </div>
 
 <div class="alert alert-info">
-  Cada grup ocupa una sola taula durant tota la seva franja. Per distribuir la competició en diversos dies,
-  assigna una data als grups que vulguis conservar, marca'ls com <strong>bloquejats</strong> i torna a generar
-  la resta seleccionant un altre dia.
+  Els grups normals ocupen una taula. Un <strong>Top X</strong> ocupa simultàniament ⌊X/2⌋ taules a cada ronda.
+  <strong>Generar màster global</strong> distribueix automàticament totes les categories no bloquejades entre
+  les dates de la competició, des de l'hora d'inici fins a l'hora final de jornada, respectant el nombre de taules disponibles.
+  Els blocs bloquejats es conserven.
 </div>
 
 <% if (dates.length) { %>
@@ -66,16 +71,21 @@
               <input class="form-control form-control-sm" type="date" name="data" value="<%= isoDate(r.data) %>" required>
             </td>
             <td><%= r.categoria_nom %></td>
-            <td>Grup <%= r.grup_numero %></td>
+            <td><%= r.format_competicio === 'GRUP_UNIC' ? 'Top X' : ('Grup ' + r.grup_numero) %></td>
             <td><%= r.participants_grup %></td>
             <td style="min-width:125px">
-              <select name="idtaula" class="form-select form-select-sm">
-                <% tables.forEach(t => { %>
-                  <option value="<%= t.idtaula %>" <%= Number(t.idtaula) === Number(r.idtaula) ? 'selected' : '' %>>
-                    <%= t.nom || ('Taula ' + t.numero) %>
-                  </option>
-                <% }) %>
-              </select>
+              <% if (r.format_competicio === 'GRUP_UNIC') { %>
+                <span class="badge text-bg-success">Taules <%= r.taules_numeros || r.taula_numero %></span>
+                <div class="small text-muted mt-1">Assignació automàtica per rondes</div>
+              <% } else { %>
+                <select name="idtaula" class="form-select form-select-sm">
+                  <% tables.forEach(t => { %>
+                    <option value="<%= t.idtaula %>" <%= Number(t.idtaula) === Number(r.idtaula) ? 'selected' : '' %>>
+                      <%= t.nom || ('Taula ' + t.numero) %>
+                    </option>
+                  <% }) %>
+                </select>
+              <% } %>
             </td>
             <td><input class="form-control form-control-sm" type="time" name="hora_inici" value="<%= String(r.hora_inici).substring(0,5) %>"></td>
             <td><input class="form-control form-control-sm" type="time" name="hora_final" value="<%= String(r.hora_final).substring(0,5) %>"></td>

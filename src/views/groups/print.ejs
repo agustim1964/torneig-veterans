@@ -2,7 +2,7 @@
 <html lang="ca">
 <head>
   <meta charset="utf-8">
-  <title><%= group.categoria_nom %> - Grup <%= group.numero %></title>
+  <title><%= group.categoria_nom %> - <%= group.format_competicio === 'GRUP_UNIC' ? 'Top X' : ('Grup ' + group.numero) %></title>
   <style>
     body { font-family: Arial, sans-serif; margin: 18mm; color: #111; }
     h1,h2,p { margin: 0 0 6px; }
@@ -42,7 +42,12 @@
 
   <div class="titol-acta">
     <h1><%= group.competicio_nom %></h1>
-    <h2><%= group.categoria_nom %> · Grup <%= group.numero %></h2>
+    <h2>
+      <%= group.categoria_nom %> ·
+      <%= group.format_competicio === 'GRUP_UNIC'
+        ? ('Top ' + participants.length + ' · Grup únic')
+        : ('Grup ' + group.numero) %>
+    </h2>
   </div>
 
   <div class="meta">
@@ -70,6 +75,7 @@
   <table class="games">
     <thead>
       <tr>
+        <% if (group.format_competicio === 'GRUP_UNIC') { %><th>Ronda</th><% } %>
         <th>Hora</th><th>Partit</th><th>Àrbitre</th>
         <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>Resultat</th>
       </tr>
@@ -77,6 +83,9 @@
     <tbody>
     <% matches.forEach(m => { %>
       <tr>
+        <% if (group.format_competicio === 'GRUP_UNIC') { %>
+          <td class="center"><%= m.ronda_grup || '' %></td>
+        <% } %>
         <td class="nowrap"><%= m.data_hora ? new Date(m.data_hora).toLocaleTimeString('ca-ES',{hour:'2-digit',minute:'2-digit'}) : '' %></td>
         <td><%= m.participant1_nom %> — <%= m.participant2_nom %></td>
         <td><%= m.arbitre_nom || '' %></td>
@@ -84,7 +93,7 @@
       </tr>
     <% }) %>
     <% if (!matches.length) { %>
-      <tr><td colspan="9" class="center">Genera els partits des de “Partits i classificació” abans d’imprimir l’acta.</td></tr>
+      <tr><td colspan="<%= group.format_competicio === 'GRUP_UNIC' ? 10 : 9 %>" class="center">Genera els partits des de “Partits i classificació” abans d’imprimir l’acta.</td></tr>
     <% } %>
     </tbody>
   </table>

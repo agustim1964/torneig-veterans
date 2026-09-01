@@ -147,6 +147,24 @@ function drawGroups(participants, blockSize = 4) {
   return groups;
 }
 
+
+function buildSingleGroup(participants) {
+  const sorted = [...participants].sort((a, b) => {
+    const d = Number(b.ranking || 0) - Number(a.ranking || 0);
+    return d || String(a.nom_mostrar).localeCompare(String(b.nom_mostrar), 'ca');
+  });
+
+  if (sorted.length < 2) {
+    throw new Error('Calen com a mínim 2 participants per crear un Top X.');
+  }
+
+  return [{
+    number: 1,
+    size: sorted.length,
+    participants: sorted
+  }];
+}
+
 function groupWarnings(group) {
   const warnings = [];
   const countBy = (field) => {
@@ -175,5 +193,6 @@ module.exports = {
   placementPenalty,
   buildSnakeSlots,
   drawGroups,
+  buildSingleGroup,
   groupWarnings
 };

@@ -18,7 +18,10 @@ exports.list = async (req, res) => {
     competition.config = config || {
       durada_partit_grups: 20,
       durada_partit_eliminatories: 25,
-      hora_inici: '09:00:00'
+      hora_inici: '09:00:00',
+      hora_fi_jornada: '20:00:00',
+      nombre_taules_disponibles: 20,
+      tipus_arbitratge: 'JUGADORS'
     };
   }
 
@@ -43,8 +46,9 @@ exports.create = async (req, res) => {
 
   await db.query(`
     INSERT INTO configuracio_competicio
-      (idcompeticio, durada_partit_grups, durada_partit_eliminatories, hora_inici)
-    VALUES (?, 20, 25, '09:00:00')
+      (idcompeticio, durada_partit_grups, durada_partit_eliminatories, hora_inici, hora_fi_jornada,
+       nombre_taules_disponibles, tipus_arbitratge)
+    VALUES (?, 20, 25, '09:00:00', '20:00:00', 20, 'JUGADORS')
   `, [result.insertId]);
 
   res.redirect('/competitions');
@@ -55,16 +59,23 @@ exports.updateConfig = async (req, res) => {
   const groupDuration = Math.max(1, Number(req.body.durada_partit_grups || 20));
   const knockoutDuration = Math.max(1, Number(req.body.durada_partit_eliminatories || 25));
   const startTime = req.body.hora_inici || '09:00';
+  const endTime = req.body.hora_fi_jornada || '20:00';
+  const availableTables = Math.max(1, Number(req.body.nombre_taules_disponibles || 1));
+  const refereeType = req.body.tipus_arbitratge === 'EXTERNS' ? 'EXTERNS' : 'JUGADORS';
 
   await db.query(`
     INSERT INTO configuracio_competicio
-      (idcompeticio, durada_partit_grups, durada_partit_eliminatories, hora_inici)
-    VALUES (?, ?, ?, ?)
+      (idcompeticio, durada_partit_grups, durada_partit_eliminatories, hora_inici, hora_fi_jornada,
+       nombre_taules_disponibles, tipus_arbitratge)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
     ON DUPLICATE KEY UPDATE
       durada_partit_grups = VALUES(durada_partit_grups),
       durada_partit_eliminatories = VALUES(durada_partit_eliminatories),
-      hora_inici = VALUES(hora_inici)
-  `, [id, groupDuration, knockoutDuration, startTime]);
+      hora_inici = VALUES(hora_inici),
+      hora_fi_jornada = VALUES(hora_fi_jornada),
+      nombre_taules_disponibles = VALUES(nombre_taules_disponibles),
+      tipus_arbitratge = VALUES(tipus_arbitratge)
+  `, [id, groupDuration, knockoutDuration, startTime, endTime, availableTables, refereeType]);
 
   res.redirect('/competitions');
 };

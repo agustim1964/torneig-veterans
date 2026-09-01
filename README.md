@@ -255,3 +255,48 @@ No tornis a executar l'script complet d'instal·lació v0.7 sobre Aiven.
   - categoria i grup a cada intersecció.
 - La vista del màster queda preparada conceptualment perquè, quan s'afegeixin eliminatòries,
   les cel·les puguin mostrar la ronda (1/16, 1/8, 1/4, etc.) en lloc del grup.
+
+
+## v0.8.6 - Top X / grup únic
+
+- Nou format de categoria `Top X / grup únic`.
+- Es pot escollir en crear una categoria o canviar-lo des del llistat de categories.
+- Un Top X crea un únic grup amb tots els participants actius ordenats per rànquing.
+- Calendari tots-contra-tots pel mètode Berger.
+- Els partits guarden el número de ronda (`ronda_grup`).
+- Amb un nombre imparell de participants, el mètode Berger incorpora automàticament els descansos.
+- Assignació d'àrbitres continua equilibrant els arbitratges entre participants que no juguen aquell partit.
+- L'acta impresa mostra les rondes del Top X.
+- La pantalla de partits mostra la ronda i identifica la classificació com a final quan tots els partits estan acabats.
+- No es genera cap Final A ni Consolació en format Top X.
+- El màster identifica els blocs de grup únic com `TOP X`.
+- Canviar el format queda bloquejat si ja existeixen partits.
+- Reconstruir un Top X queda bloquejat si hi ha resultats desats.
+- Validació de resultats també al servidor: no es pot desar un joc reglamentàriament impossible manipulant el formulari.
+
+
+## v0.8.7 - taules disponibles i Top X simultani
+- Configuració del nombre de taules disponibles per competició.
+- El màster només utilitza aquest nombre de taules actives.
+- Grups normals: 1 taula per grup.
+- Top X: floor(X/2) taules simultànies per ronda.
+- Top X parell: X/2 partits simultanis per ronda.
+- Top X imparell: floor(X/2) partits simultanis i un jugador descansa.
+- La durada del bloc Top X és nombre de rondes x durada de partit, no nombre total de partits x durada.
+- Els partits d'una mateixa ronda reben la mateixa hora i es reparteixen entre les taules assignades.
+- El màster imprimible mostra el Top X ocupant totes les seves taules.
+- En Top X no s'assignen àrbitres-jugadors automàticament quan s'utilitza la màxima simultaneïtat; caldrà definir arbitratge extern o una política específica.
+
+
+## v0.8.8 - Màster global i entrada de resultats per focus
+
+- Màster global: distribueix automàticament totes les categories no bloquejades entre els dies de la competició.
+- Respecta hora d'inici, hora final de jornada i nombre de taules disponibles.
+- Els Top X ocupen `floor(X/2)` taules simultànies.
+- Els grups normals ocupen una taula.
+- Nova configuració `tipus_arbitratge`: jugadors del grup o àrbitres externs.
+- Amb àrbitres externs no s'assigna cap participant com a àrbitre.
+- Entrada de resultats confirmable amb Enter o en perdre el focus.
+- Si s'entra 0..9, completa 11 a l'altre jugador i passa al joc següent.
+- Amb 10 o més cal completar manualment el marcador contrari.
+- Es manté la validació reglamentària dels avantatges.
