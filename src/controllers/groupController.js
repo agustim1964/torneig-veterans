@@ -41,6 +41,17 @@ exports.showByCategory = async (req, res) => {
 
     group.participants = participants;
     group.warnings = groupWarnings(group);
+
+    const [[matchStats]] = await db.query(`
+      SELECT
+        COUNT(*) AS total_partits,
+        SUM(CASE WHEN estat = 'FINALITZAT' THEN 1 ELSE 0 END) AS partits_finalitzats
+      FROM partits
+      WHERE idgrup = ?
+    `, [group.idgrup]);
+
+    group.total_partits = Number(matchStats.total_partits || 0);
+    group.partits_finalitzats = Number(matchStats.partits_finalitzats || 0);
   }
 
   res.render('groups/index', { category, groups });
@@ -157,7 +168,7 @@ exports.moveParticipant = async (req, res) => {
     }
 
     const [[current]] = await connection.query(`
-      SELECT gp.idgrupparticipant, gp.idgrup
+      SELECT gp.idgrupparticipant, gp.idgrup, g.numero AS grup_numero
       FROM grup_participants gp
       INNER JOIN grups g ON g.idgrup = gp.idgrup
       WHERE gp.idparticipant = ?
@@ -167,6 +178,43 @@ exports.moveParticipant = async (req, res) => {
 
     if (!current) {
       throw new Error('No s\'ha trobat el participant dins dels grups.');
+    }
+
+    if (Number(current.idgrup) === targetGroupId) {
+      await connection.rollback();
+      return res.redirect(`/groups/category/${categoryId}`);
+    }
+
+    const affectedGroups = [Number(current.idgrup), targetGroupId];
+    const placeholders = affectedGroups.map(() => '?').join(',');
+
+    const [[stats]] = await connection.query(`
+      SELECT
+        COUNT(*) AS total_partits,
+        SUM(CASE WHEN estat = 'FINALITZAT' THEN 1 ELSE 0 END) AS finalitzats
+      FROM partits
+      WHERE idgrup IN (${placeholders})
+    `, affectedGroups);
+
+    if (Number(stats.finalitzats || 0) > 0) {
+      await connection.rollback();
+      return res.status(409).send(`
+        <div style="font-family:Arial;max-width:760px;margin:40px auto">
+          <h1>No es pot moure el jugador encara</h1>
+          <p>El grup ${current.grup_numero} o el grup ${targetGroup.numero} té partits amb resultat desat.</p>
+          <p>Per evitar incoherències, primer ves als grups i utilitza <strong>Reiniciar partits</strong> en els grups afectats. Després podràs moure el jugador i regenerar els partits.</p>
+          <p><a href="/groups/category/${categoryId}">Tornar als grups</a></p>
+        </div>
+      `);
+    }
+
+    // Si només hi havia partits pendents, queden invalidats pel canvi de grup.
+    // Els eliminem dels dos grups afectats abans de moure el participant.
+    if (Number(stats.total_partits || 0) > 0) {
+      await connection.query(`
+        DELETE FROM partits
+        WHERE idgrup IN (${placeholders})
+      `, affectedGroups);
     }
 
     const [[maxOrder]] = await connection.query(`
@@ -187,7 +235,7 @@ exports.moveParticipant = async (req, res) => {
       VALUES ('MOURE_PARTICIPANT', 'participant', ?, ?)
     `, [
       participantId,
-      `Mogut manualment al grup ${targetGroup.numero}`
+      `Mogut manualment del grup ${current.grup_numero} al grup ${targetGroup.numero}`
     ]);
 
     await connection.commit();

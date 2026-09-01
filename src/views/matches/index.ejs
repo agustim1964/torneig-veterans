@@ -10,11 +10,18 @@
 
   <form action="/matches/category/<%= category.idcategoria %>/generate-groups"
         method="post"
-        onsubmit="return confirm('Generar o regenerar els partits pendents de grup?')">
+        onsubmit="return confirm('Generar partits només per als grups que encara no en tenen?')">
     <button class="btn btn-primary">
-      Generar partits i horari
+      Generar partits que falten
     </button>
   </form>
+</div>
+
+
+<div class="alert alert-secondary py-2">
+  Aquest botó només genera els grups que encara no tenen partits.
+  Per canviar participants d'un grup que ja té partits, utilitza els controls
+  <strong>Reiniciar i regenerar partits</strong> des de la pantalla de grups.
 </div>
 
 <div class="card shadow-sm mb-4">

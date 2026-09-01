@@ -100,6 +100,49 @@ exports.listByCategory = async (req, res) => {
   });
 };
 
+async function generateOneGroup(cx, categoryId, group, startingNumber = 1) {
+  const [participants] = await cx.query(`
+    SELECT p.idparticipant, p.nom_mostrar, gp.ordre_visual
+    FROM grup_participants gp
+    INNER JOIN participants p ON p.idparticipant = gp.idparticipant
+    WHERE gp.idgrup = ?
+    ORDER BY gp.ordre_visual
+  `, [group.idgrup]);
+
+  const orderedMatches = buildGroupMatchOrder(participants);
+  const matchesWithReferees = assignGroupReferees(orderedMatches, participants);
+
+  const [hh, mm] = String(group.hora_inici).split(':').map(Number);
+  const dt = new Date(group.data);
+  dt.setHours(hh, mm, 0, 0);
+  const duration = Number(group.durada_partit || 20);
+
+  let num = startingNumber;
+
+  for (let i = 0; i < matchesWithReferees.length; i++) {
+    const match = matchesWithReferees[i];
+    const when = new Date(dt.getTime() + i * duration * 60000);
+
+    await cx.query(`
+      INSERT INTO partits
+        (idcategoria, idgrup, numero_partit, participant1, participant2,
+         idarbitre_participant, estat, idtaula, data_hora)
+      VALUES (?, ?, ?, ?, ?, ?, 'PENDENT', ?, ?)
+    `, [
+      categoryId,
+      group.idgrup,
+      num++,
+      match.participant1,
+      match.participant2,
+      match.idarbitre_participant,
+      group.idtaula,
+      when
+    ]);
+  }
+
+  return num;
+}
+
 exports.generateGroups = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
   const category = await getCategory(categoryId);
@@ -124,50 +167,26 @@ exports.generateGroups = async (req, res) => {
   try {
     await cx.beginTransaction();
 
-    await cx.query(`
-      DELETE FROM partits
-      WHERE idcategoria = ? AND idgrup IS NOT NULL AND estat = 'PENDENT'
+    const [[maxNum]] = await cx.query(`
+      SELECT COALESCE(MAX(numero_partit), 0) AS max_num
+      FROM partits
+      WHERE idcategoria = ? AND idgrup IS NOT NULL
     `, [categoryId]);
 
-    let num = 1;
+    let num = Number(maxNum.max_num || 0) + 1;
 
     for (const g of groups) {
-      const [participants] = await cx.query(`
-        SELECT p.idparticipant, p.nom_mostrar, gp.ordre_visual
-        FROM grup_participants gp
-        INNER JOIN participants p ON p.idparticipant = gp.idparticipant
-        WHERE gp.idgrup = ?
-        ORDER BY gp.ordre_visual
+      const [[existing]] = await cx.query(`
+        SELECT COUNT(*) AS total
+        FROM partits
+        WHERE idgrup = ?
       `, [g.idgrup]);
 
-      const orderedMatches = buildGroupMatchOrder(participants);
-      const matchesWithReferees = assignGroupReferees(orderedMatches, participants);
+      // Un grup que ja té partits no es toca. Per regenerar-lo cal usar
+      // el botó específic "Reiniciar i regenerar partits".
+      if (Number(existing.total || 0) > 0) continue;
 
-      const [hh, mm] = String(g.hora_inici).split(':').map(Number);
-      const dt = new Date(g.data);
-      dt.setHours(hh, mm, 0, 0);
-      const duration = Number(g.durada_partit || 20);
-
-      for (let i = 0; i < matchesWithReferees.length; i++) {
-        const match = matchesWithReferees[i];
-        const when = new Date(dt.getTime() + i * duration * 60000);
-
-        await cx.query(`
-          INSERT INTO partits
-            (idcategoria, idgrup, numero_partit, participant1, participant2,
-             idarbitre_participant, estat, idtaula, data_hora)
-          VALUES (?, ?, ?, ?, ?, ?, 'PENDENT', ?, ?)
-        `, [
-          categoryId,
-          g.idgrup,
-          num++,
-          match.participant1,
-          match.participant2,
-          match.idarbitre_participant,
-          g.idtaula,
-          when
-        ]);
-      }
+      num = await generateOneGroup(cx, categoryId, g, num);
     }
 
     await cx.commit();
@@ -179,6 +198,89 @@ exports.generateGroups = async (req, res) => {
     cx.release();
   }
 };
+
+exports.regenerateGroup = async (req, res) => {
+  const groupId = Number(req.params.groupId);
+
+  const [[group]] = await db.query(`
+    SELECT g.*, c.idcategoria, pg.idtaula, pg.data, pg.hora_inici, pg.durada_partit
+    FROM grups g
+    INNER JOIN categories c ON c.idcategoria = g.idcategoria
+    LEFT JOIN programacio_grups pg ON pg.idgrup = g.idgrup
+    WHERE g.idgrup = ?
+  `, [groupId]);
+
+  if (!group) return res.status(404).send('Grup no trobat.');
+
+  if (!group.idtaula || !group.data || !group.hora_inici) {
+    return res.status(400).send(`
+      <h1>Falta programació del grup</h1>
+      <p>Assigna primer data, hora i taula al grup.</p>
+      <p><a href="/groups/category/${group.idcategoria}">Tornar als grups</a></p>
+    `);
+  }
+
+  const cx = await db.getConnection();
+  try {
+    await cx.beginTransaction();
+
+    // partit_jocs s'elimina automàticament per ON DELETE CASCADE.
+    await cx.query('DELETE FROM partits WHERE idgrup = ?', [groupId]);
+
+    const [[maxNum]] = await cx.query(`
+      SELECT COALESCE(MAX(numero_partit), 0) AS max_num
+      FROM partits
+      WHERE idcategoria = ? AND idgrup IS NOT NULL
+    `, [group.idcategoria]);
+
+    await generateOneGroup(cx, group.idcategoria, group, Number(maxNum.max_num || 0) + 1);
+
+    await cx.query(`
+      INSERT INTO log_canvis
+        (accio, entitat, identitat, descripcio)
+      VALUES ('REGENERAR_PARTITS_GRUP', 'grup', ?, ?)
+    `, [groupId, 'Partits i resultats del grup eliminats i regenerats']);
+
+    await cx.commit();
+    res.redirect(`/matches/category/${group.idcategoria}`);
+  } catch (e) {
+    await cx.rollback();
+    throw e;
+  } finally {
+    cx.release();
+  }
+};
+
+exports.deleteGroupMatches = async (req, res) => {
+  const groupId = Number(req.params.groupId);
+
+  const [[group]] = await db.query(`
+    SELECT idgrup, idcategoria
+    FROM grups
+    WHERE idgrup = ?
+  `, [groupId]);
+
+  if (!group) return res.status(404).send('Grup no trobat.');
+
+  const cx = await db.getConnection();
+  try {
+    await cx.beginTransaction();
+    await cx.query('DELETE FROM partits WHERE idgrup = ?', [groupId]);
+    await cx.query(`
+      INSERT INTO log_canvis
+        (accio, entitat, identitat, descripcio)
+      VALUES ('ELIMINAR_PARTITS_GRUP', 'grup', ?, ?)
+    `, [groupId, 'Partits i resultats del grup eliminats manualment']);
+    await cx.commit();
+    res.redirect(`/groups/category/${group.idcategoria}`);
+  } catch (e) {
+    await cx.rollback();
+    throw e;
+  } finally {
+    cx.release();
+  }
+};
+
 
 exports.saveResult = async (req, res) => {
   const matchId = Number(req.params.id);

@@ -78,6 +78,33 @@
         </div>
       <% }) %>
       </div>
+
+      <% if (group.total_partits > 0) { %>
+        <div class="card-footer">
+          <div class="small text-muted mb-2">
+            <%= group.total_partits %> partits generats
+            <% if (group.partits_finalitzats > 0) { %>
+              · <strong><%= group.partits_finalitzats %> amb resultat</strong>
+            <% } %>
+          </div>
+
+          <div class="d-flex gap-2 flex-wrap">
+            <form action="/matches/group/<%= group.idgrup %>/regenerate" method="post"
+                  onsubmit="return confirm('<%= group.partits_finalitzats > 0
+                    ? 'ATENCIÓ: aquest grup té resultats desats. Esborrar i regenerar eliminarà DEFINITIVAMENT tots els resultats del grup. Continuar?'
+                    : 'Esborrar els partits actuals i regenerar-los amb els participants actuals?' %>')">
+              <button class="btn btn-sm btn-warning">Reiniciar i regenerar partits</button>
+            </form>
+
+            <form action="/matches/group/<%= group.idgrup %>/delete" method="post"
+                  onsubmit="return confirm('<%= group.partits_finalitzats > 0
+                    ? 'ATENCIÓ: també elimina DEFINITIVAMENT tots els resultats del grup. Continuar?'
+                    : 'Eliminar els partits generats d\'aquest grup?' %>')">
+              <button class="btn btn-sm btn-outline-danger">Eliminar partits</button>
+            </form>
+          </div>
+        </div>
+      <% } %>
     </div>
   </div>
 <% }) %>
