@@ -56,6 +56,26 @@
                   <button class="btn btn-outline-secondary">Canviar</button>
                 </div>
               </form>
+
+              <% if (category.format_competicio !== 'GRUP_UNIC') { %>
+                <form action="/categories/<%= category.idcategoria %>/table-mode" method="post" class="mt-3">
+                  <label class="form-label small mb-1">Taules fase de grups</label>
+                  <div class="input-group input-group-sm">
+                    <select class="form-select" name="mode_taules_grups">
+                      <option value="UNA_PER_GRUP" <%= category.mode_taules_grups !== 'MAXIM' ? 'selected' : '' %>>
+                        1 taula per grup
+                      </option>
+                      <option value="MAXIM" <%= category.mode_taules_grups === 'MAXIM' ? 'selected' : '' %>>
+                        Màxim possible
+                      </option>
+                    </select>
+                    <button class="btn btn-outline-secondary">Desar</button>
+                  </div>
+                  <div class="form-text">
+                    En mode màxim, un grup de 4 utilitza 2 taules simultànies i disputa 3 franges.
+                  </div>
+                </form>
+              <% } %>
             </div>
             <div class="card-footer bg-white d-flex gap-2">
               <a class="btn btn-primary btn-sm"
@@ -109,6 +129,16 @@
             </select>
             <div class="form-text">
               Top X crea un únic grup, tots contra tots, i la classificació del grup és la classificació final.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Taules fase de grups</label>
+            <select class="form-select" name="mode_taules_grups">
+              <option value="UNA_PER_GRUP">1 taula per grup</option>
+              <option value="MAXIM">Màxim possible</option>
+            </select>
+            <div class="form-text">
+              S'aplica als grups normals. Els Top X ja utilitzen automàticament floor(X/2) taules.
             </div>
           </div>
           <button class="btn btn-primary w-100">Crear categoria</button>

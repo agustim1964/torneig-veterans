@@ -68,7 +68,7 @@ function generateMaster(groups, tables, planDate, startTime, duration, locked = 
     // del bloc és nombre de rondes x durada de partit.
     const slots = group.format_competicio === 'GRUP_UNIC'
       ? Number(group.nombre_rondes || 0)
-      : Number(group.nombre_partits || 0);
+      : Number(group.nombre_franges || group.nombre_partits || 0);
     const fi = ini + slots * matchDuration;
 
     out.push({
@@ -148,7 +148,7 @@ function generateGlobalMaster(groups, tables, startDate, endDate, startTime, end
     const matchDuration = Number(group.durada_partit || duration || 20);
     const slots = group.format_competicio === 'GRUP_UNIC'
       ? Number(group.nombre_rondes || 0)
-      : Number(group.nombre_partits || 0);
+      : Number(group.nombre_franges || group.nombre_partits || 0);
     const blockMinutes = slots * matchDuration;
 
     let assigned = null;

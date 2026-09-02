@@ -303,6 +303,7 @@ exports.printGroup = async (req, res) => {
       g.*,
       c.nom AS categoria_nom,
       c.format_competicio,
+      c.mode_taules_grups,
       comp.nom AS competicio_nom,
       pg.data,
       pg.hora_inici,

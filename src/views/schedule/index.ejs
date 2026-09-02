@@ -31,7 +31,8 @@
 </div>
 
 <div class="alert alert-info">
-  Els grups normals ocupen una taula. Un <strong>Top X</strong> ocupa simultàniament ⌊X/2⌋ taules a cada ronda.
+  Els grups normals poden estar configurats com <strong>1 taula per grup</strong> o <strong>màxim possible</strong>.
+  En mode màxim utilitzen ⌊X/2⌋ taules simultànies. Un <strong>Top X</strong> també ocupa automàticament ⌊X/2⌋ taules a cada ronda.
   <strong>Generar màster global</strong> distribueix automàticament totes les categories no bloquejades entre
   les dates de la competició, des de l'hora d'inici fins a l'hora final de jornada, respectant el nombre de taules disponibles.
   Els blocs bloquejats es conserven.
@@ -74,9 +75,13 @@
             <td><%= r.format_competicio === 'GRUP_UNIC' ? 'Top X' : ('Grup ' + r.grup_numero) %></td>
             <td><%= r.participants_grup %></td>
             <td style="min-width:125px">
-              <% if (r.format_competicio === 'GRUP_UNIC') { %>
-                <span class="badge text-bg-success">Taules <%= r.taules_numeros || r.taula_numero %></span>
-                <div class="small text-muted mt-1">Assignació automàtica per rondes</div>
+              <% if (r.format_competicio === 'GRUP_UNIC' || r.mode_taules_grups === 'MAXIM') { %>
+                <span class="badge <%= r.format_competicio === 'GRUP_UNIC' ? 'text-bg-success' : 'text-bg-primary' %>">
+                  Taules <%= r.taules_numeros || r.taula_numero %>
+                </span>
+                <div class="small text-muted mt-1">
+                  <%= r.format_competicio === 'GRUP_UNIC' ? 'Top X per rondes' : 'Grup en paral·lel' %>
+                </div>
               <% } else { %>
                 <select name="idtaula" class="form-select form-select-sm">
                   <% tables.forEach(t => { %>

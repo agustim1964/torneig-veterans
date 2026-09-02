@@ -113,7 +113,7 @@ exports.listByCategory = async (req, res) => {
   });
 };
 
-async function generateOneGroup(cx, categoryId, group, startingNumber = 1, isTopX = false, externalReferees = false) {
+async function generateOneGroup(cx, categoryId, group, startingNumber = 1, isTopX = false, externalReferees = false, tableMode = 'UNA_PER_GRUP') {
   const [participants] = await cx.query(`
     SELECT p.idparticipant, p.nom_mostrar, gp.ordre_visual
     FROM grup_participants gp
@@ -127,7 +127,12 @@ async function generateOneGroup(cx, categoryId, group, startingNumber = 1, isTop
   // En Top X amb X/2 taules tots (o gairebé tots) els jugadors juguen
   // simultàniament. Per tant no assignem un jugador del grup com a àrbitre
   // perquè podria estar jugant al mateix moment.
-  const matchesWithReferees = (isTopX || externalReferees)
+  const simultaneousGroup =
+    !isTopX &&
+    tableMode === 'MAXIM' &&
+    participants.length >= 4;
+
+  const matchesWithReferees = (isTopX || simultaneousGroup || externalReferees)
     ? orderedMatches.map(m => ({ ...m, idarbitre_participant: null }))
     : assignGroupReferees(orderedMatches, participants);
 
@@ -157,8 +162,19 @@ async function generateOneGroup(cx, categoryId, group, startingNumber = 1, isTop
     let when;
     let tableId;
 
-    if (isTopX) {
-      const round = Number(match.ronda || 1);
+    const parallelNormal =
+      !isTopX &&
+      tableMode === 'MAXIM' &&
+      participants.length >= 4 &&
+      tableIds.length > 1;
+
+    if (isTopX || parallelNormal) {
+      // Top X i grups normals en mode MAXIM treballen per franges.
+      // En grup de 4:
+      // F1: 1-4 / 3-2
+      // F2: 1-3 / 2-4
+      // F3: 1-2 / 3-4
+      const round = Number(match.ronda || (Math.floor(i / tableIds.length) + 1));
       const idx = roundCounters.get(round) || 0;
       roundCounters.set(round, idx + 1);
       when = new Date(dt.getTime() + (round - 1) * duration * 60000);
@@ -232,7 +248,7 @@ exports.generateGroups = async (req, res) => {
       // el botó específic "Reiniciar i regenerar partits".
       if (Number(existing.total || 0) > 0) continue;
 
-      num = await generateOneGroup(cx, categoryId, g, num, category.format_competicio === 'GRUP_UNIC', category.tipus_arbitratge === 'EXTERNS');
+      num = await generateOneGroup(cx, categoryId, g, num, category.format_competicio === 'GRUP_UNIC', category.tipus_arbitratge === 'EXTERNS', category.mode_taules_grups || 'UNA_PER_GRUP');
     }
 
     await cx.commit();
@@ -249,7 +265,7 @@ exports.regenerateGroup = async (req, res) => {
   const groupId = Number(req.params.groupId);
 
   const [[group]] = await db.query(`
-    SELECT g.*, c.idcategoria, c.format_competicio, c.idcompeticio,
+    SELECT g.*, c.idcategoria, c.format_competicio, c.mode_taules_grups, c.idcompeticio,
            cc.tipus_arbitratge,
            pg.idtaula, pg.data, pg.hora_inici, pg.durada_partit
     FROM grups g
@@ -288,7 +304,8 @@ exports.regenerateGroup = async (req, res) => {
       group,
       Number(maxNum.max_num || 0) + 1,
       group.format_competicio === 'GRUP_UNIC',
-      group.tipus_arbitratge === 'EXTERNS'
+      group.tipus_arbitratge === 'EXTERNS',
+      group.mode_taules_grups || 'UNA_PER_GRUP'
     );
 
     await cx.query(`

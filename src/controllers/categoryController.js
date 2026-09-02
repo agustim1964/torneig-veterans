@@ -49,8 +49,8 @@ exports.list = async (req, res) => {
 exports.create = async (req, res) => {
   await db.query(`
     INSERT INTO categories
-      (idcompeticio, nom, tipus, sexe, edat_minima, format_competicio)
-    VALUES (?, ?, ?, ?, ?, ?)
+      (idcompeticio, nom, tipus, sexe, edat_minima, format_competicio, mode_taules_grups)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `, [
     Number(req.body.idcompeticio),
     String(req.body.nom || '').trim(),
@@ -59,7 +59,8 @@ exports.create = async (req, res) => {
     req.body.edat_minima ? Number(req.body.edat_minima) : null,
     ['AUTO', 'GRUP_UNIC', 'GRUPS_MES_FINAL'].includes(req.body.format_competicio)
       ? req.body.format_competicio
-      : 'AUTO'
+      : 'AUTO',
+    req.body.mode_taules_grups === 'MAXIM' ? 'MAXIM' : 'UNA_PER_GRUP'
   ]);
 
   res.redirect(`/categories?competitionId=${Number(req.body.idcompeticio)}`);
@@ -146,6 +147,28 @@ exports.updateFormat = async (req, res) => {
   } finally {
     cx.release();
   }
+
+  res.redirect(`/categories?competitionId=${category.idcompeticio}`);
+};
+
+
+exports.updateTableMode = async (req, res) => {
+  const id = Number(req.params.id);
+  const mode = req.body.mode_taules_grups === 'MAXIM' ? 'MAXIM' : 'UNA_PER_GRUP';
+
+  const [[category]] = await db.query(`
+    SELECT idcategoria, idcompeticio
+    FROM categories
+    WHERE idcategoria = ?
+  `, [id]);
+
+  if (!category) return res.status(404).send('Categoria no trobada.');
+
+  await db.query(`
+    UPDATE categories
+    SET mode_taules_grups = ?
+    WHERE idcategoria = ?
+  `, [mode, id]);
 
   res.redirect(`/categories?competitionId=${category.idcompeticio}`);
 };

@@ -71,7 +71,7 @@ function buildGroupMatchOrder(participants, options = {}) {
   if (n === 3) {
     pairs = [[1, 3], [2, 3], [1, 2]];
   } else if (n === 4) {
-    pairs = [[1, 4], [2, 4], [1, 3], [3, 4], [1, 2], [2, 3]];
+    pairs = [[1, 4], [3, 2], [1, 3], [2, 4], [1, 2], [3, 4]];
   } else if (n === 5) {
     pairs = [[2, 5], [3, 4], [1, 5], [2, 3], [1, 4], [5, 3], [1, 3], [4, 2], [4, 5], [1, 2]];
   } else {
@@ -82,7 +82,9 @@ function buildGroupMatchOrder(participants, options = {}) {
 
   return pairs.map(([a, b], i) => ({
     ordre: i + 1,
-    ronda: null,
+    // En grups de 4, cada dos partits consecutius formen una franja
+    // simultània possible: 1-4/3-2, 1-3/2-4, 1-2/3-4.
+    ronda: n === 4 ? Math.floor(i / 2) + 1 : null,
     participant1: pos[a],
     participant2: pos[b],
     posicio1: a,

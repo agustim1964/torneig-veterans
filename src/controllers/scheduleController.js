@@ -25,6 +25,7 @@ exports.show = async (req, res) => {
       cat.nom AS categoria_nom,
       cat.idcategoria,
       cat.format_competicio,
+      cat.mode_taules_grups,
       t.numero AS taula_numero,
       t.nom AS taula_nom,
       (SELECT COUNT(*) FROM grup_participants x WHERE x.idgrup = g.idgrup) AS participants_grup,
@@ -59,10 +60,12 @@ exports.generate = async (req, res) => {
       g.idgrup,
       cat.nom AS categoria_nom,
       cat.format_competicio,
+      cat.mode_taules_grups,
       COUNT(gp.idparticipant) AS participants_grup,
       (COUNT(gp.idparticipant) * (COUNT(gp.idparticipant) - 1)) / 2 AS nombre_partits,
       CASE
-        WHEN cat.format_competicio = 'GRUP_UNIC' THEN FLOOR(COUNT(gp.idparticipant) / 2)
+        WHEN cat.format_competicio = 'GRUP_UNIC' THEN GREATEST(1, FLOOR(COUNT(gp.idparticipant) / 2))
+        WHEN cat.mode_taules_grups = 'MAXIM' THEN GREATEST(1, FLOOR(COUNT(gp.idparticipant) / 2))
         ELSE 1
       END AS taules_necessaries,
       CASE
@@ -72,12 +75,21 @@ exports.generate = async (req, res) => {
                ELSE COUNT(gp.idparticipant)
           END
         ELSE 0
-      END AS nombre_rondes
+      END AS nombre_rondes,
+      CASE
+        WHEN cat.format_competicio <> 'GRUP_UNIC'
+         AND cat.mode_taules_grups = 'MAXIM'
+        THEN CEIL(
+          ((COUNT(gp.idparticipant) * (COUNT(gp.idparticipant) - 1)) / 2)
+          / GREATEST(1, FLOOR(COUNT(gp.idparticipant) / 2))
+        )
+        ELSE ((COUNT(gp.idparticipant) * (COUNT(gp.idparticipant) - 1)) / 2)
+      END AS nombre_franges
     FROM grups g
     INNER JOIN categories cat ON cat.idcategoria = g.idcategoria
     INNER JOIN grup_participants gp ON gp.idgrup = g.idgrup
     WHERE cat.idcompeticio = ?
-    GROUP BY g.idgrup, cat.nom, cat.format_competicio
+    GROUP BY g.idgrup, cat.nom, cat.format_competicio, cat.mode_taules_grups
     ORDER BY cat.nom, g.numero
   `, [id]);
 
@@ -160,7 +172,8 @@ exports.update = async (req, res) => {
   const idtaula = req.body.idtaula ? Number(req.body.idtaula) : null;
 
   const [[row]] = await db.query(`
-    SELECT cat.format_competicio, pg.idtaula
+    SELECT cat.format_competicio,
+      cat.mode_taules_grups, pg.idtaula
     FROM programacio_grups pg
     INNER JOIN grups g ON g.idgrup = pg.idgrup
     INNER JOIN categories cat ON cat.idcategoria = g.idcategoria
@@ -184,7 +197,7 @@ exports.update = async (req, res) => {
     idprogramacio
   ]);
 
-  if (row?.format_competicio !== 'GRUP_UNIC' && idtaula) {
+  if (!multiTableMode && idtaula) {
     await db.query('DELETE FROM programacio_grup_taules WHERE idprogramacio = ?', [idprogramacio]);
     await db.query(`
       INSERT INTO programacio_grup_taules (idprogramacio, idtaula, ordre)
@@ -227,6 +240,7 @@ exports.print = async (req, res) => {
       g.numero AS grup_numero,
       cat.nom AS categoria_nom,
       cat.format_competicio,
+      cat.mode_taules_grups,
       COALESCE(pgt.idtaula, pg.idtaula) AS idtaula_real,
       t.numero AS taula_numero,
       t.nom AS taula_nom

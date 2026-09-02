@@ -75,7 +75,7 @@
   <table class="games">
     <thead>
       <tr>
-        <% if (group.format_competicio === 'GRUP_UNIC') { %><th>Ronda</th><% } %>
+        <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %><th>Franja</th><% } %>
         <th>Hora</th><th>Partit</th><th>Àrbitre</th>
         <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>Resultat</th>
       </tr>
@@ -83,7 +83,7 @@
     <tbody>
     <% matches.forEach(m => { %>
       <tr>
-        <% if (group.format_competicio === 'GRUP_UNIC') { %>
+        <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %>
           <td class="center"><%= m.ronda_grup || '' %></td>
         <% } %>
         <td class="nowrap"><%= m.data_hora ? new Date(m.data_hora).toLocaleTimeString('ca-ES',{hour:'2-digit',minute:'2-digit'}) : '' %></td>
@@ -93,7 +93,7 @@
       </tr>
     <% }) %>
     <% if (!matches.length) { %>
-      <tr><td colspan="<%= group.format_competicio === 'GRUP_UNIC' ? 10 : 9 %>" class="center">Genera els partits des de “Partits i classificació” abans d’imprimir l’acta.</td></tr>
+      <tr><td colspan="<%= (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') ? 10 : 9 %>" class="center">Genera els partits des de “Partits i classificació” abans d’imprimir l’acta.</td></tr>
     <% } %>
     </tbody>
   </table>

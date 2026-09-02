@@ -300,3 +300,19 @@ No tornis a executar l'script complet d'instal·lació v0.7 sobre Aiven.
 - Si s'entra 0..9, completa 11 a l'altre jugador i passa al joc següent.
 - Amb 10 o més cal completar manualment el marcador contrari.
 - Es manté la validació reglamentària dels avantatges.
+
+
+## v0.8.9 - Mode de taules per grup
+
+- Cada categoria normal pot escollir:
+  - `UNA_PER_GRUP`: comportament anterior.
+  - `MAXIM`: utilitza `floor(jugadors/2)` taules simultànies per grup.
+- El valor per defecte és `UNA_PER_GRUP`, per no alterar categories existents.
+- Grup de 4 en mode màxim: 2 taules, 3 franges.
+- Ordre específic de grup de 4:
+  1. 1-4 i 3-2
+  2. 1-3 i 2-4
+  3. 1-2 i 3-4
+- Això conserva 1-2 i 3-4 com a darrera franja.
+- El màster global té en compte les taules necessàries i la reducció de durada.
+- Les actes mostren la franja quan el grup es disputa en paral·lel.
