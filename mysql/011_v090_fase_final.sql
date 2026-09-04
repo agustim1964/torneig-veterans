@@ -1,0 +1,11 @@
+-- Torneig Veterans v0.9.0 - Quadre A + Consolació
+--
+-- La v0.7 ja va crear les taules:
+--   fases
+--   rondes
+--   quadre_posicions
+--   classificacions_fase
+--
+-- Per tant aquesta versió no necessita alterar l'estructura de la BBDD.
+-- Aquest fitxer serveix únicament per deixar registrada la migració v0.9.0.
+SELECT 'v0.9.0 - estructura de fase final ja disponible' AS resultat;

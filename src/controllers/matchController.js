@@ -1,6 +1,7 @@
 const db = require('../config/db');
 const { buildGroupMatchOrder, assignGroupReferees } = require('../services/matchService');
 const { classifyGroup } = require('../services/classificationService');
+const { propagateWinner } = require('../services/phaseService');
 
 async function getCategory(categoryId) {
   const [[category]] = await db.query(`
@@ -360,7 +361,7 @@ exports.saveResult = async (req, res) => {
   const categoryId = Number(req.body.categoryId);
 
   const [[match]] = await db.query(`
-    SELECT participant1, participant2
+    SELECT participant1, participant2, idfase, idronda, idgrup, guanyador AS guanyador_anterior
     FROM partits
     WHERE idpartit = ?
   `, [matchId]);
@@ -469,6 +470,10 @@ exports.saveResult = async (req, res) => {
       matchId
     ]);
 
+    if (winner && match.idfase) {
+      await propagateWinner(connection, matchId, winner);
+    }
+
     await connection.commit();
   } catch (e) {
     await connection.rollback();
@@ -477,5 +482,9 @@ exports.saveResult = async (req, res) => {
     connection.release();
   }
 
-  res.redirect(`/matches/category/${categoryId}`);
+  if (req.body.returnTo === 'phases') {
+    res.redirect(`/phases/category/${categoryId}`);
+  } else {
+    res.redirect(`/matches/category/${categoryId}`);
+  }
 };

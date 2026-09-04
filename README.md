@@ -316,3 +316,24 @@ No tornis a executar l'script complet d'instal·lació v0.7 sobre Aiven.
 - Això conserva 1-2 i 3-4 com a darrera franja.
 - El màster global té en compte les taules necessàries i la reducció de durada.
 - Les actes mostren la franja quan el grup es disputa en paral·lel.
+
+
+## v0.9.0 - Quadre A i Consolació
+
+- Nova pantalla de fase final per categoria.
+- Quadre A: passen 1r i 2n de cada grup.
+- Consolació: passen la resta de participants del grup.
+- El número de grup determina el pes dels caps de sèrie:
+  - Grup 1 i 2 als dos extrems del quadre.
+  - Grups 3 i 4 se sortegen entre les dues meitats.
+  - Grups 5..8 se sortegen dins la banda següent, i així successivament.
+- Els segons (i els classificats secundaris de Consolació) es col·loquen
+  evitant primera ronda contra un jugador del mateix grup i intentant
+  retardar qualsevol reenfrontament.
+- Quadre automàtic a la potència de 2 superior: 8, 16, 32, 64, 128...
+- Els BYEs beneficien primer els caps de sèrie de més pes.
+- Es creen totes les rondes i els partits del quadre.
+- Els BYEs avancen automàticament.
+- En desar un resultat eliminatori, el guanyador passa a la ronda següent.
+- El sorteig es pot repetir mentre no hi hagi resultats eliminatoris reals.
+- Quan ja hi ha resultats, el sorteig queda bloquejat.

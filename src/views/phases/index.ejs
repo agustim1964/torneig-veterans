@@ -1,0 +1,201 @@
+<%- include('../partials/header', { title: 'Fase final - ' + category.nom }) %>
+
+<div class="d-flex justify-content-between align-items-start gap-3 mb-4 flex-wrap">
+  <div>
+    <a href="/matches/category/<%= category.idcategoria %>" class="text-decoration-none">← Partits i classificació</a>
+    <h1 class="mt-2">Fase final · <%= category.nom %></h1>
+    <p class="text-muted mb-0"><%= category.competicio_nom %></p>
+  </div>
+
+  <% if (groupsFinished && category.format_competicio !== 'GRUP_UNIC') { %>
+    <div class="d-flex gap-2 flex-wrap">
+      <form action="/phases/category/<%= category.idcategoria %>/generate" method="post"
+            onsubmit="return confirm('Generar o tornar a sortejar el Quadre A? Si no hi ha resultats eliminatoris, el quadre actual serà substituït.')">
+        <input type="hidden" name="kind" value="A">
+        <button class="btn btn-primary">Generar / sortejar Quadre A</button>
+      </form>
+
+      <form action="/phases/category/<%= category.idcategoria %>/generate" method="post"
+            onsubmit="return confirm('Generar o tornar a sortejar la Consolació? Si no hi ha resultats eliminatoris, el quadre actual serà substituït.')">
+        <input type="hidden" name="kind" value="B">
+        <button class="btn btn-outline-primary">Generar / sortejar Consolació</button>
+      </form>
+    </div>
+  <% } %>
+</div>
+
+<% if (!groupsFinished) { %>
+  <div class="alert alert-warning">
+    <strong>Encara no es pot fer el sorteig.</strong>
+    Tots els partits de tots els grups han d'estar finalitzats.
+  </div>
+<% } %>
+
+<div class="alert alert-info">
+  <strong>Criteri del Quadre A:</strong>
+  els primers de grup són els caps de sèrie segons el número de grup.
+  Grup 1 i Grup 2 van als extrems; 3 i 4 se sortegen entre les dues meitats;
+  5–8 entre els quarts corresponents, i així successivament.
+  Els segons de grup es col·loquen intentant que no tornin a trobar el primer
+  del seu grup fins tan tard com sigui possible.
+  <br>
+  <strong>Consolació:</strong> entren els classificats a partir del 3r lloc,
+  aplicant el mateix criteri de pes per número de grup i evitant reenfrontaments.
+</div>
+
+<% if (!phases.length) { %>
+  <div class="card shadow-sm">
+    <div class="card-body text-center text-muted py-5">
+      Encara no s'ha generat cap quadre eliminatori.
+    </div>
+  </div>
+<% } %>
+
+<% phases.forEach(phase => { %>
+  <section class="mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+      <div>
+        <h2 class="mb-0"><%= phase.nom %></h2>
+        <div class="text-muted small">
+          <%= phase.positions.filter(p => p.idparticipant).length %> participants ·
+          quadre de <%= phase.positions.length %>
+        </div>
+      </div>
+
+      <% if (phase.locked) { %>
+        <span class="badge text-bg-danger fs-6">Sorteig bloquejat: ja hi ha resultats</span>
+      <% } else { %>
+        <span class="badge text-bg-success fs-6">Es pot tornar a sortejar</span>
+      <% } %>
+    </div>
+
+    <details class="mb-3">
+      <summary class="fw-semibold">Veure posicions inicials i origen</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm table-bordered align-middle">
+          <thead>
+            <tr>
+              <th>Pos.</th>
+              <th>Participant</th>
+              <th>Origen</th>
+              <th>Cap sèrie</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% phase.positions.forEach(pos => { %>
+              <tr>
+                <td><%= pos.posicio %></td>
+                <td><%= pos.nom_mostrar || 'BYE' %></td>
+                <td><%= pos.origen || '' %></td>
+                <td><%= pos.ranking_sorteig || '' %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <div class="bracket-scroll">
+      <div class="bracket">
+        <% phase.rounds.forEach(round => { %>
+          <div class="round-column">
+            <h3><%= round.nom %></h3>
+
+            <% round.matches.forEach(match => { %>
+              <div class="match-card <%= match.bye ? 'bye-card' : '' %>">
+                <div class="small text-muted mb-1">Partit <%= match.numero_partit %></div>
+
+                <div class="player-row <%= Number(match.guanyador) === Number(match.participant1) ? 'winner' : '' %>">
+                  <span><%= match.participant1_nom || (match.bye ? 'BYE' : 'Pendent') %></span>
+                  <% if (match.resultat1 !== null) { %><strong><%= match.resultat1 %></strong><% } %>
+                </div>
+                <div class="player-row <%= Number(match.guanyador) === Number(match.participant2) ? 'winner' : '' %>">
+                  <span><%= match.participant2_nom || (match.bye ? 'BYE' : 'Pendent') %></span>
+                  <% if (match.resultat2 !== null) { %><strong><%= match.resultat2 %></strong><% } %>
+                </div>
+
+                <% if (!match.bye && match.participant1 && match.participant2) { %>
+                  <form action="/matches/<%= match.idpartit %>/result"
+                        method="post"
+                        class="mt-2 phase-result-form">
+                    <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
+                    <input type="hidden" name="returnTo" value="phases">
+
+                    <div class="d-flex gap-1 flex-wrap align-items-center">
+                      <% for (let joc = 1; joc <= 5; joc++) {
+                           const saved = match.jocs?.find(j => Number(j.numero_joc) === joc);
+                      %>
+                        <div class="d-flex align-items-center border rounded p-1">
+                          <input class="form-control form-control-sm text-center phase-score"
+                                 style="width:42px"
+                                 type="number" min="0" max="99"
+                                 name="joc<%= joc %>_p1"
+                                 value="<%= saved ? saved.punts1 : '' %>">
+                          <span class="mx-1">-</span>
+                          <input class="form-control form-control-sm text-center phase-score"
+                                 style="width:42px"
+                                 type="number" min="0" max="99"
+                                 name="joc<%= joc %>_p2"
+                                 value="<%= saved ? saved.punts2 : '' %>">
+                        </div>
+                      <% } %>
+                    </div>
+                    <button class="btn btn-sm btn-outline-success mt-2">Desar resultat</button>
+                  </form>
+                <% } else if (match.bye) { %>
+                  <div class="small text-success mt-2">Classificat automàticament</div>
+                <% } %>
+              </div>
+            <% }) %>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+<% }) %>
+
+<style>
+.bracket-scroll {
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+.bracket {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  min-width: max-content;
+}
+.round-column {
+  width: 285px;
+}
+.round-column h3 {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.match-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fff;
+  margin-bottom: 14px;
+}
+.bye-card {
+  background: #f8f9fa;
+}
+.player-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid #eee;
+  padding: 4px 0;
+}
+.player-row:first-of-type {
+  border-top: 0;
+}
+.player-row.winner {
+  font-weight: 700;
+}
+</style>
+
+<%- include('../partials/footer') %>

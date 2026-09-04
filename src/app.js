@@ -11,6 +11,7 @@ const tableRoutes = require('./routes/tableRoutes');
 const competitionRoutes = require('./routes/competitionRoutes');
 const matchRoutes = require('./routes/matchRoutes');
 const scheduleRoutes = require('./routes/scheduleRoutes');
+const phaseRoutes = require('./routes/phaseRoutes');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/participants', participantRoutes);
 app.use('/groups', groupRoutes);
 app.use('/matches', matchRoutes);
 app.use('/schedule', scheduleRoutes);
+app.use('/phases', phaseRoutes);
 app.use('/tables', tableRoutes);
 
 app.use((err, req, res, next) => {
