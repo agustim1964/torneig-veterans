@@ -337,3 +337,16 @@ No tornis a executar l'script complet d'instal·lació v0.7 sobre Aiven.
 - En desar un resultat eliminatori, el guanyador passa a la ronda següent.
 - El sorteig es pot repetir mentre no hi hagi resultats eliminatoris reals.
 - Quan ja hi ha resultats, el sorteig queda bloquejat.
+
+
+## v0.9.1 - Accés a fase final + mida de grup configurable
+
+- Botó `Fase final A / Consolació` visible tant a Grups com a Partits i classificació.
+- Al sorteig es tria una mida màxima de grup entre 3 i 8.
+- Només es creen grups de N o N-1 participants, maximitzant els grups de N.
+- Exemples:
+  - 9 participants, N=5 -> 5+4
+  - 13 participants, N=5 -> 5+4+4
+  - 16 participants, N=6 -> 6+5+5
+  - 17 participants, N=6 -> 6+6+5
+- Si el total no es pot repartir exclusivament entre N i N-1, es mostra un avís.

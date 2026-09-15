@@ -8,13 +8,18 @@
     <p class="text-muted"><%= category.competicio_nom %></p>
   </div>
 
-  <form action="/matches/category/<%= category.idcategoria %>/generate-groups"
-        method="post"
-        onsubmit="return confirm('Generar partits només per als grups que encara no en tenen?')">
-    <button class="btn btn-primary">
-      Generar partits que falten
-    </button>
-  </form>
+  <div class="d-flex gap-2 flex-wrap">
+    <% if (category.format_competicio !== 'GRUP_UNIC') { %>
+      <a class="btn btn-outline-dark" href="/phases/category/<%= category.idcategoria %>">
+        Fase final A / Consolació
+      </a>
+    <% } %>
+    <form action="/matches/category/<%= category.idcategoria %>/generate-groups"
+          method="post"
+          onsubmit="return confirm('Generar partits només per als grups que encara no en tenen?')">
+      <button class="btn btn-primary">Generar partits que falten</button>
+    </form>
+  </div>
 </div>
 
 

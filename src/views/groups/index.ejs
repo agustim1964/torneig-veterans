@@ -10,6 +10,11 @@
     <a class="btn btn-outline-success" href="/matches/category/<%= category.idcategoria %>">
       Partits i classificació
     </a>
+    <% if (category.format_competicio !== 'GRUP_UNIC') { %>
+      <a class="btn btn-outline-dark" href="/phases/category/<%= category.idcategoria %>">
+        Fase final A / Consolació
+      </a>
+    <% } %>
     <% if (category.format_competicio === 'GRUP_UNIC') { %>
       <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
             onsubmit="return confirm('Crear o reconstruir el Top X amb tots els participants actius?')">
@@ -18,15 +23,25 @@
         </button>
       </form>
     <% } else { %>
-      <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
-            onsubmit="return confirm('Tornar a sortejar amb serp 2x2?')">
-        <input type="hidden" name="snakeBlockSize" value="2">
-        <button class="btn btn-outline-primary">Serp 2 × 2</button>
-      </form>
-      <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
-            onsubmit="return confirm('Tornar a sortejar amb serp 4x4?')">
-        <input type="hidden" name="snakeBlockSize" value="4">
-        <button class="btn btn-primary">Serp 4 × 4</button>
+      <form action="/groups/category/<%= category.idcategoria %>/draw"
+            method="post"
+            class="d-flex gap-2 align-items-end flex-wrap"
+            onsubmit="return confirm('Tornar a sortejar els grups amb la mida seleccionada?')">
+        <div>
+          <label class="form-label small mb-1">Jugadors per grup</label>
+          <select class="form-select form-select-sm" name="maxGroupSize">
+            <% for (let n = 3; n <= 8; n++) { %>
+              <option value="<%= n %>" <%= n === 4 ? 'selected' : '' %>><%= n %></option>
+            <% } %>
+          </select>
+        </div>
+        <div>
+          <label class="form-label small mb-1">Serp</label>
+          <div class="btn-group">
+            <button class="btn btn-sm btn-outline-primary" type="submit" name="snakeBlockSize" value="2">2 × 2</button>
+            <button class="btn btn-sm btn-primary" type="submit" name="snakeBlockSize" value="4">4 × 4</button>
+          </div>
+        </div>
       </form>
     <% } %>
   </div>
@@ -41,7 +56,10 @@
   </div>
 <% } else { %>
   <div class="alert alert-secondary">
-    El sorteig respecta els blocs de rànquing i intenta minimitzar coincidències de <strong>club</strong> i després de <strong>país</strong> dins de cada bloc.
+    Tria la mida màxima del grup entre 3 i 8. El sistema només crearà grups de
+    <strong>N</strong> o <strong>N-1</strong> jugadors, maximitzant els grups de N.
+    També respecta els blocs de rànquing i intenta minimitzar coincidències de
+    <strong>club</strong> i després de <strong>país</strong>.
   </div>
 <% } %>
 

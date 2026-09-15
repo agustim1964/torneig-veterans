@@ -7,37 +7,41 @@ function shuffle(items) {
   return copy;
 }
 
-function calculateGroupSizes(total) {
-  if (total < 3) throw new Error('Calen com a mínim 3 participants per fer grups.');
-  if (total === 5) return [5];
+function calculateGroupSizes(total, maxSize = 4) {
+  total = Number(total);
+  maxSize = Number(maxSize);
 
-  const r = total % 4;
-  const sizes = [];
-
-  if (r === 0) {
-    for (let i = 0; i < total / 4; i++) sizes.push(4);
-    return sizes;
+  if (!Number.isInteger(total) || total < 2) {
+    throw new Error('Calen com a mínim 2 participants per fer grups.');
   }
 
-  if (r === 1 && total >= 9) {
-    sizes.push(5);
-    for (let i = 0; i < (total - 5) / 4; i++) sizes.push(4);
-    return sizes;
+  if (!Number.isInteger(maxSize) || maxSize < 3 || maxSize > 8) {
+    throw new Error('La mida màxima del grup ha d\'estar entre 3 i 8.');
   }
 
-  if (r === 2) {
-    for (let i = 0; i < (total - 6) / 4; i++) sizes.push(4);
-    sizes.push(3, 3);
-    return sizes;
+  const minSize = maxSize - 1;
+
+  // Només grups de N o N-1, maximitzant els grups de N.
+  for (let countMax = Math.floor(total / maxSize); countMax >= 0; countMax--) {
+    const remaining = total - countMax * maxSize;
+
+    if (remaining === 0) {
+      return Array(countMax).fill(maxSize);
+    }
+
+    if (remaining > 0 && remaining % minSize === 0) {
+      const countMin = remaining / minSize;
+      return [
+        ...Array(countMax).fill(maxSize),
+        ...Array(countMin).fill(minSize)
+      ];
+    }
   }
 
-  if (r === 3) {
-    for (let i = 0; i < (total - 3) / 4; i++) sizes.push(4);
-    sizes.push(3);
-    return sizes;
-  }
-
-  return [total];
+  throw new Error(
+    `Amb ${total} participants no es poden fer només grups de ${maxSize} i ${minSize}. ` +
+    `Tria una altra mida màxima.`
+  );
 }
 
 function normalizeText(value) {
@@ -105,7 +109,7 @@ function buildSnakeSlots(groups) {
   return slots;
 }
 
-function drawGroups(participants, blockSize = 4) {
+function drawGroups(participants, blockSize = 4, maxGroupSize = 4) {
   blockSize = Number(blockSize);
   if (![2, 4].includes(blockSize)) {
     throw new Error('El sorteig ha de ser serp 2x2 o serp 4x4.');
@@ -116,7 +120,7 @@ function drawGroups(participants, blockSize = 4) {
     return d || String(a.nom_mostrar).localeCompare(String(b.nom_mostrar), 'ca');
   });
 
-  const sizes = calculateGroupSizes(sorted.length);
+  const sizes = calculateGroupSizes(sorted.length, maxGroupSize);
   const groups = sizes.map((size, i) => ({
     number: i + 1,
     size,

@@ -73,11 +73,12 @@ exports.draw = async (req, res) => {
   `, [categoryId]);
 
   const snakeBlockSize = Number(req.body.snakeBlockSize || 4);
+  const maxGroupSize = Number(req.body.maxGroupSize || 4);
   const isTopX = category.format_competicio === 'GRUP_UNIC';
 
   const groups = isTopX
     ? buildSingleGroup(participants)
-    : drawGroups(participants, snakeBlockSize);
+    : drawGroups(participants, snakeBlockSize, maxGroupSize);
 
   const connection = await db.getConnection();
 
@@ -179,14 +180,20 @@ exports.draw = async (req, res) => {
       categoryId,
       isTopX
         ? `Top ${participants.length} creat amb un únic grup segons rànquing`
-        : `Sorteig serp ${snakeBlockSize}x${snakeBlockSize} generat amb ${participants.length} participants i ${groups.length} grups`
+        : `Sorteig serp ${snakeBlockSize}x${snakeBlockSize}, grup màxim ${maxGroupSize}, generat amb ${participants.length} participants i ${groups.length} grups`
     ]);
 
     await connection.commit();
     res.redirect(`/groups/category/${categoryId}`);
   } catch (e) {
     await connection.rollback();
-    throw e;
+    return res.status(400).send(`
+      <div style="font-family:Arial;max-width:760px;margin:40px auto">
+        <h1>No s'ha pogut fer el sorteig</h1>
+        <p>${String(e.message || e)}</p>
+        <p><a href="/groups/category/${categoryId}">Tornar als grups</a></p>
+      </div>
+    `);
   } finally {
     connection.release();
   }
