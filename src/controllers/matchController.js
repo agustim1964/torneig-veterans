@@ -44,7 +44,30 @@ exports.listByCategory = async (req, res) => {
   `, [categoryId]);
 
 
-  for (const match of matches) {
+  const [groups] = await db.query(`
+    SELECT *
+    FROM grups
+    WHERE idcategoria = ?
+    ORDER BY numero
+  `, [categoryId]);
+
+  const requestedGroupId = req.query.groupId
+    ? Number(req.query.groupId)
+    : null;
+  const selectedGroup = requestedGroupId
+    ? groups.find(group => Number(group.idgrup) === requestedGroupId)
+    : null;
+
+  if (requestedGroupId && !selectedGroup) {
+    return res.status(400).send('El grup seleccionat no pertany a aquesta categoria.');
+  }
+
+  const visibleGroups = selectedGroup ? [selectedGroup] : groups;
+  const visibleMatches = selectedGroup
+    ? matches.filter(match => Number(match.idgrup) === Number(selectedGroup.idgrup))
+    : matches;
+
+  for (const match of visibleMatches) {
     const [games] = await db.query(`
       SELECT numero_joc, punts1, punts2
       FROM partit_jocs
@@ -54,13 +77,6 @@ exports.listByCategory = async (req, res) => {
 
     match.jocs = games;
   }
-
-  const [groups] = await db.query(`
-    SELECT *
-    FROM grups
-    WHERE idcategoria = ?
-    ORDER BY numero
-  `, [categoryId]);
 
   const [allGameRows] = await db.query(`
     SELECT pj.*
@@ -73,7 +89,7 @@ exports.listByCategory = async (req, res) => {
 
   const groupedStandings = {};
 
-  for (const group of groups) {
+  for (const group of visibleGroups) {
     const [participants] = await db.query(`
       SELECT p.idparticipant, p.nom_mostrar, p.ranking
       FROM grup_participants gp
@@ -106,7 +122,10 @@ exports.listByCategory = async (req, res) => {
 
   res.render('matches/index', {
     category,
-    matches,
+    matches: visibleMatches,
+    groups,
+    selectedGroup,
+    selectedGroupId: selectedGroup ? Number(selectedGroup.idgrup) : null,
     groupedStandings,
     totalMatches,
     finishedMatches,
@@ -359,13 +378,14 @@ exports.deleteGroupMatches = async (req, res) => {
 exports.saveResult = async (req, res) => {
   const matchId = Number(req.params.id);
   const categoryId = Number(req.body.categoryId);
+  const groupId = Number(req.body.groupId);
   const wantsJson =
     req.body.ajax === '1' ||
     (typeof req.get === 'function' &&
       req.get('X-Requested-With') === 'XMLHttpRequest');
   const returnUrl = req.body.returnTo === 'phases'
     ? `/phases/category/${categoryId}`
-    : `/matches/category/${categoryId}`;
+    : `/matches/category/${categoryId}${groupId > 0 ? `?groupId=${groupId}` : ''}`;
 
   function sendValidationError(message) {
     if (wantsJson) {

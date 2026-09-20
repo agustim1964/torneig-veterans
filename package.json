@@ -1,6 +1,6 @@
 {
   "name": "torneig-veterans",
-  "version": "0.9.7",
+  "version": "0.9.10",
   "description": "Gestió de torneig de veterans de tennis taula",
   "main": "src/app.js",
   "scripts": {

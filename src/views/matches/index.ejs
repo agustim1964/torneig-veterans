@@ -30,7 +30,53 @@
 </div>
 
 <div class="card shadow-sm mb-4">
-  <div class="card-header">Partits de grup</div>
+  <div class="card-body py-3">
+    <form action="/matches/category/<%= category.idcategoria %>"
+          method="get"
+          class="row g-2 align-items-end">
+      <div class="col-sm-8 col-md-5 col-lg-4">
+        <label for="group-filter" class="form-label mb-1">
+          <strong>Filtrar per grup</strong>
+        </label>
+        <select id="group-filter"
+                name="groupId"
+                class="form-select"
+                onchange="this.form.submit()">
+          <option value="" <%= selectedGroupId === null ? 'selected' : '' %>>
+            Tots els grups
+          </option>
+          <% groups.forEach(group => { %>
+            <option value="<%= group.idgrup %>"
+                    <%= Number(selectedGroupId) === Number(group.idgrup) ? 'selected' : '' %>>
+              Grup <%= group.numero %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-auto">
+        <noscript><button class="btn btn-primary">Aplicar filtre</button></noscript>
+        <% if (selectedGroup) { %>
+          <a href="/matches/category/<%= category.idcategoria %>"
+             class="btn btn-outline-secondary">
+            Veure tots
+          </a>
+        <% } %>
+      </div>
+      <div class="col-auto ms-sm-auto">
+        <a href="/groups/category/<%= category.idcategoria %>/print<%= selectedGroupId !== null ? ('?groupId=' + selectedGroupId) : '' %>"
+           target="_blank"
+           class="btn btn-outline-dark">
+          🖨 <%= selectedGroup ? ('Imprimir acta del Grup ' + selectedGroup.numero) : 'Imprimir actes de tots els grups' %>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-header">
+    <%= selectedGroup ? ('Partits del Grup ' + selectedGroup.numero) : 'Partits de tots els grups' %>
+  </div>
   <div class="table-responsive">
     <table class="table table-hover align-middle mb-0">
       <thead>
@@ -74,6 +120,9 @@
                   class="d-flex flex-wrap gap-1 align-items-center match-result-form"
                   data-match-id="<%= m.idpartit %>">
               <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
+              <% if (selectedGroupId !== null) { %>
+                <input type="hidden" name="groupId" value="<%= selectedGroupId %>">
+              <% } %>
 
               <% for (let joc = 1; joc <= 5; joc++) {
                    const saved = (m.jocs || []).find(x => Number(x.numero_joc) === joc);
@@ -135,7 +184,9 @@
   <% if (category.format_competicio === 'GRUP_UNIC') { %>
     <%= topXComplete ? 'Classificació final' : 'Classificació provisional del Top X' %>
   <% } else { %>
-    Classificació provisional
+    <%= selectedGroup
+      ? ('Classificació provisional · Grup ' + selectedGroup.numero)
+      : 'Classificació provisional · Tots els grups' %>
   <% } %>
 </h2>
 

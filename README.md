@@ -413,3 +413,29 @@ No tornis a executar l'script complet d'instal·lació v0.7 sobre Aiven.
 - Després de corregir un marcador invàlid, un resultat correcte es desa sense abandonar la fase final.
 - La taula i l'hora assignades es mostren en una etiqueta clara dins de cada partit del quadre imprès.
 - No requereix cap migració de base de dades.
+
+
+## v0.9.8 - Filtre de grup als partits i classificacions
+
+- Selector a la vista de partits per veure tots els grups o només un grup concret.
+- En filtrar, només es mostren els partits i la classificació del grup seleccionat.
+- Botó per recuperar ràpidament la vista conjunta de tots els grups.
+- Després de desar un resultat es conserva el filtre de grup actiu.
+- No requereix cap migració de base de dades.
+
+
+## v0.9.9 - Impressió d'actes des de la vista de partits
+
+- Botó per imprimir l'acta del grup que estigui seleccionat al filtre.
+- Des de la vista de tots els grups, imprimeix una acta per grup en pàgines separades.
+- Les actes mostren els marcadors de cada joc i el resultat final disponibles fins al moment.
+- Es manté el format d'acta de grup existent.
+- No requereix cap migració de base de dades.
+
+
+## v0.9.10 - Classificació al peu de l'acta de grup
+
+- Cada acta impresa incorpora la classificació provisional o final al peu de la pàgina.
+- La classificació mostra victòries, derrotes i factors de jocs i punts.
+- Si encara no s'ha disputat cap partit, es mostra la graella de classificació amb les files en blanc.
+- No requereix cap migració de base de dades.

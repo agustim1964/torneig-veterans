@@ -1,5 +1,6 @@
 const db = require('../config/db');
 const { drawGroups, buildSingleGroup, groupWarnings } = require('../services/drawService');
+const { classifyGroup } = require('../services/classificationService');
 
 async function loadCategory(categoryId) {
   const [[category]] = await db.query(
@@ -302,9 +303,7 @@ exports.moveParticipant = async (req, res) => {
 };
 
 
-exports.printGroup = async (req, res) => {
-  const groupId = Number(req.params.id);
-
+async function loadPrintableGroup(groupId) {
   const [[group]] = await db.query(`
     SELECT
       g.*,
@@ -326,7 +325,7 @@ exports.printGroup = async (req, res) => {
     WHERE g.idgrup = ?
   `, [groupId]);
 
-  if (!group) return res.status(404).send('Grup no trobat.');
+  if (!group) return null;
 
   const [participants] = await db.query(`
     SELECT
@@ -356,5 +355,86 @@ exports.printGroup = async (req, res) => {
     ORDER BY pa.data_hora, pa.numero_partit
   `, [groupId]);
 
-  res.render('groups/print', { group, participants, matches });
+  const [games] = await db.query(`
+    SELECT pj.idpartit, pj.numero_joc, pj.punts1, pj.punts2
+    FROM partit_jocs pj
+    INNER JOIN partits pa ON pa.idpartit = pj.idpartit
+    WHERE pa.idgrup = ?
+    ORDER BY pj.idpartit, pj.numero_joc
+  `, [groupId]);
+
+  for (const match of matches) {
+    match.jocs = games.filter(game => Number(game.idpartit) === Number(match.idpartit));
+  }
+
+  const finishedMatches = matches.filter(match => match.estat === 'FINALITZAT');
+  const standings = finishedMatches.length
+    ? classifyGroup(participants, matches, games)
+    : [];
+
+  return {
+    group,
+    participants,
+    matches,
+    standings,
+    classificationFinal: matches.length > 0 && finishedMatches.length === matches.length
+  };
+}
+
+exports.printGroup = async (req, res) => {
+  const groupId = Number(req.params.id);
+  const sheet = await loadPrintableGroup(groupId);
+
+  if (!sheet) return res.status(404).send('Grup no trobat.');
+
+  res.render('groups/print', {
+    pageTitle: `${sheet.group.categoria_nom} · Grup ${sheet.group.numero}`,
+    sheets: [sheet]
+  });
+};
+
+exports.printCategoryGroups = async (req, res) => {
+  const categoryId = Number(req.params.categoryId);
+  const requestedGroupId = req.query.groupId ? Number(req.query.groupId) : null;
+
+  if (!Number.isInteger(categoryId) || categoryId <= 0) {
+    return res.status(400).send('Categoria no vàlida.');
+  }
+  if (req.query.groupId && (!Number.isInteger(requestedGroupId) || requestedGroupId <= 0)) {
+    return res.status(400).send('Grup no vàlid.');
+  }
+
+  const [[category]] = await db.query(`
+    SELECT c.idcategoria, c.nom, comp.nom AS competicio_nom
+    FROM categories c
+    INNER JOIN competicions comp ON comp.idcompeticio = c.idcompeticio
+    WHERE c.idcategoria = ?
+  `, [categoryId]);
+
+  if (!category) return res.status(404).send('Categoria no trobada.');
+
+  const [groups] = await db.query(`
+    SELECT idgrup, numero
+    FROM grups
+    WHERE idcategoria = ?
+      AND (? IS NULL OR idgrup = ?)
+    ORDER BY numero, idgrup
+  `, [categoryId, requestedGroupId, requestedGroupId]);
+
+  if (requestedGroupId && !groups.length) {
+    return res.status(400).send('El grup seleccionat no pertany a aquesta categoria.');
+  }
+
+  const sheets = [];
+  for (const group of groups) {
+    const sheet = await loadPrintableGroup(group.idgrup);
+    if (sheet) sheets.push(sheet);
+  }
+
+  res.render('groups/print', {
+    pageTitle: requestedGroupId
+      ? `${category.nom} · Grup ${groups[0].numero}`
+      : `${category.nom} · Tots els grups`,
+    sheets
+  });
 };

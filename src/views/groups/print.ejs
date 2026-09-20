@@ -2,10 +2,31 @@
 <html lang="ca">
 <head>
   <meta charset="utf-8">
-  <title><%= group.categoria_nom %> - <%= group.format_competicio === 'GRUP_UNIC' ? 'Top X' : ('Grup ' + group.numero) %></title>
+  <title><%= pageTitle %></title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 18mm; color: #111; }
+    @page { size: A4 portrait; margin: 10mm; }
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; margin: 0; color: #111; }
     h1,h2,p { margin: 0 0 6px; }
+    .controls {
+      max-width: 190mm;
+      margin: 12px auto;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f7f7f7;
+    }
+    .controls button { padding: 6px 12px; cursor: pointer; }
+    .sheet {
+      max-width: 190mm;
+      margin: 0 auto;
+      break-after: page;
+      page-break-after: always;
+    }
+    .sheet:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
     .capcalera-fctt {
       width: 100%;
       padding-bottom: 10px;
@@ -21,85 +42,173 @@
     .titol-acta { margin-top: 4px; }
     .titol-acta h1 { font-size: 22px; margin-bottom: 4px; }
     .titol-acta h2 { font-size: 17px; font-weight: 600; }
-    .meta { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:14px 0; }
-    .box { border:1px solid #999; padding:7px; }
-    table { width:100%; border-collapse:collapse; margin-top:14px; }
-    th,td { border:1px solid #777; padding:6px; font-size:12px; }
-    th { background:#eee; }
-    .games td { height:28px; }
-    .center { text-align:center; }
-    .nowrap { white-space:nowrap; }
-    .no-print { margin-bottom:12px; }
-    @media print { .no-print { display:none; } body { margin:10mm; } }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .box { border: 1px solid #999; padding: 7px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    th,td { border: 1px solid #777; padding: 6px; font-size: 12px; }
+    th { background: #eee; }
+    .games td { height: 28px; }
+    .center { text-align: center; }
+    .nowrap { white-space: nowrap; }
+    .saved-score { font-weight: 700; }
+    .classification {
+      margin-top: 14px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .classification h3 { margin: 0 0 5px; font-size: 15px; }
+    .classification table { margin-top: 0; }
+    .classification .blank-row td { height: 25px; }
+    .empty { max-width: 190mm; margin: 30px auto; text-align: center; }
+
+    @media print {
+      .controls { display: none; }
+      .sheet { max-width: none; margin: 0; }
+    }
   </style>
 </head>
 <body>
-  <button class="no-print" onclick="window.print()">Imprimir</button>
-
-  <div class="capcalera-fctt">
-    <img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula">
+  <div class="controls">
+    <button type="button" onclick="window.print()">🖨 Imprimir</button>
+    <span style="margin-left:8px"><%= sheets.length %> acta(es) · una acta per grup</span>
   </div>
 
-  <div class="titol-acta">
-    <h1><%= group.competicio_nom %></h1>
-    <h2>
-      <%= group.categoria_nom %> ·
-      <%= group.format_competicio === 'GRUP_UNIC'
-        ? ('Top ' + participants.length + ' · Grup únic')
-        : ('Grup ' + group.numero) %>
-    </h2>
-  </div>
+  <% if (!sheets.length) { %>
+    <div class="empty"><h1>No hi ha grups per imprimir</h1></div>
+  <% } %>
 
-  <div class="meta">
-    <div class="box"><strong>Data</strong><br><%= group.data ? new Date(group.data).toLocaleDateString('ca-ES') : '—' %></div>
-    <div class="box"><strong>Taula</strong><br><%= group.taula_nom || (group.taula_numero ? 'Taula ' + group.taula_numero : '—') %></div>
-    <div class="box"><strong>Inici</strong><br><%= group.hora_inici ? String(group.hora_inici).substring(0,5) : '—' %></div>
-    <div class="box"><strong>Final prevista</strong><br><%= group.hora_final ? String(group.hora_final).substring(0,5) : '—' %></div>
-  </div>
+  <% sheets.forEach(sheet => {
+       const group = sheet.group;
+       const participants = sheet.participants;
+       const matches = sheet.matches;
+       const standings = sheet.standings || [];
+  %>
+    <article class="sheet">
+      <div class="capcalera-fctt">
+        <img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula">
+      </div>
 
-  <table>
-    <thead><tr><th>Pos.</th><th>Participant</th><th>País</th><th>Club</th><th>Rànquing</th></tr></thead>
-    <tbody>
-    <% participants.forEach(p => { %>
-      <tr>
-        <td class="center"><%= p.ordre_visual %></td>
-        <td><%= p.nom_mostrar %></td>
-        <td class="center"><%= p.pais || '' %></td>
-        <td><%= p.club || '' %></td>
-        <td class="center"><%= p.ranking %></td>
-      </tr>
-    <% }) %>
-    </tbody>
-  </table>
+      <div class="titol-acta">
+        <h1><%= group.competicio_nom %></h1>
+        <h2>
+          <%= group.categoria_nom %> ·
+          <%= group.format_competicio === 'GRUP_UNIC'
+            ? ('Top ' + participants.length + ' · Grup únic')
+            : ('Grup ' + group.numero) %>
+        </h2>
+      </div>
 
-  <table class="games">
-    <thead>
-      <tr>
-        <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %><th>Franja</th><% } %>
-        <th>Hora</th><th>Partit</th><th>Àrbitre</th>
-        <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>Resultat</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% matches.forEach(m => { %>
-      <tr>
-        <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %>
-          <td class="center"><%= m.ronda_grup || '' %></td>
+      <div class="meta">
+        <div class="box"><strong>Data</strong><br><%= group.data ? new Date(group.data).toLocaleDateString('ca-ES') : '—' %></div>
+        <div class="box"><strong>Taula</strong><br><%= group.taula_nom || (group.taula_numero ? 'Taula ' + group.taula_numero : '—') %></div>
+        <div class="box"><strong>Inici</strong><br><%= group.hora_inici ? String(group.hora_inici).substring(0,5) : '—' %></div>
+        <div class="box"><strong>Final prevista</strong><br><%= group.hora_final ? String(group.hora_final).substring(0,5) : '—' %></div>
+      </div>
+
+      <table>
+        <thead><tr><th>Pos.</th><th>Participant</th><th>País</th><th>Club</th><th>Rànquing</th></tr></thead>
+        <tbody>
+        <% participants.forEach(participant => { %>
+          <tr>
+            <td class="center"><%= participant.ordre_visual %></td>
+            <td><%= participant.nom_mostrar %></td>
+            <td class="center"><%= participant.pais || '' %></td>
+            <td><%= participant.club || '' %></td>
+            <td class="center"><%= participant.ranking %></td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+
+      <table class="games">
+        <thead>
+          <tr>
+            <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %><th>Franja</th><% } %>
+            <th>Hora</th><th>Partit</th><th>Àrbitre</th>
+            <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>Resultat</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% matches.forEach(match => { %>
+          <tr>
+            <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %>
+              <td class="center"><%= match.ronda_grup || '' %></td>
+            <% } %>
+            <td class="nowrap"><%= match.data_hora ? new Date(match.data_hora).toLocaleTimeString('ca-ES',{hour:'2-digit',minute:'2-digit'}) : '' %></td>
+            <td><%= match.participant1_nom %> — <%= match.participant2_nom %></td>
+            <td><%= match.arbitre_nom || '' %></td>
+            <% for (let gameNumber = 1; gameNumber <= 5; gameNumber++) {
+                 const game = (match.jocs || []).find(item => Number(item.numero_joc) === gameNumber);
+            %>
+              <td class="center <%= game ? 'saved-score' : '' %>">
+                <%= game ? (game.punts1 + '-' + game.punts2) : '' %>
+              </td>
+            <% } %>
+            <td class="center saved-score">
+              <%= match.resultat1 !== null && match.resultat2 !== null
+                ? (match.resultat1 + '-' + match.resultat2)
+                : '' %>
+            </td>
+          </tr>
+        <% }) %>
+        <% if (!matches.length) { %>
+          <tr>
+            <td colspan="<%= (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') ? 10 : 9 %>" class="center">
+              Genera els partits des de “Partits i classificació” abans d’imprimir l’acta.
+            </td>
+          </tr>
         <% } %>
-        <td class="nowrap"><%= m.data_hora ? new Date(m.data_hora).toLocaleTimeString('ca-ES',{hour:'2-digit',minute:'2-digit'}) : '' %></td>
-        <td><%= m.participant1_nom %> — <%= m.participant2_nom %></td>
-        <td><%= m.arbitre_nom || '' %></td>
-        <td></td><td></td><td></td><td></td><td></td><td></td>
-      </tr>
-    <% }) %>
-    <% if (!matches.length) { %>
-      <tr><td colspan="<%= (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') ? 10 : 9 %>" class="center">Genera els partits des de “Partits i classificació” abans d’imprimir l’acta.</td></tr>
-    <% } %>
-    </tbody>
-  </table>
+        </tbody>
+      </table>
 
-  <p style="margin-top:14px;font-size:11px">
-    Desempats: només partits entre els participants empatats; primer factor de jocs guanyats/perduts i després factor de punts guanyats/perduts.
-  </p>
+      <div class="classification">
+        <h3><%= sheet.classificationFinal ? 'Classificació final' : 'Classificació provisional' %></h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Pos.</th><th>Participant</th><th>V</th><th>D</th><th>F. jocs</th><th>F. punts</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% if (standings.length) { %>
+            <% standings.forEach((row, index) => { %>
+              <tr>
+                <td class="center"><strong><%= index + 1 %></strong></td>
+                <td><%= row.nom_mostrar %></td>
+                <td class="center"><%= row.victories %></td>
+                <td class="center"><%= row.derrotes %></td>
+                <td class="center">
+                  <%= row.factor_jocs === null || row.factor_jocs === undefined
+                    ? ''
+                    : (row.factor_jocs === Infinity ? '∞' : Number(row.factor_jocs).toFixed(3)) %>
+                </td>
+                <td class="center">
+                  <%= row.factor_punts === null || row.factor_punts === undefined
+                    ? ''
+                    : (row.factor_punts === Infinity ? '∞' : Number(row.factor_punts).toFixed(3)) %>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <% participants.forEach(() => { %>
+              <tr class="blank-row">
+                <td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td>
+              </tr>
+            <% }) %>
+          <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:14px;font-size:11px">
+        Desempats: només partits entre els participants empatats; primer factor de jocs guanyats/perduts i després factor de punts guanyats/perduts.
+      </p>
+    </article>
+  <% }) %>
 </body>
 </html>
