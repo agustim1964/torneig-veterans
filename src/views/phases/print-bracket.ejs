@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quadre · <%= phase.competicio_nom %> · <%= phase.categoria_nom %> · <%= phase.fase_nom %></title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 5mm;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #111;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .controls {
+      width: 200mm;
+      margin: 10px auto;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f8f9fa;
+      font-size: 14px;
+    }
+
+    .controls button {
+      padding: 6px 12px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .page {
+      width: 200mm;
+      height: 287mm;
+      margin: 0 auto;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .page-header {
+      height: 22mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8mm;
+    }
+
+    .brand {
+      width: 88mm;
+      padding-top: 2mm;
+    }
+
+    .brand img {
+      display: block;
+      max-width: 76mm;
+      max-height: 10mm;
+      width: auto;
+      height: auto;
+    }
+
+    .phase-name {
+      margin-top: 1.5mm;
+      font-size: 9pt;
+      font-weight: 700;
+    }
+
+    .event-box {
+      width: 65mm;
+      min-height: 20mm;
+      border: 0.5mm solid #111;
+      padding: 1.5mm 2mm;
+      font-size: 8pt;
+      line-height: 1.15;
+    }
+
+    .event-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 2mm;
+    }
+
+    .event-phase {
+      background: #fff500;
+      min-width: 8mm;
+      padding: 0.5mm 1mm;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .event-category {
+      margin-top: 1mm;
+      text-align: right;
+      font-size: 10pt;
+      font-weight: 700;
+    }
+
+    .event-place {
+      margin-top: 0.5mm;
+    }
+
+    .round-labels {
+      height: 7mm;
+      display: grid;
+      grid-template-columns: repeat(<%= Math.max(rounds.length, 1) %>, minmax(0, 1fr));
+      align-items: end;
+      font-size: 6.5pt;
+      font-weight: 700;
+      color: #555;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .bracket {
+      position: relative;
+      width: 100%;
+      height: 255mm;
+      display: block;
+      overflow: hidden;
+    }
+
+    .connectors {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .round {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .match-card {
+      position: absolute;
+      left: 2mm;
+      width: calc(100% - 8mm);
+      height: 10mm;
+      transform: translateY(-50%);
+      border: 0.35mm solid #111;
+      background: #fff;
+      font-size: 6.2pt;
+    }
+
+    .match-meta {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -3.2mm;
+      height: 3mm;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1mm;
+      padding: 0 0.8mm;
+      color: #d10b00;
+      font-size: 5.5pt;
+      font-style: italic;
+      background: #fff;
+    }
+
+    .match-result {
+      text-align: right;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .match-schedule {
+      color: #145a8d;
+      justify-self: center;
+      padding: 0.15mm 0.8mm;
+      border: 0.2mm solid #145a8d;
+      border-radius: 0.7mm;
+      background: #eaf6ff;
+      font-style: normal;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .player-row {
+      position: relative;
+      height: 50%;
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+      padding: 0.4mm 1mm 0.35mm 1mm;
+      border-bottom: 0.2mm solid #bbb;
+      white-space: nowrap;
+    }
+
+    .player-row:last-child { border-bottom: 0; }
+    .player-row.winner { font-weight: 700; }
+
+    .slot-number {
+      position: absolute;
+      left: -6mm;
+      width: 5mm;
+      padding: 0.4mm 0;
+      background: #e7f2df;
+      text-align: center;
+      font-size: 5.5pt;
+      font-weight: 400;
+    }
+
+    .player-name {
+      display: block;
+      min-width: 0;
+      flex: 1 1 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-license {
+      margin-right: 1mm;
+      font-size: 5.3pt;
+      font-weight: 400;
+      color: #444;
+    }
+
+    .player-club {
+      display: block;
+      flex: 0 0 auto;
+      max-width: 15mm;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: right;
+      font-size: 5.5pt;
+      font-weight: 400;
+    }
+
+    .pending { color: #aaa; }
+    .bye { color: #777; font-style: italic; }
+
+    .bracket.size-8 .match-card,
+    .bracket.size-4 .match-card {
+      height: 13mm;
+      font-size: 8pt;
+    }
+
+    .bracket.size-8 .match-meta,
+    .bracket.size-4 .match-meta {
+      font-size: 6.5pt;
+    }
+
+    .bracket.size-16 .match-card { height: 11mm; font-size: 7pt; }
+
+    .bracket.size-64 .match-card {
+      height: 6mm;
+      font-size: 4.5pt;
+      border-width: 0.25mm;
+    }
+
+    .bracket.size-64 .match-meta {
+      top: -1.8mm;
+      height: 1.8mm;
+      font-size: 3.8pt;
+    }
+
+    .bracket.size-64 .player-row { padding-top: 0; padding-bottom: 0; }
+    .bracket.size-64 .player-license,
+    .bracket.size-64 .player-club { font-size: 3.8pt; }
+    .bracket.size-64 .slot-number { font-size: 4pt; padding: 0.1mm 0; }
+
+    @media print {
+      .controls { display: none; }
+      .page { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button type="button" onclick="window.print()">🖨 Imprimir quadre</button>
+    <span style="margin-left:10px">
+      <%= phase.fase_nom %> · quadre de <%= bracketSize %> · els noms pendents queden en blanc
+    </span>
+  </div>
+
+  <main class="page">
+    <header class="page-header">
+      <div class="brand">
+        <img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula">
+        <div class="phase-name"><%= phase.fase_nom %></div>
+      </div>
+
+      <div class="event-box">
+        <div class="event-top">
+          <strong><%= phase.competicio_nom %></strong>
+          <span class="event-phase"><%= Number(phase.fase_ordre) === 1 ? 'A' : 'B' %></span>
+        </div>
+        <div class="event-category"><%= phase.categoria_nom %></div>
+        <div class="event-place"><%= phase.competicio_lloc || '' %></div>
+        <div>
+          <%= phase.data_inici
+            ? new Date(phase.data_inici).toLocaleDateString('ca-ES', { timeZone: 'UTC' })
+            : '' %>
+        </div>
+      </div>
+    </header>
+
+    <div class="round-labels">
+      <% rounds.forEach(round => { %><div><%= round.nom %></div><% }); %>
+    </div>
+
+    <section class="bracket size-<%= bracketSize %>">
+      <svg class="connectors"
+           viewBox="0 0 <%= Math.max(rounds.length, 1) * 100 %> 1000"
+           preserveAspectRatio="none"
+           aria-hidden="true">
+        <% for (let roundIndex = 0; roundIndex < rounds.length - 1; roundIndex++) {
+             const currentCount = rounds[roundIndex].matches.length;
+             const nextCount = rounds[roundIndex + 1].matches.length;
+             const pairCount = Math.min(nextCount, Math.floor(currentCount / 2));
+             const xEnd = (roundIndex + 1) * 100 - 8;
+             const xMiddle = (roundIndex + 1) * 100;
+             const xNext = (roundIndex + 1) * 100 + 2;
+             for (let pair = 0; pair < pairCount; pair++) {
+               const yTop = ((pair * 2 + 0.5) / currentCount) * 1000;
+               const yBottom = ((pair * 2 + 1.5) / currentCount) * 1000;
+               const yNext = ((pair + 0.5) / nextCount) * 1000;
+        %>
+          <path d="M <%= xEnd %> <%= yTop %> H <%= xMiddle %> V <%= yBottom %> H <%= xEnd %>"
+                fill="none" stroke="#777" stroke-width="0.7" vector-effect="non-scaling-stroke" />
+          <path d="M <%= xMiddle %> <%= yNext %> H <%= xNext %>"
+                fill="none" stroke="#777" stroke-width="0.7" vector-effect="non-scaling-stroke" />
+        <%   }
+           }
+        %>
+      </svg>
+
+      <% rounds.forEach((round, roundIndex) => { %>
+        <div class="round"
+             style="left:<%= (roundIndex / Math.max(rounds.length, 1)) * 100 %>%;width:<%= 100 / Math.max(rounds.length, 1) %>%">
+          <% round.matches.forEach((match, matchIndex) => {
+               const top = ((matchIndex + 0.5) / round.matches.length) * 100;
+               const firstMissingIsBye = Number(match.bye) && !match.participant1;
+               const secondMissingIsBye = Number(match.bye) && !match.participant2;
+          %>
+            <article class="match-card" style="top:<%= top %>%">
+              <div class="match-meta">
+                <span>Acta <%= match.acta_numero %></span>
+                <span class="match-schedule">
+                  <% if (match.taula_numero || match.hora_partit) { %>
+                    <%= match.taula_numero ? ('Taula ' + match.taula_numero) : '' %><%= match.taula_numero && match.hora_partit ? ' · ' : '' %><%= match.hora_partit || '' %>
+                  <% } %>
+                </span>
+                <span class="match-result"><%= match.resultat %></span>
+              </div>
+
+              <div class="player-row <%= Number(match.guanyador) === Number(match.participant1) ? 'winner' : '' %>">
+                <% if (match.slot1) { %><span class="slot-number"><%= match.slot1 %></span><% } %>
+                <span class="player-name <%= match.participant1_nom ? '' : (firstMissingIsBye ? 'bye' : 'pending') %>">
+                  <% if (match.participant1_llicencia) { %><span class="player-license"><%= match.participant1_llicencia %></span><% } %>
+                  <%= match.participant1_nom || (firstMissingIsBye ? 'BYE' : '') %>
+                </span>
+                <span class="player-club"><%= match.participant1_club || '' %></span>
+              </div>
+
+              <div class="player-row <%= Number(match.guanyador) === Number(match.participant2) ? 'winner' : '' %>">
+                <% if (match.slot2) { %><span class="slot-number"><%= match.slot2 %></span><% } %>
+                <span class="player-name <%= match.participant2_nom ? '' : (secondMissingIsBye ? 'bye' : 'pending') %>">
+                  <% if (match.participant2_llicencia) { %><span class="player-license"><%= match.participant2_llicencia %></span><% } %>
+                  <%= match.participant2_nom || (secondMissingIsBye ? 'BYE' : '') %>
+                </span>
+                <span class="player-club"><%= match.participant2_club || '' %></span>
+              </div>
+            </article>
+          <% }); %>
+        </div>
+      <% }); %>
+    </section>
+  </main>
+</body>
+</html>

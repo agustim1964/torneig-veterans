@@ -359,6 +359,27 @@ exports.deleteGroupMatches = async (req, res) => {
 exports.saveResult = async (req, res) => {
   const matchId = Number(req.params.id);
   const categoryId = Number(req.body.categoryId);
+  const wantsJson =
+    req.body.ajax === '1' ||
+    (typeof req.get === 'function' &&
+      req.get('X-Requested-With') === 'XMLHttpRequest');
+  const returnUrl = req.body.returnTo === 'phases'
+    ? `/phases/category/${categoryId}`
+    : `/matches/category/${categoryId}`;
+
+  function sendValidationError(message) {
+    if (wantsJson) {
+      return res.status(400).json({ ok: false, error: message });
+    }
+
+    return res.status(400).send(`
+      <div style="font-family:Arial;max-width:720px;margin:40px auto">
+        <h1>Resultat de joc no vàlid</h1>
+        <p>${message}</p>
+        <p><a href="${returnUrl}">Tornar als partits</a></p>
+      </div>
+    `);
+  }
 
   const [[match]] = await db.query(`
     SELECT participant1, participant2, idfase, idronda, idgrup, guanyador AS guanyador_anterior
@@ -373,11 +394,16 @@ exports.saveResult = async (req, res) => {
   for (let n = 1; n <= 5; n++) {
     const raw1 = req.body[`joc${n}_p1`];
     const raw2 = req.body[`joc${n}_p2`];
+    const hasScore1 = raw1 !== undefined && raw1 !== '';
+    const hasScore2 = raw2 !== undefined && raw2 !== '';
 
-    if (
-      raw1 !== undefined && raw1 !== '' &&
-      raw2 !== undefined && raw2 !== ''
-    ) {
+    if (hasScore1 !== hasScore2) {
+      return sendValidationError(
+        `Joc ${n}: cal informar els punts dels dos jugadors.`
+      );
+    }
+
+    if (hasScore1 && hasScore2) {
       games.push({
         numero_joc: n,
         punts1: Number(raw1),
@@ -398,14 +424,11 @@ exports.saveResult = async (req, res) => {
 
   for (const game of games) {
     if (!validGameScore(game.punts1, game.punts2)) {
-      return res.status(400).send(`
-        <div style="font-family:Arial;max-width:720px;margin:40px auto">
-          <h1>Resultat de joc no vàlid</h1>
-          <p>Joc ${game.numero_joc}: <strong>${game.punts1}-${game.punts2}</strong>.</p>
-          <p>Fins a 9 punts del perdedor, el guanyador ha de tenir 11. A partir de 10-10 cal guanyar per 2 punts.</p>
-          <p><a href="/matches/category/${categoryId}">Tornar als partits</a></p>
-        </div>
-      `);
+      return sendValidationError(
+        `Joc ${game.numero_joc}: ${game.punts1}-${game.punts2}. ` +
+        'Fins a 9 punts del perdedor, el guanyador ha de tenir 11. ' +
+        'A partir de 10-10 cal guanyar per 2 punts.'
+      );
     }
   }
 
@@ -482,9 +505,6 @@ exports.saveResult = async (req, res) => {
     connection.release();
   }
 
-  if (req.body.returnTo === 'phases') {
-    res.redirect(`/phases/category/${categoryId}`);
-  } else {
-    res.redirect(`/matches/category/${categoryId}`);
-  }
+  if (wantsJson) return res.json({ ok: true });
+  res.redirect(returnUrl);
 };

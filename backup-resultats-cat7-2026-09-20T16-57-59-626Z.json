@@ -1,0 +1,1508 @@
+{
+  "created_at": "2026-09-20T16:57:59.612Z",
+  "competition_id": 1,
+  "category_id": 7,
+  "matches": [
+    {
+      "idpartit": 352,
+      "numero_partit": 1,
+      "participant1": 150,
+      "participant2": 177,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 353,
+      "numero_partit": 2,
+      "participant1": 185,
+      "participant2": 136,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 354,
+      "numero_partit": 3,
+      "participant1": 130,
+      "participant2": 177,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 355,
+      "numero_partit": 4,
+      "participant1": 150,
+      "participant2": 185,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 356,
+      "numero_partit": 5,
+      "participant1": 130,
+      "participant2": 136,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 357,
+      "numero_partit": 6,
+      "participant1": 177,
+      "participant2": 185,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 358,
+      "numero_partit": 7,
+      "participant1": 130,
+      "participant2": 185,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 359,
+      "numero_partit": 8,
+      "participant1": 136,
+      "participant2": 150,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 360,
+      "numero_partit": 9,
+      "participant1": 136,
+      "participant2": 177,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 361,
+      "numero_partit": 10,
+      "participant1": 130,
+      "participant2": 150,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 362,
+      "numero_partit": 11,
+      "participant1": 144,
+      "participant2": 203,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 363,
+      "numero_partit": 12,
+      "participant1": 148,
+      "participant2": 184,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 364,
+      "numero_partit": 13,
+      "participant1": 193,
+      "participant2": 203,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 365,
+      "numero_partit": 14,
+      "participant1": 144,
+      "participant2": 148,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 366,
+      "numero_partit": 15,
+      "participant1": 193,
+      "participant2": 184,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 367,
+      "numero_partit": 16,
+      "participant1": 203,
+      "participant2": 148,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 368,
+      "numero_partit": 17,
+      "participant1": 193,
+      "participant2": 148,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 369,
+      "numero_partit": 18,
+      "participant1": 184,
+      "participant2": 144,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 370,
+      "numero_partit": 19,
+      "participant1": 184,
+      "participant2": 203,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 371,
+      "numero_partit": 20,
+      "participant1": 193,
+      "participant2": 144,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 372,
+      "numero_partit": 21,
+      "participant1": 160,
+      "participant2": 141,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 373,
+      "numero_partit": 22,
+      "participant1": 139,
+      "participant2": 156,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 374,
+      "numero_partit": 23,
+      "participant1": 151,
+      "participant2": 141,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 375,
+      "numero_partit": 24,
+      "participant1": 160,
+      "participant2": 139,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 376,
+      "numero_partit": 25,
+      "participant1": 151,
+      "participant2": 156,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 377,
+      "numero_partit": 26,
+      "participant1": 141,
+      "participant2": 139,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 378,
+      "numero_partit": 27,
+      "participant1": 151,
+      "participant2": 139,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 379,
+      "numero_partit": 28,
+      "participant1": 156,
+      "participant2": 160,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 380,
+      "numero_partit": 29,
+      "participant1": 156,
+      "participant2": 141,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 381,
+      "numero_partit": 30,
+      "participant1": 151,
+      "participant2": 160,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 382,
+      "numero_partit": 31,
+      "participant1": 152,
+      "participant2": 199,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 383,
+      "numero_partit": 32,
+      "participant1": 183,
+      "participant2": 162,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 384,
+      "numero_partit": 33,
+      "participant1": 133,
+      "participant2": 199,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 385,
+      "numero_partit": 34,
+      "participant1": 152,
+      "participant2": 183,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 386,
+      "numero_partit": 35,
+      "participant1": 133,
+      "participant2": 162,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 387,
+      "numero_partit": 36,
+      "participant1": 199,
+      "participant2": 183,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 388,
+      "numero_partit": 37,
+      "participant1": 133,
+      "participant2": 183,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 389,
+      "numero_partit": 38,
+      "participant1": 162,
+      "participant2": 152,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 390,
+      "numero_partit": 39,
+      "participant1": 162,
+      "participant2": 199,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 391,
+      "numero_partit": 40,
+      "participant1": 133,
+      "participant2": 152,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 392,
+      "numero_partit": 41,
+      "participant1": 140,
+      "participant2": 172,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 393,
+      "numero_partit": 42,
+      "participant1": 143,
+      "participant2": 200,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 394,
+      "numero_partit": 43,
+      "participant1": 192,
+      "participant2": 172,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 395,
+      "numero_partit": 44,
+      "participant1": 140,
+      "participant2": 143,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 396,
+      "numero_partit": 45,
+      "participant1": 192,
+      "participant2": 200,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 397,
+      "numero_partit": 46,
+      "participant1": 172,
+      "participant2": 143,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 398,
+      "numero_partit": 47,
+      "participant1": 192,
+      "participant2": 143,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 399,
+      "numero_partit": 48,
+      "participant1": 200,
+      "participant2": 140,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 400,
+      "numero_partit": 49,
+      "participant1": 200,
+      "participant2": 172,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 401,
+      "numero_partit": 50,
+      "participant1": 192,
+      "participant2": 140,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 402,
+      "numero_partit": 51,
+      "participant1": 155,
+      "participant2": 180,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 403,
+      "numero_partit": 52,
+      "participant1": 202,
+      "participant2": 167,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 404,
+      "numero_partit": 53,
+      "participant1": 146,
+      "participant2": 180,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 405,
+      "numero_partit": 54,
+      "participant1": 155,
+      "participant2": 202,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 406,
+      "numero_partit": 55,
+      "participant1": 146,
+      "participant2": 167,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 407,
+      "numero_partit": 56,
+      "participant1": 180,
+      "participant2": 202,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 408,
+      "numero_partit": 57,
+      "participant1": 146,
+      "participant2": 202,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 409,
+      "numero_partit": 58,
+      "participant1": 167,
+      "participant2": 155,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 410,
+      "numero_partit": 59,
+      "participant1": 167,
+      "participant2": 180,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 411,
+      "numero_partit": 60,
+      "participant1": 146,
+      "participant2": 155,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 412,
+      "numero_partit": 61,
+      "participant1": 178,
+      "participant2": 188,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 413,
+      "numero_partit": 62,
+      "participant1": 182,
+      "participant2": 147,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 414,
+      "numero_partit": 63,
+      "participant1": 168,
+      "participant2": 188,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 415,
+      "numero_partit": 64,
+      "participant1": 178,
+      "participant2": 182,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 416,
+      "numero_partit": 65,
+      "participant1": 168,
+      "participant2": 147,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 417,
+      "numero_partit": 66,
+      "participant1": 188,
+      "participant2": 182,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 418,
+      "numero_partit": 67,
+      "participant1": 168,
+      "participant2": 182,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 419,
+      "numero_partit": 68,
+      "participant1": 147,
+      "participant2": 178,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 420,
+      "numero_partit": 69,
+      "participant1": 147,
+      "participant2": 188,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 421,
+      "numero_partit": 70,
+      "participant1": 168,
+      "participant2": 178,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 422,
+      "numero_partit": 71,
+      "participant1": 176,
+      "participant2": 179,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 423,
+      "numero_partit": 72,
+      "participant1": 195,
+      "participant2": 173,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 424,
+      "numero_partit": 73,
+      "participant1": 129,
+      "participant2": 179,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 425,
+      "numero_partit": 74,
+      "participant1": 176,
+      "participant2": 195,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 426,
+      "numero_partit": 75,
+      "participant1": 129,
+      "participant2": 173,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 427,
+      "numero_partit": 76,
+      "participant1": 179,
+      "participant2": 195,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 428,
+      "numero_partit": 77,
+      "participant1": 129,
+      "participant2": 195,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 429,
+      "numero_partit": 78,
+      "participant1": 173,
+      "participant2": 176,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 430,
+      "numero_partit": 79,
+      "participant1": 173,
+      "participant2": 179,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 431,
+      "numero_partit": 80,
+      "participant1": 129,
+      "participant2": 176,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 432,
+      "numero_partit": 81,
+      "participant1": 157,
+      "participant2": 166,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 433,
+      "numero_partit": 82,
+      "participant1": 154,
+      "participant2": 196,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 434,
+      "numero_partit": 83,
+      "participant1": 201,
+      "participant2": 166,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 435,
+      "numero_partit": 84,
+      "participant1": 157,
+      "participant2": 154,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 436,
+      "numero_partit": 85,
+      "participant1": 201,
+      "participant2": 196,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 437,
+      "numero_partit": 86,
+      "participant1": 166,
+      "participant2": 154,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 438,
+      "numero_partit": 87,
+      "participant1": 201,
+      "participant2": 154,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 439,
+      "numero_partit": 88,
+      "participant1": 196,
+      "participant2": 157,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 440,
+      "numero_partit": 89,
+      "participant1": 196,
+      "participant2": 166,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 441,
+      "numero_partit": 90,
+      "participant1": 201,
+      "participant2": 157,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 442,
+      "numero_partit": 91,
+      "participant1": 170,
+      "participant2": 138,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 443,
+      "numero_partit": 92,
+      "participant1": 142,
+      "participant2": 164,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 444,
+      "numero_partit": 93,
+      "participant1": 163,
+      "participant2": 138,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 445,
+      "numero_partit": 94,
+      "participant1": 170,
+      "participant2": 142,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 446,
+      "numero_partit": 95,
+      "participant1": 163,
+      "participant2": 164,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 447,
+      "numero_partit": 96,
+      "participant1": 138,
+      "participant2": 142,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 448,
+      "numero_partit": 97,
+      "participant1": 163,
+      "participant2": 142,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 449,
+      "numero_partit": 98,
+      "participant1": 164,
+      "participant2": 170,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 450,
+      "numero_partit": 99,
+      "participant1": 164,
+      "participant2": 138,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 451,
+      "numero_partit": 100,
+      "participant1": 163,
+      "participant2": 170,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 452,
+      "numero_partit": 101,
+      "participant1": 171,
+      "participant2": 153,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 453,
+      "numero_partit": 102,
+      "participant1": 135,
+      "participant2": 198,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 454,
+      "numero_partit": 103,
+      "participant1": 190,
+      "participant2": 153,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 455,
+      "numero_partit": 104,
+      "participant1": 171,
+      "participant2": 135,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 456,
+      "numero_partit": 105,
+      "participant1": 190,
+      "participant2": 198,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 457,
+      "numero_partit": 106,
+      "participant1": 153,
+      "participant2": 135,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 458,
+      "numero_partit": 107,
+      "participant1": 190,
+      "participant2": 135,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 459,
+      "numero_partit": 108,
+      "participant1": 198,
+      "participant2": 171,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 460,
+      "numero_partit": 109,
+      "participant1": 198,
+      "participant2": 153,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 461,
+      "numero_partit": 110,
+      "participant1": 190,
+      "participant2": 171,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 462,
+      "numero_partit": 111,
+      "participant1": 165,
+      "participant2": 187,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 463,
+      "numero_partit": 112,
+      "participant1": 191,
+      "participant2": 158,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 464,
+      "numero_partit": 113,
+      "participant1": 189,
+      "participant2": 187,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 465,
+      "numero_partit": 114,
+      "participant1": 165,
+      "participant2": 191,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 466,
+      "numero_partit": 115,
+      "participant1": 189,
+      "participant2": 158,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 467,
+      "numero_partit": 116,
+      "participant1": 187,
+      "participant2": 191,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 468,
+      "numero_partit": 117,
+      "participant1": 189,
+      "participant2": 191,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 469,
+      "numero_partit": 118,
+      "participant1": 158,
+      "participant2": 165,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 470,
+      "numero_partit": 119,
+      "participant1": 158,
+      "participant2": 187,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 471,
+      "numero_partit": 120,
+      "participant1": 189,
+      "participant2": 165,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 472,
+      "numero_partit": 121,
+      "participant1": 175,
+      "participant2": 197,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 473,
+      "numero_partit": 122,
+      "participant1": 137,
+      "participant2": 134,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 474,
+      "numero_partit": 123,
+      "participant1": 181,
+      "participant2": 197,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 475,
+      "numero_partit": 124,
+      "participant1": 175,
+      "participant2": 137,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 476,
+      "numero_partit": 125,
+      "participant1": 181,
+      "participant2": 134,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 477,
+      "numero_partit": 126,
+      "participant1": 197,
+      "participant2": 137,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 478,
+      "numero_partit": 127,
+      "participant1": 181,
+      "participant2": 137,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 479,
+      "numero_partit": 128,
+      "participant1": 134,
+      "participant2": 175,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 480,
+      "numero_partit": 129,
+      "participant1": 134,
+      "participant2": 197,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 481,
+      "numero_partit": 130,
+      "participant1": 181,
+      "participant2": 175,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 482,
+      "numero_partit": 131,
+      "participant1": 145,
+      "participant2": 174,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 483,
+      "numero_partit": 132,
+      "participant1": 159,
+      "participant2": 132,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 484,
+      "numero_partit": 133,
+      "participant1": 161,
+      "participant2": 174,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 485,
+      "numero_partit": 134,
+      "participant1": 145,
+      "participant2": 159,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 486,
+      "numero_partit": 135,
+      "participant1": 161,
+      "participant2": 132,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 487,
+      "numero_partit": 136,
+      "participant1": 174,
+      "participant2": 159,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 488,
+      "numero_partit": 137,
+      "participant1": 161,
+      "participant2": 159,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 489,
+      "numero_partit": 138,
+      "participant1": 132,
+      "participant2": 145,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 490,
+      "numero_partit": 139,
+      "participant1": 132,
+      "participant2": 174,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 491,
+      "numero_partit": 140,
+      "participant1": 161,
+      "participant2": 145,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 492,
+      "numero_partit": 141,
+      "participant1": 149,
+      "participant2": 131,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 493,
+      "numero_partit": 142,
+      "participant1": 194,
+      "participant2": 169,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 494,
+      "numero_partit": 143,
+      "participant1": 186,
+      "participant2": 131,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 495,
+      "numero_partit": 144,
+      "participant1": 149,
+      "participant2": 194,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 496,
+      "numero_partit": 145,
+      "participant1": 186,
+      "participant2": 169,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 497,
+      "numero_partit": 146,
+      "participant1": 131,
+      "participant2": 194,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 498,
+      "numero_partit": 147,
+      "participant1": 186,
+      "participant2": 194,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 499,
+      "numero_partit": 148,
+      "participant1": 169,
+      "participant2": 149,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 500,
+      "numero_partit": 149,
+      "participant1": 169,
+      "participant2": 131,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    },
+    {
+      "idpartit": 501,
+      "numero_partit": 150,
+      "participant1": 186,
+      "participant2": 149,
+      "resultat1": null,
+      "resultat2": null,
+      "guanyador": null,
+      "estat": "PENDENT"
+    }
+  ],
+  "games": []
+}

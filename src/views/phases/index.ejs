@@ -62,11 +62,18 @@
         </div>
       </div>
 
-      <% if (phase.locked) { %>
-        <span class="badge text-bg-danger fs-6">Sorteig bloquejat: ja hi ha resultats</span>
-      <% } else { %>
-        <span class="badge text-bg-success fs-6">Es pot tornar a sortejar</span>
-      <% } %>
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <a href="/phases/<%= phase.idfase %>/print-bracket"
+           target="_blank"
+           class="btn btn-outline-dark btn-sm">
+          🖨 Imprimir quadre
+        </a>
+        <% if (phase.locked) { %>
+          <span class="badge text-bg-danger fs-6">Sorteig bloquejat: ja hi ha resultats</span>
+        <% } else { %>
+          <span class="badge text-bg-success fs-6">Es pot tornar a sortejar</span>
+        <% } %>
+      </div>
     </div>
 
     <details class="mb-3">
@@ -93,6 +100,47 @@
           </tbody>
         </table>
       </div>
+
+      <% if (!phase.locked) {
+           const swappablePositions = phase.positions.filter(pos => pos.idparticipant);
+      %>
+        <form action="/phases/<%= phase.idfase %>/swap-players"
+              method="post"
+              class="card card-body bg-light mt-3"
+              onsubmit="return confirm('Intercanviar aquests dos jugadors? Es reconstruiran els enfrontaments del quadre i els BYE, però es conservaran les taules i els horaris assignats.')">
+          <div class="fw-semibold mb-2">Correcció manual del sorteig</div>
+          <div class="row g-2 align-items-end">
+            <div class="col-md-5">
+              <label class="form-label small mb-1">Primer jugador</label>
+              <select name="positionA" class="form-select form-select-sm" required>
+                <option value="">Selecciona...</option>
+                <% swappablePositions.forEach(pos => { %>
+                  <option value="<%= pos.posicio %>">
+                    Pos. <%= pos.posicio %> · <%= pos.nom_mostrar %> (<%= pos.origen || 'sense origen' %>)
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <label class="form-label small mb-1">Segon jugador</label>
+              <select name="positionB" class="form-select form-select-sm" required>
+                <option value="">Selecciona...</option>
+                <% swappablePositions.forEach(pos => { %>
+                  <option value="<%= pos.posicio %>">
+                    Pos. <%= pos.posicio %> · <%= pos.nom_mostrar %> (<%= pos.origen || 'sense origen' %>)
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="col-md-2 d-grid">
+              <button class="btn btn-sm btn-warning">Intercanviar</button>
+            </div>
+          </div>
+          <div class="form-text">
+            Disponible només mentre no s’hagi introduït cap resultat eliminatori.
+          </div>
+        </form>
+      <% } %>
     </details>
 
     <div class="bracket-scroll">
@@ -101,9 +149,34 @@
           <div class="round-column">
             <h3><%= round.nom %></h3>
 
-            <% round.matches.forEach(match => { %>
+            <div class="text-center mb-2">
+              <% if (round.printable) { %>
+                <a href="/phases/round/<%= round.idronda %>/print?bestOf=5"
+                   target="_blank"
+                   class="btn btn-sm btn-outline-primary">
+                  🖨 Imprimir actes
+                </a>
+              <% } else { %>
+                <button type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                        disabled
+                        title="Cal que tots els partits de la ronda tinguin els dos participants definits">
+                  🖨 Actes pendents
+                </button>
+              <% } %>
+            </div>
+
+            <% round.matches.forEach(match => {
+                 const scheduleComplete = Boolean(match.idtaula && match.data_hora_input);
+                 const tableText = match.taula_nom || (match.taula_numero ? ('Taula ' + match.taula_numero) : 'Taula pendent');
+                 const dateTimeText = match.data_hora_input
+                   ? (match.data_hora_input.substring(8,10) + '/' + match.data_hora_input.substring(5,7) + '/' + match.data_hora_input.substring(0,4) + ' · ' + match.data_hora_input.substring(11,16))
+                   : 'Hora pendent';
+            %>
               <div class="match-card <%= match.bye ? 'bye-card' : '' %>">
-                <div class="small text-muted mb-1">Partit <%= match.numero_partit %></div>
+                <div class="d-flex justify-content-between gap-2 small text-muted mb-1">
+                  <span>Partit <%= match.numero_partit %></span>
+                </div>
 
                 <div class="player-row <%= Number(match.guanyador) === Number(match.participant1) ? 'winner' : '' %>">
                   <span><%= match.participant1_nom || (match.bye ? 'BYE' : 'Pendent') %></span>
@@ -114,12 +187,64 @@
                   <% if (match.resultat2 !== null) { %><strong><%= match.resultat2 %></strong><% } %>
                 </div>
 
+                <% if (!match.bye) { %>
+                  <div class="match-schedule-status <%= scheduleComplete ? 'complete' : 'incomplete' %>">
+                    <span><%= scheduleComplete ? '✓' : '⚠' %></span>
+                    <strong><%= tableText %></strong>
+                    <span>· <%= dateTimeText %></span>
+                  </div>
+                <% } %>
+
+                <% if (!match.bye) { %>
+                  <details class="schedule-box mt-2">
+                    <summary class="small fw-semibold">📅 Assignar hora i taula</summary>
+                    <form action="/phases/match/<%= match.idpartit %>/schedule"
+                          method="post"
+                          class="mt-2">
+                      <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
+                      <div class="row g-1">
+                        <div class="col-6">
+                          <label class="form-label schedule-label">Data</label>
+                          <input type="date"
+                                 name="date"
+                                 class="form-control form-control-sm"
+                                 value="<%= match.data_hora_input ? match.data_hora_input.substring(0,10) : '' %>">
+                        </div>
+                        <div class="col-6">
+                          <label class="form-label schedule-label">Hora</label>
+                          <input type="time"
+                                 name="time"
+                                 class="form-control form-control-sm"
+                                 value="<%= match.data_hora_input ? match.data_hora_input.substring(11,16) : '' %>">
+                        </div>
+                        <div class="col-8">
+                          <label class="form-label schedule-label">Taula</label>
+                          <select name="tableId" class="form-select form-select-sm">
+                            <option value="">Sense assignar</option>
+                            <% tables.forEach(table => { %>
+                              <option value="<%= table.idtaula %>"
+                                      <%= Number(match.idtaula) === Number(table.idtaula) ? 'selected' : '' %>>
+                                <%= table.nom || ('Taula ' + table.numero) %><%= table.activa ? '' : ' (inactiva)' %>
+                              </option>
+                            <% }) %>
+                          </select>
+                        </div>
+                        <div class="col-4 d-grid align-items-end">
+                          <button class="btn btn-sm btn-outline-primary">Desar</button>
+                        </div>
+                      </div>
+                      <div class="form-text schedule-help">Deixa-ho tot buit per desassignar.</div>
+                    </form>
+                  </details>
+                <% } %>
+
                 <% if (!match.bye && match.participant1 && match.participant2) { %>
                   <form action="/matches/<%= match.idpartit %>/result"
                         method="post"
                         class="mt-2 phase-result-form">
                     <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
                     <input type="hidden" name="returnTo" value="phases">
+                    <input type="hidden" name="ajax" value="1">
 
                     <div class="d-flex gap-1 flex-wrap align-items-center">
                       <% for (let joc = 1; joc <= 5; joc++) {
@@ -127,13 +252,11 @@
                       %>
                         <div class="d-flex align-items-center border rounded p-1">
                           <input class="form-control form-control-sm text-center phase-score"
-                                 style="width:42px"
                                  type="number" min="0" max="99"
                                  name="joc<%= joc %>_p1"
                                  value="<%= saved ? saved.punts1 : '' %>">
                           <span class="mx-1">-</span>
                           <input class="form-control form-control-sm text-center phase-score"
-                                 style="width:42px"
                                  type="number" min="0" max="99"
                                  name="joc<%= joc %>_p2"
                                  value="<%= saved ? saved.punts2 : '' %>">
@@ -166,7 +289,7 @@
   min-width: max-content;
 }
 .round-column {
-  width: 285px;
+  width: 320px;
 }
 .round-column h3 {
   font-size: 1rem;
@@ -196,6 +319,178 @@
 .player-row.winner {
   font-weight: 700;
 }
+.match-schedule-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 7px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  font-size: .72rem;
+  line-height: 1.15;
+}
+.match-schedule-status.complete {
+  color: #0f5132;
+  background: #d1e7dd;
+  border: 1px solid #badbcc;
+}
+.match-schedule-status.incomplete {
+  color: #664d03;
+  background: #fff3cd;
+  border: 1px solid #ffecb5;
+}
+.phase-score {
+  width: 50px;
+  min-width: 50px;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+.phase-score::-webkit-inner-spin-button,
+.phase-score::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+.schedule-box {
+  border-top: 1px dashed #ccc;
+  padding-top: 6px;
+}
+.schedule-box summary {
+  cursor: pointer;
+  color: #0d6efd;
+}
+.schedule-label {
+  font-size: .72rem;
+  margin-bottom: 2px;
+  color: #555;
+}
+.schedule-help {
+  font-size: .68rem;
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollKey = 'phase-final-scroll-<%= category.idcategoria %>';
+  const savedScroll = sessionStorage.getItem(scrollKey);
+
+  if (savedScroll !== null) {
+    sessionStorage.removeItem(scrollKey);
+    window.requestAnimationFrame(() => window.scrollTo(0, Number(savedScroll) || 0));
+  }
+
+  function validGameScore(score1, score2) {
+    if (
+      !Number.isInteger(score1) ||
+      !Number.isInteger(score2) ||
+      score1 < 0 ||
+      score2 < 0 ||
+      score1 === score2
+    ) {
+      return false;
+    }
+
+    const winner = Math.max(score1, score2);
+    const loser = Math.min(score1, score2);
+
+    if (loser <= 9) return winner === 11;
+    return winner >= 12 && winner - loser === 2;
+  }
+
+  function showResultError(message, input) {
+    document.querySelectorAll('.phase-score.is-invalid').forEach(
+      field => field.classList.remove('is-invalid')
+    );
+
+    if (input) {
+      input.classList.add('is-invalid');
+      input.focus();
+      input.select();
+    }
+
+    window.alert('Resultat no vàlid\n\n' + message);
+  }
+
+  document.querySelectorAll('.phase-score').forEach(input => {
+    input.addEventListener('input', () => input.classList.remove('is-invalid'));
+  });
+
+  document.querySelectorAll('.phase-result-form').forEach(form => {
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+
+      for (let game = 1; game <= 5; game++) {
+        const input1 = form.querySelector(`[name="joc${game}_p1"]`);
+        const input2 = form.querySelector(`[name="joc${game}_p2"]`);
+        const raw1 = input1.value.trim();
+        const raw2 = input2.value.trim();
+
+        if ((raw1 === '') !== (raw2 === '')) {
+          showResultError(
+            `Joc ${game}: cal informar els punts dels dos jugadors.`,
+            raw1 === '' ? input1 : input2
+          );
+          return;
+        }
+
+        if (raw1 !== '' && raw2 !== '') {
+          const score1 = Number(raw1);
+          const score2 = Number(raw2);
+
+          if (!validGameScore(score1, score2)) {
+            showResultError(
+              `Joc ${game}: ${raw1}-${raw2}.\n` +
+              'Fins a 9 punts del perdedor, el guanyador ha de tenir 11. ' +
+              'A partir de 10-10 cal guanyar per 2 punts.',
+              input1
+            );
+            return;
+          }
+        }
+      }
+
+      const button = form.querySelector('button[type="submit"], button:not([type])');
+      const originalText = button ? button.textContent : '';
+
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Desant...';
+      }
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: new URLSearchParams(new FormData(form))
+        });
+
+        const contentType = response.headers.get('content-type') || '';
+        const payload = contentType.includes('application/json')
+          ? await response.json()
+          : null;
+
+        if (!response.ok || !payload?.ok) {
+          throw new Error(payload?.error || 'No s’ha pogut desar el resultat.');
+        }
+
+        sessionStorage.setItem(scrollKey, String(window.scrollY));
+        window.location.reload();
+      } catch (error) {
+        showResultError(error.message || 'No s’ha pogut desar el resultat.');
+
+        if (button) {
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      }
+    });
+  });
+});
+</script>
 
 <%- include('../partials/footer') %>

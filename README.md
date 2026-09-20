@@ -350,3 +350,66 @@ No tornis a executar l'script complet d'instal·lació v0.7 sobre Aiven.
   - 16 participants, N=6 -> 6+5+5
   - 17 participants, N=6 -> 6+6+5
 - Si el total no es pot repartir exclusivament entre N i N-1, es mostra un avís.
+
+
+## v0.9.2 - Actes dels partits d'eliminatòries
+
+- Botó `Imprimir actes` a cada ronda de la fase final.
+- El botó només s'activa quan tots els partits reals de la ronda tenen els dos participants definits.
+- Vista d'impressió exclusiva amb 6 actes per full A4 (2 columnes × 3 files) i guies de tall.
+- Selector de partits al millor de 3, 5 o 7, amb tantes caselles de joc com correspongui.
+- Cada acta inclou competició, categoria, fase, ronda, número de partit, taula, hora i jugadors.
+- Espais per al resultat, nom de l'àrbitre, targeta blanca de temps mort, sancions i signatures.
+- Reutilitza la capçalera gràfica de la FCTT de les actes de grup.
+- No requereix cap migració de base de dades.
+
+
+## v0.9.3 - Correcció manual del quadre i programació eliminatòria
+
+- Intercanvi manual de dos jugadors dins del mateix Quadre A o Consolació.
+- L'intercanvi conserva l'origen i el pes de sorteig de cada jugador, reconstrueix els enfrontaments i torna a propagar els BYE.
+- La correcció manual queda bloquejada quan ja s'ha introduït qualsevol resultat eliminatori.
+- Assignació manual de data, hora i taula a cada partit eliminatori, fins i tot abans de conèixer els participants de rondes posteriors.
+- Control de conflictes quan una mateixa taula ja té un partit exactament a la mateixa data i hora.
+- Les actes d'eliminatòries mostren automàticament la taula i l'hora programades.
+- No requereix cap migració de base de dades.
+
+
+## v0.9.4 - Camps de resultat de les eliminatòries
+
+- S'han eliminat visualment les fletxes d'increment i decrement dels marcadors eliminatoris.
+- Els camps tenen més amplada útil i menys marge interior perquè es vegin correctament els resultats de dues xifres.
+- Es manté el tipus numèric, el teclat numèric en dispositius compatibles i la validació de 0 a 99.
+- No requereix cap migració de base de dades.
+
+
+## v0.9.5 - Impressió del quadre eliminatori
+
+- Botó `Imprimir quadre` a cada fase Final A o Consolació.
+- Quadre complet en una sola pàgina A4 vertical, inspirat en el model de la FCTT.
+- Disseny adaptable a quadres de 8, 16, 32 i 64 posicions.
+- Connectors visuals entre partits i rondes fins a la final.
+- Mostra els noms ja coneguts a qualsevol ronda; les places encara pendents queden en blanc.
+- Mostra llicència i club quan estan disponibles, inclosos els participants de dobles.
+- Inclou competició, categoria, fase, lloc, data, número d'acta i resultat final del partit.
+- No requereix cap migració de base de dades.
+
+
+## v0.9.6 - Programació visible i errors de resultat sense redirecció
+
+- El quadre imprès mostra el número de taula i l'hora de cada partit quan estan assignats.
+- Cada partit de la pantalla de fase final indica clarament si està programat.
+- Estat verd per als partits amb taula i horari complets; estat groc amb els camps pendents quan falta alguna dada.
+- Validació del resultat al navegador abans de desar-lo.
+- Els marcadors incorrectes, com `13-19`, mostren un avís emergent, marquen el camp erroni i no canvien de pantalla.
+- El desament des de la fase final es fa en segon pla; els errors del servidor també es mostren sense redirigir.
+- Després d'un resultat correcte es conserva aproximadament la posició vertical de la pantalla.
+- No requereix cap migració de base de dades.
+
+
+## v0.9.7 - Desament robust i horari visible al quadre
+
+- El formulari de resultats identifica explícitament les peticions en segon pla, encara que el navegador o un intermediari elimini la capçalera AJAX.
+- Després de corregir un marcador invàlid, un resultat correcte es desa sense abandonar la fase final.
+- La taula i l'hora assignades es mostren en una etiqueta clara dins de cada partit del quadre imprès.
+- No requereix cap migració de base de dades.

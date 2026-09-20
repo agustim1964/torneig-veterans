@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Actes · <%= round.competicio_nom %> · <%= round.fase_nom %> · <%= round.ronda_nom %></title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 6mm;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      color: #111;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .controls {
+      max-width: 198mm;
+      margin: 10px auto;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f8f9fa;
+      font-size: 14px;
+    }
+
+    .controls label { font-weight: 700; }
+    .controls select, .controls button {
+      margin-left: 6px;
+      padding: 6px 10px;
+      font: inherit;
+    }
+
+    .controls .hint {
+      margin-left: 10px;
+      color: #555;
+    }
+
+    .page {
+      width: 198mm;
+      height: 285mm;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 99mm);
+      grid-template-rows: repeat(3, 95mm);
+      break-after: page;
+      page-break-after: always;
+      overflow: hidden;
+    }
+
+    .page:last-child {
+      break-after: auto;
+      page-break-after: auto;
+    }
+
+    .sheet {
+      position: relative;
+      width: 99mm;
+      height: 95mm;
+      padding: 2.2mm 2.5mm;
+      overflow: hidden;
+      border-right: 0.25mm dashed #999;
+      border-bottom: 0.25mm dashed #999;
+      font-size: 7.5pt;
+    }
+
+    .sheet:nth-child(2n) { border-right: 0; }
+
+    .header-logo {
+      height: 8.5mm;
+      margin-bottom: 0.7mm;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .header-logo img {
+      display: inline-block;
+      max-width: 58mm;
+      max-height: 8.5mm;
+      width: auto;
+      height: auto;
+    }
+
+    .title {
+      text-align: center;
+      line-height: 1.12;
+      margin-bottom: 1mm;
+    }
+
+    .competition {
+      font-size: 8.5pt;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .category-round {
+      font-size: 7.5pt;
+      font-weight: 700;
+    }
+
+    .match-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1mm;
+      margin-bottom: 1mm;
+      padding: 0.7mm 1mm;
+      border: 0.25mm solid #555;
+      font-size: 6.7pt;
+    }
+
+    .match-meta span:nth-child(2) { text-align: center; }
+    .match-meta span:last-child { text-align: right; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th, td { border: 0.25mm solid #444; }
+
+    .players { margin-bottom: 1mm; }
+
+    .players td {
+      height: 5.7mm;
+      padding: 0.7mm 1mm;
+      font-size: 7.8pt;
+      font-weight: 700;
+      line-height: 1.05;
+      overflow-wrap: anywhere;
+    }
+
+    .players .player-letter {
+      width: 7mm;
+      text-align: center;
+      font-size: 7pt;
+    }
+
+    .games { margin-bottom: 1mm; }
+
+    .games th {
+      height: 3.7mm;
+      padding: 0.3mm;
+      text-align: center;
+      font-size: 6.2pt;
+      font-weight: 700;
+    }
+
+    .games td {
+      height: 5.7mm;
+      padding: 0;
+      text-align: center;
+    }
+
+    .games .label { width: 7mm; font-size: 7pt; font-weight: 700; }
+    .games .final { width: 10mm; }
+
+    .referee {
+      height: 5mm;
+      margin-bottom: 1mm;
+      padding: 0.9mm 1mm 0;
+      border: 0.25mm solid #444;
+      font-size: 7pt;
+    }
+
+    .cards {
+      margin-bottom: 1mm;
+      font-size: 5.5pt;
+    }
+
+    .cards th {
+      height: 5.3mm;
+      padding: 0.25mm;
+      text-align: center;
+      line-height: 1.02;
+    }
+
+    .cards td {
+      height: 4.8mm;
+      padding: 0;
+      text-align: center;
+      font-size: 8pt;
+    }
+
+    .cards .player-letter { width: 7mm; font-size: 6.5pt; font-weight: 700; }
+
+    .signatures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+      padding: 3mm 1mm 0;
+      font-size: 5.8pt;
+      text-align: center;
+    }
+
+    .signature {
+      border-top: 0.25mm solid #333;
+      padding-top: 0.7mm;
+    }
+
+    @media print {
+      .controls { display: none; }
+      .page { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <label for="bestOf">Partits al millor de</label>
+    <select id="bestOf" onchange="changeBestOf(this.value)">
+      <option value="3" <%= bestOf === 3 ? 'selected' : '' %>>3 jocs</option>
+      <option value="5" <%= bestOf === 5 ? 'selected' : '' %>>5 jocs</option>
+      <option value="7" <%= bestOf === 7 ? 'selected' : '' %>>7 jocs</option>
+    </select>
+    <button type="button" onclick="window.print()">🖨 Imprimir</button>
+    <span class="hint"><%= matches.length %> acta(es) · 6 per full A4</span>
+  </div>
+
+  <%
+    const pages = [];
+    for (let index = 0; index < matches.length; index += 6) {
+      pages.push(matches.slice(index, index + 6));
+    }
+  %>
+
+  <% pages.forEach(pageMatches => { %>
+    <section class="page">
+      <% pageMatches.forEach(match => {
+           const tableLabel = match.taula_nom || (match.taula_numero ? ('Taula ' + match.taula_numero) : '____');
+           const timeLabel = match.data_hora
+             ? new Date(match.data_hora).toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })
+             : '____';
+      %>
+        <article class="sheet">
+          <div class="header-logo">
+            <img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula">
+          </div>
+
+          <div class="title">
+            <div class="competition"><%= round.competicio_nom %></div>
+            <div class="category-round">
+              <%= round.categoria_nom %> · <%= round.fase_nom %> · <%= round.ronda_nom %>
+            </div>
+          </div>
+
+          <div class="match-meta">
+            <span>Partit: <strong><%= match.numero_partit || match.idpartit %></strong></span>
+            <span><strong><%= tableLabel %></strong></span>
+            <span>Hora: <strong><%= timeLabel %></strong></span>
+          </div>
+
+          <table class="players">
+            <tbody>
+              <tr><td class="player-letter">A</td><td><%= match.participant1_nom %></td></tr>
+              <tr><td class="player-letter">B</td><td><%= match.participant2_nom %></td></tr>
+            </tbody>
+          </table>
+
+          <table class="games">
+            <thead>
+              <tr>
+                <th class="label">Joc</th>
+                <% for (let game = 1; game <= bestOf; game++) { %><th><%= game %></th><% } %>
+                <th class="final">Resultat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="label">A</td>
+                <% for (let game = 1; game <= bestOf; game++) { %><td></td><% } %>
+                <td></td>
+              </tr>
+              <tr>
+                <td class="label">B</td>
+                <% for (let game = 1; game <= bestOf; game++) { %><td></td><% } %>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="referee"><strong>Àrbitre:</strong></div>
+
+          <table class="cards">
+            <thead>
+              <tr>
+                <th class="player-letter"></th>
+                <th>TM /<br>blanca</th>
+                <th>Groga</th>
+                <th>1a groga /<br>vermella</th>
+                <th>2a groga /<br>vermella</th>
+                <th>Vermella</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="player-letter">A</td><td>□</td><td>□</td><td>□</td><td>□</td><td>□</td></tr>
+              <tr><td class="player-letter">B</td><td>□</td><td>□</td><td>□</td><td>□</td><td>□</td></tr>
+            </tbody>
+          </table>
+
+          <div class="signatures">
+            <div class="signature">Signatura jugador A</div>
+            <div class="signature">Signatura jugador B</div>
+          </div>
+        </article>
+      <% }); %>
+    </section>
+  <% }); %>
+
+  <script>
+    function changeBestOf(value) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('bestOf', value);
+      window.location.href = url.toString();
+    }
+  </script>
+</body>
+</html>
