@@ -63,23 +63,121 @@ exports.create = async (req, res) => {
   res.redirect(`/participants/category/${categoryId}`);
 };
 
+exports.edit = async (req, res) => {
+  const id = Number(req.params.id);
+  const [[participant]] = await db.query(
+    'SELECT * FROM participants WHERE idparticipant = ?',
+    [id]
+  );
+
+  if (!participant) return res.status(404).send('Participant no trobat');
+
+  const category = await getCategory(participant.idcategoria);
+  const [players] = await db.query(`
+    SELECT
+      j.idjugador,
+      j.nom,
+      j.cognoms,
+      DATE_FORMAT(j.data_naixement, '%Y-%m-%d') AS data_naixement,
+      j.club,
+      j.pais,
+      j.sexe,
+      j.num_llicencia,
+      pj.ordre
+    FROM participant_jugadors pj
+    INNER JOIN jugadors j ON j.idjugador = pj.idjugador
+    WHERE pj.idparticipant = ?
+    ORDER BY pj.ordre, j.idjugador
+  `, [id]);
+
+  res.render('participants/edit', { category, participant, players });
+};
+
+function asArray(value) {
+  if (value === undefined) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
 exports.update = async (req, res) => {
   const id = Number(req.params.id);
-  const { nom_mostrar, ranking, club, pais, categoryId } = req.body;
+  const { nom_mostrar, ranking, club, pais, actiu } = req.body;
+  const connection = await db.getConnection();
 
-  await db.query(`
-    UPDATE participants
-    SET nom_mostrar = ?, club = ?, pais = ?, ranking = ?
-    WHERE idparticipant = ?
-  `, [
-    String(nom_mostrar || '').trim(),
-    String(club || '').trim() || null,
-    String(pais || '').trim().toUpperCase() || null,
-    Number(ranking || 0),
-    id
-  ]);
+  try {
+    await connection.beginTransaction();
 
-  res.redirect(`/participants/category/${Number(categoryId)}`);
+    const [[participant]] = await connection.query(
+      'SELECT idcategoria FROM participants WHERE idparticipant = ? FOR UPDATE',
+      [id]
+    );
+
+    if (!participant) {
+      await connection.rollback();
+      return res.status(404).send('Participant no trobat');
+    }
+
+    await connection.query(`
+      UPDATE participants
+      SET nom_mostrar = ?, club = ?, pais = ?, ranking = ?, actiu = ?
+      WHERE idparticipant = ?
+    `, [
+      String(nom_mostrar || '').trim(),
+      String(club || '').trim() || null,
+      String(pais || '').trim().toUpperCase() || null,
+      Number(ranking || 0),
+      Number(actiu) === 1 ? 1 : 0,
+      id
+    ]);
+
+    const playerIds = asArray(req.body.player_id);
+    const playerNames = asArray(req.body.player_nom);
+    const playerSurnames = asArray(req.body.player_cognoms);
+    const playerBirthDates = asArray(req.body.player_data_naixement);
+    const playerClubs = asArray(req.body.player_club);
+    const playerCountries = asArray(req.body.player_pais);
+    const playerSexes = asArray(req.body.player_sexe);
+    const playerLicences = asArray(req.body.player_num_llicencia);
+
+    for (let index = 0; index < playerIds.length; index++) {
+      const playerId = Number(playerIds[index]);
+      if (!playerId) continue;
+
+      await connection.query(`
+        UPDATE jugadors j
+        INNER JOIN participant_jugadors pj
+          ON pj.idjugador = j.idjugador
+         AND pj.idparticipant = ?
+        SET j.nom = ?,
+            j.cognoms = ?,
+            j.data_naixement = ?,
+            j.club = ?,
+            j.pais = ?,
+            j.sexe = ?,
+            j.num_llicencia = ?
+        WHERE j.idjugador = ?
+      `, [
+        id,
+        String(playerNames[index] || '').trim(),
+        String(playerSurnames[index] || '').trim() || null,
+        String(playerBirthDates[index] || '').trim() || null,
+        String(playerClubs[index] || '').trim() || null,
+        String(playerCountries[index] || '').trim().toUpperCase() || null,
+        ['M', 'F'].includes(String(playerSexes[index] || '').toUpperCase())
+          ? String(playerSexes[index]).toUpperCase()
+          : null,
+        String(playerLicences[index] || '').trim() || null,
+        playerId
+      ]);
+    }
+
+    await connection.commit();
+    res.redirect(`/participants/category/${participant.idcategoria}`);
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
 };
 
 exports.toggleActive = async (req, res) => {

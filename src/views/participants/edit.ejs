@@ -1,0 +1,115 @@
+<%- include('../partials/header', { title: `Editar ${participant.nom_mostrar}` }) %>
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+  <div>
+    <a href="/participants/category/<%= category.idcategoria %>" class="text-decoration-none">
+      ← Tornar als participants
+    </a>
+    <h1 class="mt-2 mb-1">Editar participant</h1>
+    <div class="text-muted"><%= category.nom %></div>
+  </div>
+</div>
+
+<form action="/participants/<%= participant.idparticipant %>/update" method="post">
+  <div class="card shadow-sm mb-4">
+    <div class="card-header">Dades del participant a la competició</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label">Nom a mostrar</label>
+          <input class="form-control" name="nom_mostrar"
+                 value="<%= participant.nom_mostrar %>" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Club</label>
+          <input class="form-control" name="club" value="<%= participant.club || '' %>">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">País</label>
+          <input class="form-control text-uppercase" maxlength="3" name="pais"
+                 value="<%= participant.pais || '' %>">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Rànquing</label>
+          <input class="form-control" type="number" name="ranking"
+                 value="<%= participant.ranking || 0 %>">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Estat</label>
+          <select class="form-select" name="actiu">
+            <option value="1" <%= participant.actiu ? 'selected' : '' %>>Actiu</option>
+            <option value="0" <%= !participant.actiu ? 'selected' : '' %>>Inactiu</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if (players.length) { %>
+    <div class="card shadow-sm mb-4">
+      <div class="card-header">
+        <%= players.length > 1 ? 'Components de la parella' : 'Dades del jugador' %>
+      </div>
+      <div class="card-body">
+        <% players.forEach((player, index) => { %>
+          <input type="hidden" name="player_id[]" value="<%= player.idjugador %>">
+          <div class="<%= index ? 'border-top pt-4 mt-4' : '' %>">
+            <% if (players.length > 1) { %>
+              <h2 class="h6 mb-3">Jugador <%= index + 1 %></h2>
+            <% } %>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Nom</label>
+                <input class="form-control" name="player_nom[]" value="<%= player.nom || '' %>">
+              </div>
+              <div class="col-md-8">
+                <label class="form-label">Cognoms</label>
+                <input class="form-control" name="player_cognoms[]" value="<%= player.cognoms || '' %>">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Data de naixement</label>
+                <input class="form-control" type="date" name="player_data_naixement[]"
+                       value="<%= player.data_naixement || '' %>">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Sexe</label>
+                <select class="form-select" name="player_sexe[]">
+                  <option value="" <%= !player.sexe ? 'selected' : '' %>>Sense indicar</option>
+                  <option value="M" <%= player.sexe === 'M' ? 'selected' : '' %>>Masculí</option>
+                  <option value="F" <%= player.sexe === 'F' ? 'selected' : '' %>>Femení</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Llicència</label>
+                <input class="form-control" name="player_num_llicencia[]"
+                       value="<%= player.num_llicencia || '' %>">
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">País</label>
+                <input class="form-control text-uppercase" maxlength="3" name="player_pais[]"
+                       value="<%= player.pais || '' %>">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Club</label>
+                <input class="form-control" name="player_club[]" value="<%= player.club || '' %>">
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="alert alert-info">
+      Aquest participant no té una fitxa de jugador vinculada. Es poden editar totes les dades
+      disponibles de la competició al bloc superior.
+    </div>
+  <% } %>
+
+  <div class="d-flex gap-2 justify-content-end">
+    <a class="btn btn-outline-secondary"
+       href="/participants/category/<%= category.idcategoria %>">Cancel·lar</a>
+    <button class="btn btn-primary" type="submit">Desar canvis</button>
+  </div>
+</form>
+
+<%- include('../partials/footer') %>
