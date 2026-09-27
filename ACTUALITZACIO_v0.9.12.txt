@@ -1,0 +1,37 @@
+TORNEIG VETERANS v0.9.12
+========================
+
+1. Fes una còpia de seguretat de la base de dades.
+
+2. Executa UNA SOLA VEGADA a MySQL Workbench:
+
+   mysql/013_v0912_import_data_naixement_actiu.sql
+
+3. Copia els fitxers de la v0.9.12 al projecte local.
+
+4. Com que s'ha afegit la dependència jszip, executa dins del projecte:
+
+   npm install
+
+5. Prova l'aplicació:
+
+   npm start
+
+6. Importa l'Excel des de la categoria corresponent.
+
+   - data_naixement es desa a jugadors.data_naixement.
+   - actiu = 0 deixa el participant inactiu i fora del sorteig.
+   - actiu = 1 deixa el participant actiu.
+
+7. Si tot és correcte, actualitza GitHub:
+
+   git add .
+   git commit -m "Versio 0.9.12 - data naixement i actiu a la importacio"
+   git push origin main
+
+8. Al servidor Oracle, executa l'actualitzador que ja tens:
+
+   actualitza-torneig-oracle.bat
+
+IMPORTANT: no tornis a executar la migració SQL si la columna
+jugadors.data_naixement ja existeix.

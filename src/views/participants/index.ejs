@@ -15,6 +15,14 @@
 
 <div class="row g-4">
   <div class="col-lg-8">
+    <% if (importSummary && importSummary.imported > 0) { %>
+      <div class="alert alert-success">
+        S'han importat <strong><%= importSummary.imported %></strong> participants.
+        <% if (importSummary.inactive > 0) { %>
+          <strong><%= importSummary.inactive %></strong> han quedat inactius i no entraran al sorteig.
+        <% } %>
+      </div>
+    <% } %>
     <div class="card shadow-sm">
       <div class="card-header">Participants</div>
       <div class="table-responsive">
@@ -25,6 +33,7 @@
               <th>Participant</th>
               <th>Club</th>
               <th>País</th>
+              <th>Data naixement</th>
               <th>Estat</th>
               <th></th>
             </tr>
@@ -46,6 +55,7 @@
                 <td style="width:85px">
                   <input class="form-control form-control-sm text-uppercase" maxlength="3" name="pais" value="<%= p.pais || '' %>">
                 </td>
+                <td class="text-nowrap"><%= p.data_naixement || '—' %></td>
                 <td>
                   <% if (p.actiu && !p.baixa) { %>
                     <span class="badge text-bg-success">Actiu</span>
@@ -102,7 +112,14 @@
     <div class="card shadow-sm mb-4">
       <div class="card-header">Importar Excel / CSV</div>
       <div class="card-body">
-        <p class="small text-muted">La v0.8 també reconeix la columna <strong>pais</strong> (codi de 3 lletres, p. ex. ESP).</p>
+        <p class="small text-muted">
+          Columnes admeses: <strong>nom</strong>, <strong>cognoms</strong>,
+          <strong>club</strong>, <strong>pais</strong>, <strong>sexe</strong>,
+          <strong>llicencia</strong>, <strong>ranking</strong>,
+          <strong>data_naixement</strong> i <strong>actiu</strong>.
+          La data pot ser una data d'Excel, dd/mm/aaaa o aaaa-mm-dd.
+          Per a actiu s'accepta 1/0, sí/no o actiu/inactiu.
+        </p>
         <form action="/participants/category/<%= category.idcategoria %>/import" method="post" enctype="multipart/form-data">
           <input class="form-control mb-3" type="file" name="fitxer" accept=".xlsx,.csv" required>
           <button class="btn btn-outline-primary w-100">Importar</button>

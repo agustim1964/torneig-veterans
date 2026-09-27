@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const { generateMaster, generateGlobalMaster, isoDate } = require('../services/scheduleService');
+const { generateMaster, generateGlobalMaster, generateSessionMaster, isoDate } = require('../services/scheduleService');
 
 async function getCompetition(id) {
   const [[competition]] = await db.query(`
@@ -41,10 +41,17 @@ exports.show = async (req, res) => {
     ORDER BY pg.data, pg.hora_inici, t.numero, cat.nom, g.numero
   `, [id]);
 
+  const [sessions] = await db.query(`
+    SELECT *
+    FROM sessions_competicio
+    WHERE idcompeticio = ?
+    ORDER BY data, hora_inici, ordre, idsessio
+  `, [id]);
+
   const dates = [...new Set(rows.map(r => isoDate(r.data)).filter(Boolean))];
   const defaultDate = isoDate(req.query.data || competition.data_inici || new Date());
 
-  res.render('schedule/index', { competition, tables, rows, dates, defaultDate, isoDate });
+  res.render('schedule/index', { competition, tables, rows, sessions, dates, defaultDate, isoDate });
 };
 
 exports.generate = async (req, res) => {
@@ -110,17 +117,32 @@ exports.generate = async (req, res) => {
       : [Number(row.idtaula)];
   }
 
+  const [sessions] = await db.query(`
+    SELECT *
+    FROM sessions_competicio
+    WHERE idcompeticio = ? AND activa = 1
+    ORDER BY data, hora_inici, ordre, idsessio
+  `, [id]);
+
   const plan = globalMode
-    ? generateGlobalMaster(
-        groups,
-        tables,
-        competition.data_inici || planDate,
-        competition.data_fi || competition.data_inici || planDate,
-        competition.hora_inici || '09:00:00',
-        competition.hora_fi_jornada || '20:00:00',
-        Number(competition.durada_partit_grups || 20),
-        locked
-      )
+    ? (sessions.length
+        ? generateSessionMaster(
+            groups,
+            tables,
+            sessions,
+            Number(competition.durada_partit_grups || 20),
+            locked
+          )
+        : generateGlobalMaster(
+            groups,
+            tables,
+            competition.data_inici || planDate,
+            competition.data_fi || competition.data_inici || planDate,
+            competition.hora_inici || '09:00:00',
+            competition.hora_fi_jornada || '20:00:00',
+            Number(competition.durada_partit_grups || 20),
+            locked
+          ))
     : generateMaster(
         groups,
         tables,
@@ -180,7 +202,11 @@ exports.update = async (req, res) => {
     WHERE pg.idprogramacio = ?
   `, [idprogramacio]);
 
-  const mainTable = row?.format_competicio === 'GRUP_UNIC'
+  const multiTableMode =
+    row?.format_competicio === 'GRUP_UNIC' ||
+    row?.mode_taules_grups === 'MAXIM';
+
+  const mainTable = multiTableMode
     ? Number(row.idtaula)
     : idtaula;
 
@@ -206,6 +232,73 @@ exports.update = async (req, res) => {
   }
 
   res.redirect(`/schedule/competition/${Number(req.body.competitionId)}`);
+};
+
+
+exports.createSession = async (req, res) => {
+  const competitionId = Number(req.params.competitionId);
+  const nom = String(req.body.nom || '').trim() || 'Sessió';
+  const data = req.body.data;
+  const horaInici = req.body.hora_inici;
+  const horaFinal = req.body.hora_final;
+  const nombreTaules = Math.max(1, Number(req.body.nombre_taules || 1));
+
+  if (!data || !horaInici || !horaFinal) {
+    return res.status(400).send('Cal indicar data, hora inicial i hora final.');
+  }
+  if (minutesFromTime(horaFinal) <= minutesFromTime(horaInici)) {
+    return res.status(400).send("L'hora final ha de ser posterior a l'hora inicial.");
+  }
+
+  const [[maxOrder]] = await db.query(`
+    SELECT COALESCE(MAX(ordre), 0) AS max_ordre
+    FROM sessions_competicio
+    WHERE idcompeticio = ?
+  `, [competitionId]);
+
+  await db.query(`
+    INSERT INTO sessions_competicio
+      (idcompeticio, nom, data, hora_inici, hora_final, nombre_taules, ordre, activa)
+    VALUES (?, ?, ?, ?, ?, ?, ?, 1)
+  `, [competitionId, nom, data, horaInici, horaFinal, nombreTaules, Number(maxOrder.max_ordre || 0) + 1]);
+
+  res.redirect(`/schedule/competition/${competitionId}`);
+};
+
+exports.updateSession = async (req, res) => {
+  const id = Number(req.params.id);
+  const competitionId = Number(req.body.competitionId);
+  const nom = String(req.body.nom || '').trim() || 'Sessió';
+  const nombreTaules = Math.max(1, Number(req.body.nombre_taules || 1));
+
+  if (minutesFromTime(req.body.hora_final) <= minutesFromTime(req.body.hora_inici)) {
+    return res.status(400).send("L'hora final ha de ser posterior a l'hora inicial.");
+  }
+
+  await db.query(`
+    UPDATE sessions_competicio
+    SET nom = ?, data = ?, hora_inici = ?, hora_final = ?,
+        nombre_taules = ?, activa = ?
+    WHERE idsessio = ? AND idcompeticio = ?
+  `, [
+    nom,
+    req.body.data,
+    req.body.hora_inici,
+    req.body.hora_final,
+    nombreTaules,
+    req.body.activa ? 1 : 0,
+    id,
+    competitionId
+  ]);
+
+  res.redirect(`/schedule/competition/${competitionId}`);
+};
+
+exports.deleteSession = async (req, res) => {
+  const id = Number(req.params.id);
+  const competitionId = Number(req.body.competitionId);
+  await db.query(`DELETE FROM sessions_competicio WHERE idsessio = ? AND idcompeticio = ?`, [id, competitionId]);
+  res.redirect(`/schedule/competition/${competitionId}`);
 };
 
 

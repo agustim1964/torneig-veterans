@@ -204,4 +204,146 @@ function generateGlobalMaster(groups, tables, startDate, endDate, startTime, end
   return out;
 }
 
-module.exports = { timeToMinutes, minutesToTime, isoDate, generateMaster, generateGlobalMaster };
+
+
+function generateSessionMaster(groups, tables, sessions, duration, locked = []) {
+  if (!tables.length) throw new Error('No hi ha taules disponibles per aquesta competició.');
+  if (!sessions.length) throw new Error('No hi ha cap sessió activa definida.');
+
+  const orderedSessions = sessions
+    .filter(s => Number(s.activa) !== 0)
+    .map(s => ({
+      ...s,
+      data_iso: isoDate(s.data),
+      inici_min: timeToMinutes(s.hora_inici),
+      final_min: timeToMinutes(s.hora_final),
+      max_taules: Math.max(1, Math.min(Number(s.nombre_taules || 1), tables.length))
+    }))
+    .sort((a, b) =>
+      a.data_iso.localeCompare(b.data_iso) ||
+      a.inici_min - b.inici_min ||
+      Number(a.ordre || 0) - Number(b.ordre || 0)
+    );
+
+  for (const sessio of orderedSessions) {
+    if (sessio.final_min <= sessio.inici_min) {
+      throw new Error(`La sessió ${sessio.nom} té una hora final anterior o igual a l'hora inicial.`);
+    }
+  }
+
+  // Ocupació per sessió i taula: intervals [inici, final].
+  const occupancy = new Map();
+  for (const sessio of orderedSessions) {
+    occupancy.set(Number(sessio.idsessio), new Map());
+  }
+
+  function sessionForDateTime(date, start, end) {
+    const d = isoDate(date);
+    const ini = timeToMinutes(start);
+    const fi = timeToMinutes(end);
+    return orderedSessions.find(s =>
+      s.data_iso === d && ini >= s.inici_min && fi <= s.final_min
+    );
+  }
+
+  function addBusy(sessioId, tableId, start, end) {
+    const sm = occupancy.get(Number(sessioId));
+    if (!sm) return;
+    const list = sm.get(Number(tableId)) || [];
+    list.push([Number(start), Number(end)]);
+    list.sort((a,b) => a[0]-b[0]);
+    sm.set(Number(tableId), list);
+  }
+
+  for (const row of locked) {
+    const sessio = sessionForDateTime(row.data, row.hora_inici, row.hora_final);
+    if (!sessio) continue;
+    const ids = Array.isArray(row.taules_ids) && row.taules_ids.length
+      ? row.taules_ids.map(Number)
+      : [Number(row.idtaula)];
+    const ini = timeToMinutes(row.hora_inici);
+    const fi = timeToMinutes(row.hora_final);
+    for (const id of ids) addBusy(sessio.idsessio, id, ini, fi);
+  }
+
+  function isFree(sessio, tableId, start, end) {
+    const list = occupancy.get(Number(sessio.idsessio)).get(Number(tableId)) || [];
+    return !list.some(([a,b]) => start < b && end > a);
+  }
+
+  function nextCandidateTimes(sessio) {
+    const values = new Set([sessio.inici_min]);
+    const sm = occupancy.get(Number(sessio.idsessio));
+    for (const intervals of sm.values()) {
+      for (const [,end] of intervals) values.add(end);
+    }
+    return [...values].sort((a,b)=>a-b);
+  }
+
+  const lockedIds = new Set(locked.map(r => Number(r.idgrup)));
+  const pending = groups
+    .filter(g => !lockedIds.has(Number(g.idgrup)))
+    .map((g,index)=>({...g,_order:index}))
+    .sort((a,b) =>
+      Number(b.taules_necessaries || 1) - Number(a.taules_necessaries || 1) ||
+      a._order - b._order
+    );
+
+  const out = [];
+
+  for (const group of pending) {
+    const needed = Math.max(1, Number(group.taules_necessaries || 1));
+    const matchDuration = Number(group.durada_partit || duration || 20);
+    const slots = group.format_competicio === 'GRUP_UNIC'
+      ? Number(group.nombre_rondes || 0)
+      : Number(group.nombre_franges || group.nombre_partits || 0);
+    const blockMinutes = slots * matchDuration;
+
+    let assigned = null;
+
+    for (const sessio of orderedSessions) {
+      if (needed > sessio.max_taules) continue;
+
+      const sessionTables = tables.slice(0, sessio.max_taules);
+      for (const ini of nextCandidateTimes(sessio)) {
+        const fi = ini + blockMinutes;
+        if (fi > sessio.final_min) continue;
+
+        const freeTables = sessionTables.filter(t =>
+          isFree(sessio, Number(t.idtaula), ini, fi)
+        );
+        if (freeTables.length < needed) continue;
+
+        const chosen = freeTables.slice(0, needed);
+        assigned = { sessio, chosen, ini, fi };
+        break;
+      }
+      if (assigned) break;
+    }
+
+    if (!assigned) {
+      throw new Error(
+        `No hi ha cap espai disponible a les sessions definides per programar ${group.categoria_nom || 'la categoria'} (${needed} taules).`
+      );
+    }
+
+    out.push({
+      idgrup: group.idgrup,
+      idtaula: assigned.chosen[0].idtaula,
+      taules: assigned.chosen.map(t => Number(t.idtaula)),
+      data: assigned.sessio.data_iso,
+      hora_inici: minutesToTime(assigned.ini),
+      hora_final: minutesToTime(assigned.fi),
+      durada_partit: matchDuration,
+      idsessio: Number(assigned.sessio.idsessio)
+    });
+
+    for (const table of assigned.chosen) {
+      addBusy(assigned.sessio.idsessio, table.idtaula, assigned.ini, assigned.fi);
+    }
+  }
+
+  return out;
+}
+
+module.exports = { timeToMinutes, minutesToTime, isoDate, generateMaster, generateGlobalMaster, generateSessionMaster };

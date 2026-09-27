@@ -49,8 +49,13 @@ La primera fila ha de contenir capçaleres. S'admeten aquests noms:
 - `llicencia`
 - `ranking`
 - `nom_mostrar`
+- `data_naixement`
+- `actiu`
 
 `nom` és obligatori si no s'informa `nom_mostrar`.
+
+`data_naixement` admet una data real d'Excel, `dd/mm/aaaa` o `aaaa-mm-dd`.
+`actiu` admet `1`/`0`, `sí`/`no` o `actiu`/`inactiu`; si queda buit, el participant s'importa actiu.
 
 Exemple:
 
@@ -439,3 +444,34 @@ No tornis a executar l'script complet d'instal·lació v0.7 sobre Aiven.
 - La classificació mostra victòries, derrotes i factors de jocs i punts.
 - Si encara no s'ha disputat cap partit, es mostra la graella de classificació amb les files en blanc.
 - No requereix cap migració de base de dades.
+
+
+## v0.9.11 - Sessions multi-dia del màster
+
+- Nova configuració de sessions/jornades per competició.
+- Cada sessió té nom, data, hora inici, hora final i nombre de taules disponibles.
+- Es poden tenir diverses sessions el mateix dia (matí/tarda) i diversos dies.
+- El màster global prioritza les sessions definides i col·loca els grups només dins d'aquestes franges.
+- Si no hi ha sessions, es manté el comportament anterior basat en data inici/fi i horari general.
+- Les programacions bloquejades continuen reservant les seves taules i franges.
+- Correcció del mode multitaula a l'edició manual del màster.
+- Aquesta versió prepara l'estructura per afegir a continuació blocs eliminatoris al mateix màster.
+
+
+## v0.9.12 - Data de naixement i estat actiu a la importació
+
+Abans d'arrencar aquesta versió, executa una sola vegada:
+
+```sql
+mysql/013_v0912_import_data_naixement_actiu.sql
+```
+
+- La importació Excel/CSV reconeix la columna `data_naixement`.
+- La data es desa a `jugadors.data_naixement` i es mostra a la llista de participants.
+- S'accepten dates reals d'Excel, números de sèrie d'Excel, `dd/mm/aaaa` i `aaaa-mm-dd`.
+- La columna `actiu` controla directament si el participant entra al sorteig.
+- S'accepten `1`/`0`, `sí`/`no`, `true`/`false` i `actiu`/`inactiu`.
+- Si `actiu` queda buit, s'utilitza el valor actiu per defecte.
+- En acabar, la pantalla informa del total importat i de quants han quedat inactius.
+- També s'admeten fitxers XLSX vàlids que utilitzen prefixos XML d'espai de noms,
+  evitant incompatibilitats de lectura d'`exceljs` amb alguns generadors d'Excel.
