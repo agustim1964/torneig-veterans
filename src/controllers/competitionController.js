@@ -28,6 +28,80 @@ exports.list = async (req, res) => {
   res.render('competitions/index', { competitions });
 };
 
+exports.participantList = async (req, res) => {
+  const id = Number(req.params.id);
+  const [[competition]] = await db.query(
+    'SELECT * FROM competicions WHERE idcompeticio = ?',
+    [id]
+  );
+
+  if (!competition) return res.status(404).send('Competició no trobada');
+
+  const [rows] = await db.query(`
+    SELECT
+      c.idcategoria,
+      c.nom AS categoria_nom,
+      c.tipus,
+      c.sexe,
+      c.edat_minima,
+      p.idparticipant,
+      p.nom_mostrar,
+      p.pais,
+      p.ranking,
+      p.actiu,
+      p.baixa
+    FROM categories c
+    LEFT JOIN participants p ON p.idcategoria = c.idcategoria
+    WHERE c.idcompeticio = ?
+    ORDER BY
+      c.tipus,
+      c.sexe,
+      c.edat_minima,
+      c.nom,
+      p.actiu DESC,
+      p.baixa ASC,
+      p.ranking DESC,
+      p.nom_mostrar
+  `, [id]);
+
+  const categoryMap = new Map();
+
+  for (const row of rows) {
+    if (!categoryMap.has(row.idcategoria)) {
+      categoryMap.set(row.idcategoria, {
+        idcategoria: row.idcategoria,
+        nom: row.categoria_nom,
+        tipus: row.tipus,
+        sexe: row.sexe,
+        edat_minima: row.edat_minima,
+        participants: [],
+        activeCount: 0,
+        inactiveCount: 0
+      });
+    }
+
+    if (!row.idparticipant) continue;
+
+    const category = categoryMap.get(row.idcategoria);
+    const isActive = Boolean(row.actiu) && !Boolean(row.baixa);
+    category.participants.push({
+      idparticipant: row.idparticipant,
+      nom_mostrar: row.nom_mostrar,
+      pais: row.pais,
+      ranking: row.ranking,
+      isActive
+    });
+
+    if (isActive) category.activeCount++;
+    else category.inactiveCount++;
+  }
+
+  res.render('competitions/participant-list', {
+    competition,
+    categories: Array.from(categoryMap.values())
+  });
+};
+
 exports.create = async (req, res) => {
   const nom = String(req.body.nom || '').trim();
   if (!nom) return res.status(400).send('El nom de la competició és obligatori.');

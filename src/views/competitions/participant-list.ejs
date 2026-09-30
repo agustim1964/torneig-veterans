@@ -1,0 +1,124 @@
+<%- include('../partials/header', { title: `Participants · ${competition.nom}` }) %>
+
+<style>
+  .participant-category {
+    break-inside: auto;
+  }
+
+  .participant-category thead,
+  .participant-category tr {
+    break-inside: avoid;
+  }
+
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 12mm;
+    }
+
+    body {
+      background: #fff;
+      font-size: 10pt;
+    }
+
+    .navbar,
+    .no-print {
+      display: none !important;
+    }
+
+    .container {
+      max-width: none !important;
+      padding: 0 !important;
+    }
+
+    .participant-category {
+      margin-bottom: 8mm !important;
+    }
+
+    .participant-category .card-header {
+      background: #eee !important;
+      color: #000 !important;
+      border: 1px solid #777;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .participant-category .table {
+      margin-bottom: 0;
+    }
+
+    .participant-category .badge {
+      border: 1px solid #666;
+      color: #000 !important;
+      background: #fff !important;
+    }
+  }
+</style>
+
+<div class="d-flex justify-content-between align-items-start mb-4 no-print">
+  <div>
+    <a href="/categories?competitionId=<%= competition.idcompeticio %>"
+       class="text-decoration-none">← Tornar a categories</a>
+    <h1 class="mt-2 mb-1">Llistat de participants</h1>
+    <div class="text-muted"><%= competition.nom %></div>
+  </div>
+  <button class="btn btn-outline-primary" type="button" onclick="window.print()">
+    Imprimir llistat
+  </button>
+</div>
+
+<div class="d-none d-print-block mb-4">
+  <h1 class="h3 mb-1"><%= competition.nom %></h1>
+  <div>Llistat de participants per categories</div>
+</div>
+
+<% if (!categories.length) { %>
+  <div class="alert alert-info">Aquesta competició encara no té categories.</div>
+<% } %>
+
+<% categories.forEach(category => { %>
+  <section class="card shadow-sm mb-4 participant-category">
+    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <strong><%= category.nom %></strong>
+      <span class="small">
+        <%= category.activeCount %> actius
+        <% if (category.inactiveCount) { %>
+          · <%= category.inactiveCount %> inactius
+        <% } %>
+      </span>
+    </div>
+
+    <% if (category.participants.length) { %>
+      <div class="table-responsive">
+        <table class="table table-sm table-striped align-middle mb-0">
+          <thead>
+            <tr>
+              <th style="width:90px">Rànquing</th>
+              <th>Participant</th>
+              <th style="width:80px">País</th>
+              <th style="width:90px">Estat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% category.participants.forEach(participant => { %>
+              <tr class="<%= participant.isActive ? '' : 'text-muted' %>">
+                <td class="text-end"><%= participant.ranking || 0 %></td>
+                <td><%= participant.nom_mostrar %></td>
+                <td><%= participant.pais || '—' %></td>
+                <td>
+                  <span class="badge <%= participant.isActive ? 'text-bg-success' : 'text-bg-secondary' %>">
+                    <%= participant.isActive ? 'Actiu' : 'Inactiu' %>
+                  </span>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="card-body text-muted">Sense participants.</div>
+    <% } %>
+  </section>
+<% }) %>
+
+<%- include('../partials/footer') %>

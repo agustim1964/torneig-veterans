@@ -71,9 +71,11 @@
                 <%= c.activa ? 'Activa' : 'Inactiva' %>
               </span>
             </div>
-            <div class="card-footer bg-white d-flex gap-2">
+            <div class="card-footer bg-white d-flex gap-2 flex-wrap">
               <a class="btn btn-primary btn-sm"
                  href="/categories?competitionId=<%= c.idcompeticio %>">Gestionar</a> <a class="btn btn-outline-primary btn-sm" href="/schedule/competition/<%= c.idcompeticio %>">Màster horaris</a>
+              <a class="btn btn-outline-primary btn-sm"
+                 href="/competitions/<%= c.idcompeticio %>/participants">Llistat participants</a>
               <form action="/competitions/<%= c.idcompeticio %>/toggle" method="post">
                 <button class="btn btn-outline-secondary btn-sm">
                   <%= c.activa ? 'Desactivar' : 'Activar' %>
