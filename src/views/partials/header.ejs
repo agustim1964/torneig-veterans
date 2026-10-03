@@ -8,12 +8,22 @@
   <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>
+<%
+  const currentCompetitionId =
+    (typeof competitionId !== 'undefined' && Number(competitionId)) ||
+    (typeof competition !== 'undefined' && competition && Number(competition.idcompeticio)) ||
+    (typeof category !== 'undefined' && category && Number(category.idcompeticio)) ||
+    0;
+  const categoriesUrl = currentCompetitionId
+    ? `/categories?competitionId=${currentCompetitionId}`
+    : '/categories';
+%>
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark mb-4">
   <div class="container">
     <a class="navbar-brand" href="/competitions">Torneig Veterans</a>
     <div class="navbar-nav">
       <a class="nav-link" href="/competitions">Competicions</a>
-      <a class="nav-link" href="/categories">Categories</a>
+      <a class="nav-link" href="<%= categoriesUrl %>">Categories</a>
       <a class="nav-link" href="/tables">Taules</a>
     </div>
   </div>
