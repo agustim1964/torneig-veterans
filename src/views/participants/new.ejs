@@ -1,0 +1,113 @@
+<%- include('../partials/header', { title: `Nou participant · ${category.nom}` }) %>
+
+<% const playerCount = category.tipus === 'DOBLES' ? 2 : 1; %>
+<% const defaultSex = category.sexe === 'MASCULI' ? 'M' : (category.sexe === 'FEMENI' ? 'F' : ''); %>
+
+<div class="mb-4">
+  <a href="/participants/category/<%= category.idcategoria %>" class="text-decoration-none">
+    ← Tornar als participants
+  </a>
+  <h1 class="mt-2 mb-1">Nou participant</h1>
+  <div class="text-muted"><%= category.nom %></div>
+</div>
+
+<form action="/participants/category/<%= category.idcategoria %>" method="post">
+  <div class="card shadow-sm mb-4">
+    <div class="card-header">Dades de la inscripció</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label">Nom a mostrar</label>
+          <input class="form-control" name="nom_mostrar"
+                 placeholder="Es generarà automàticament si es deixa en blanc">
+          <div class="form-text">
+            En dobles es formarà amb els dos noms separats per un guió.
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Club del participant</label>
+          <input class="form-control" name="club"
+                 placeholder="Si queda buit s'utilitzarà el del primer jugador">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">País</label>
+          <input class="form-control text-uppercase" maxlength="3" name="pais"
+                 placeholder="Del primer jugador">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Rànquing</label>
+          <input class="form-control" type="number" name="ranking" value="0">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Estat</label>
+          <select class="form-select" name="actiu">
+            <option value="1" selected>Actiu</option>
+            <option value="0">Inactiu</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header">
+      <%= playerCount === 2 ? 'Components de la parella' : 'Dades del jugador' %>
+    </div>
+    <div class="card-body">
+      <% for (let index = 0; index < playerCount; index++) { %>
+        <section class="<%= index ? 'border-top pt-4 mt-4' : '' %>">
+          <% if (playerCount === 2) { %>
+            <h2 class="h6 mb-3">Jugador <%= index + 1 %></h2>
+          <% } %>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label">Nom</label>
+              <input class="form-control" name="player_nom[]" required>
+            </div>
+            <div class="col-md-8">
+              <label class="form-label">Cognoms</label>
+              <input class="form-control" name="player_cognoms[]">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Data de naixement</label>
+              <input class="form-control" type="date" name="player_data_naixement[]">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Sexe</label>
+              <select class="form-select" name="player_sexe[]">
+                <option value="" <%= !defaultSex ? 'selected' : '' %>>Sense indicar</option>
+                <option value="M" <%= defaultSex === 'M' ? 'selected' : '' %>>Masculí</option>
+                <option value="F" <%= defaultSex === 'F' ? 'selected' : '' %>>Femení</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Llicència</label>
+              <input class="form-control" name="player_num_llicencia[]">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">País</label>
+              <input class="form-control text-uppercase" maxlength="3" name="player_pais[]">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Club</label>
+              <input class="form-control" name="player_club[]">
+            </div>
+          </div>
+        </section>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    Si la llicència ja existeix, es reutilitzarà la fitxa del jugador. Sense llicència,
+    també es reutilitzarà si coincideixen nom, cognoms i data de naixement.
+  </div>
+
+  <div class="d-flex gap-2 justify-content-end">
+    <a class="btn btn-outline-secondary"
+       href="/participants/category/<%= category.idcategoria %>">Cancel·lar</a>
+    <button class="btn btn-primary" type="submit">Crear participant</button>
+  </div>
+</form>
+
+<%- include('../partials/footer') %>

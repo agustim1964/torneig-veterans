@@ -67,27 +67,13 @@
     <div class="card shadow-sm mb-4">
       <div class="card-header">Afegir participant</div>
       <div class="card-body">
-        <form action="/participants/category/<%= category.idcategoria %>" method="post">
-          <div class="mb-3">
-            <label class="form-label">Nom a mostrar</label>
-            <input class="form-control" name="nom_mostrar" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Club</label>
-            <input class="form-control" name="club">
-          </div>
-          <div class="row g-2">
-            <div class="col-4 mb-3">
-              <label class="form-label">País</label>
-              <input class="form-control text-uppercase" maxlength="3" name="pais" placeholder="ESP">
-            </div>
-            <div class="col-8 mb-3">
-              <label class="form-label">Rànquing</label>
-              <input class="form-control" type="number" name="ranking" value="0">
-            </div>
-          </div>
-          <button class="btn btn-primary w-100">Afegir</button>
-        </form>
+        <p class="small text-muted">
+          L'alta crea la fitxa del jugador i la vincula amb el participant de la categoria.
+        </p>
+        <a class="btn btn-primary w-100"
+           href="/participants/category/<%= category.idcategoria %>/new">
+          Nou participant
+        </a>
       </div>
     </div>
 

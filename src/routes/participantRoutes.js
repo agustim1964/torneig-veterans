@@ -6,6 +6,7 @@ const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
 
 router.get('/category/:categoryId', controller.listByCategory);
+router.get('/category/:categoryId/new', controller.newForm);
 router.post('/category/:categoryId', controller.create);
 router.post('/category/:categoryId/import', upload.single('fitxer'), controller.importFile);
 router.get('/:id/edit', controller.edit);

@@ -12,6 +12,68 @@ async function getCategory(id) {
   return category;
 }
 
+async function findOrCreatePlayer(connection, player) {
+  let playerId = null;
+
+  if (player.licence) {
+    const [[existing]] = await connection.query(
+      'SELECT idjugador FROM jugadors WHERE num_llicencia = ? LIMIT 1',
+      [player.licence]
+    );
+    playerId = existing?.idjugador || null;
+  } else if (player.birthDate) {
+    const [[existing]] = await connection.query(`
+      SELECT idjugador
+      FROM jugadors
+      WHERE LOWER(TRIM(nom)) = LOWER(?)
+        AND LOWER(TRIM(COALESCE(cognoms, ''))) = LOWER(?)
+        AND data_naixement = ?
+      LIMIT 1
+    `, [player.name, player.surnames, player.birthDate]);
+    playerId = existing?.idjugador || null;
+  }
+
+  if (playerId) {
+    await connection.query(`
+      UPDATE jugadors
+      SET nom = ?,
+          cognoms = ?,
+          data_naixement = COALESCE(?, data_naixement),
+          club = COALESCE(NULLIF(?, ''), club),
+          pais = COALESCE(NULLIF(?, ''), pais),
+          sexe = COALESCE(NULLIF(?, ''), sexe),
+          num_llicencia = COALESCE(NULLIF(?, ''), num_llicencia)
+      WHERE idjugador = ?
+    `, [
+      player.name,
+      player.surnames || null,
+      player.birthDate,
+      player.club,
+      player.country,
+      player.sex,
+      player.licence,
+      playerId
+    ]);
+    return playerId;
+  }
+
+  const [result] = await connection.query(`
+    INSERT INTO jugadors
+      (nom, cognoms, data_naixement, club, pais, sexe, num_llicencia)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `, [
+    player.name,
+    player.surnames || null,
+    player.birthDate,
+    player.club || null,
+    player.country || null,
+    player.sex || null,
+    player.licence || null
+  ]);
+
+  return result.insertId;
+}
+
 exports.listByCategory = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
   const category = await getCategory(categoryId);
@@ -44,23 +106,99 @@ exports.listByCategory = async (req, res) => {
   });
 };
 
+exports.newForm = async (req, res) => {
+  const categoryId = Number(req.params.categoryId);
+  const category = await getCategory(categoryId);
+
+  if (!category) return res.status(404).send('Categoria no trobada');
+
+  res.render('participants/new', { category });
+};
+
 exports.create = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
-  const { nom_mostrar, ranking, club, pais } = req.body;
+  const category = await getCategory(categoryId);
 
-  await db.query(`
-    INSERT INTO participants
-      (idcategoria, nom_mostrar, club, pais, ranking)
-    VALUES (?, ?, ?, ?, ?)
-  `, [
-    categoryId,
-    String(nom_mostrar || '').trim(),
-    String(club || '').trim() || null,
-    String(pais || '').trim().toUpperCase() || null,
-    Number(ranking || 0)
-  ]);
+  if (!category) return res.status(404).send('Categoria no trobada');
 
-  res.redirect(`/participants/category/${categoryId}`);
+  const expectedPlayers = category.tipus === 'DOBLES' ? 2 : 1;
+  const names = asArray(req.body.player_nom);
+  const surnames = asArray(req.body.player_cognoms);
+  const birthDates = asArray(req.body.player_data_naixement);
+  const clubs = asArray(req.body.player_club);
+  const countries = asArray(req.body.player_pais);
+  const sexes = asArray(req.body.player_sexe);
+  const licences = asArray(req.body.player_num_llicencia);
+  const players = [];
+
+  for (let index = 0; index < expectedPlayers; index++) {
+    const name = String(names[index] || '').trim();
+    if (!name) {
+      return res.status(400).send(`El nom del jugador ${index + 1} és obligatori.`);
+    }
+
+    players.push({
+      name,
+      surnames: String(surnames[index] || '').trim(),
+      birthDate: String(birthDates[index] || '').trim() || null,
+      club: String(clubs[index] || '').trim(),
+      country: String(countries[index] || '').trim().toUpperCase(),
+      sex: ['M', 'F'].includes(String(sexes[index] || '').toUpperCase())
+        ? String(sexes[index]).toUpperCase()
+        : '',
+      licence: String(licences[index] || '').trim()
+    });
+  }
+
+  const participantName = String(req.body.nom_mostrar || '').trim() || players
+    .map(player => [player.name, player.surnames].filter(Boolean).join(' '))
+    .join(' - ');
+  const participantClub = String(req.body.club || '').trim() || players[0].club;
+  const participantCountry = String(req.body.pais || '').trim().toUpperCase() || players[0].country;
+  const connection = await db.getConnection();
+
+  try {
+    await connection.beginTransaction();
+
+    const playerIds = [];
+    for (const player of players) {
+      playerIds.push(await findOrCreatePlayer(connection, player));
+    }
+
+    if (new Set(playerIds).size !== playerIds.length) {
+      await connection.rollback();
+      return res.status(400).send('Els dos components de la parella no poden ser el mateix jugador.');
+    }
+
+    const [participantResult] = await connection.query(`
+      INSERT INTO participants
+        (idcategoria, nom_mostrar, club, pais, ranking, actiu)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `, [
+      categoryId,
+      participantName,
+      participantClub || null,
+      participantCountry || null,
+      Number(req.body.ranking || 0),
+      Number(req.body.actiu) === 0 ? 0 : 1
+    ]);
+
+    for (let index = 0; index < playerIds.length; index++) {
+      await connection.query(`
+        INSERT INTO participant_jugadors
+          (idparticipant, idjugador, ordre)
+        VALUES (?, ?, ?)
+      `, [participantResult.insertId, playerIds[index], index + 1]);
+    }
+
+    await connection.commit();
+    res.redirect(`/participants/category/${categoryId}`);
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
 };
 
 exports.edit = async (req, res) => {
