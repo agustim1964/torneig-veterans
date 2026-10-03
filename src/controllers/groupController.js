@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { hasFinishedKnockoutMatches, deleteCategoryDraw } = require('../services/categoryResetService');
 const { drawGroups, buildSingleGroup, groupWarnings } = require('../services/drawService');
 const { classifyGroup } = require('../services/classificationService');
 
@@ -107,35 +108,12 @@ exports.draw = async (req, res) => {
       `);
     }
 
-    // Els partits pendents deixen de ser vàlids si reconstruïm els grups.
-    if (Number(matchStats.total || 0) > 0) {
-      await connection.query(`
-        DELETE pa
-        FROM partits pa
-        INNER JOIN grups g ON g.idgrup = pa.idgrup
-        WHERE g.idcategoria = ?
-      `, [categoryId]);
+    if (await hasFinishedKnockoutMatches(connection, categoryId)) {
+      await connection.rollback();
+      return res.status(409).send('No es pot reconstruir el sorteig: aquesta categoria té partits eliminatoris finalitzats amb resultats reals (no BYE). Reinicia primer els resultats de les fases finals.');
     }
 
-    const [oldGroups] = await connection.query(
-      'SELECT idgrup FROM grups WHERE idcategoria = ?',
-      [categoryId]
-    );
-
-    if (oldGroups.length) {
-      const ids = oldGroups.map(g => g.idgrup);
-      const ph = ids.map(() => '?').join(',');
-      await connection.query(
-        `DELETE FROM grup_participants WHERE idgrup IN (${ph})`,
-        ids
-      );
-    }
-
-    await connection.query(
-      'DELETE FROM grups WHERE idcategoria = ?',
-      [categoryId]
-    );
-
+    await deleteCategoryDraw(connection, categoryId);
     for (const group of groups) {
       const groupName = isTopX ? `Top ${participants.length}` : `Grup ${group.number}`;
 

@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { hasFinishedKnockoutMatches, deleteCategoryDraw } = require('../services/categoryResetService');
 
 exports.list = async (req, res) => {
   let competitionId = Number(req.query.competitionId || 0);
@@ -91,43 +92,28 @@ exports.updateFormat = async (req, res) => {
   );
   if (!category) return res.status(404).send('Categoria no trobada.');
 
-  const [[stats]] = await db.query(`
-    SELECT
-      COUNT(pa.idpartit) AS total_partits,
-      SUM(CASE WHEN pa.estat = 'FINALITZAT' THEN 1 ELSE 0 END) AS finalitzats
-    FROM grups g
-    LEFT JOIN partits pa ON pa.idgrup = g.idgrup
-    WHERE g.idcategoria = ?
-  `, [id]);
-
-  if (Number(stats.total_partits || 0) > 0) {
-    return res.status(409).send(`
-      <div style="font-family:Arial;max-width:760px;margin:40px auto">
-        <h1>No es pot canviar el format encara</h1>
-        <p>Aquesta categoria ja té partits generats${Number(stats.finalitzats || 0) > 0 ? ' i alguns tenen resultat' : ''}.</p>
-        <p>Elimina o reinicia primer els partits abans de canviar entre Top X i grups + eliminatòries.</p>
-        <p><a href="/categories?competitionId=${category.idcompeticio}">Tornar a categories</a></p>
-      </div>
-    `);
-  }
-
   const cx = await db.getConnection();
   try {
     await cx.beginTransaction();
 
-    // Si hi havia un sorteig sense partits, el descartem perquè el nou format
-    // requereix reconstruir els grups de forma coherent.
-    const [groups] = await cx.query(
-      'SELECT idgrup FROM grups WHERE idcategoria = ?',
-      [id]
-    );
-    if (groups.length) {
-      const ids = groups.map(g => g.idgrup);
-      const ph = ids.map(() => '?').join(',');
-      await cx.query(`DELETE FROM grup_participants WHERE idgrup IN (${ph})`, ids);
-      await cx.query('DELETE FROM grups WHERE idcategoria = ?', [id]);
+    const [[stats]] = await cx.query(`
+      SELECT COUNT(*) AS finalitzats
+      FROM partits pa
+      INNER JOIN grups g ON g.idgrup = pa.idgrup
+      WHERE g.idcategoria = ? AND pa.estat = 'FINALITZAT'
+    `, [id]);
+
+    if (Number(stats.finalitzats || 0) > 0) {
+      await cx.rollback();
+      return res.status(409).send('No es pot canviar el format: aquesta categoria té partits de grup amb resultats desats. Reinicia primer els partits dels grups.');
     }
 
+    if (await hasFinishedKnockoutMatches(cx, id)) {
+      await cx.rollback();
+      return res.status(409).send('No es pot canviar el format: aquesta categoria té partits eliminatoris finalitzats amb resultats reals (no BYE). Reinicia primer els resultats de les fases finals.');
+    }
+
+    await deleteCategoryDraw(cx, id);
     await cx.query(`
       UPDATE categories
       SET format_competicio = ?, estat = 'PREPARACIO'
