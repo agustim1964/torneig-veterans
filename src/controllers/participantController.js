@@ -471,7 +471,8 @@ async function loadXlsxWorkbook(filePath) {
     return workbook;
   } catch (originalError) {
     const zip = await JSZip.loadAsync(originalBuffer);
-    const xmlFiles = Object.keys(zip.files).filter(name => name.endsWith('.xml'));
+    const xmlFiles = Object.keys(zip.files).filter(name =>
+      name.endsWith('.xml') || name.endsWith('.rels'));
     let changed = false;
 
     for (const fileName of xmlFiles) {
@@ -479,7 +480,15 @@ async function loadXlsxWorkbook(filePath) {
       if (!file) continue;
 
       let xml = await file.async('string');
-      const rootMatch = xml.match(/<([A-Za-z_][\w.-]*):(workbook|worksheet|styleSheet|sst)\b/);
+      if (fileName.endsWith('.rels')) {
+        const sourceDirectory = path.posix.dirname(path.posix.dirname(fileName));
+        xml = xml.replace(/Target="\/([^\"]+)"/g, (match, target) =>
+          `Target="${path.posix.relative(sourceDirectory, target)}"`);
+        zip.file(fileName, xml);
+        changed = true;
+        continue;
+      }
+      const rootMatch = xml.match(/<([A-Za-z_][\w.-]*):(workbook|worksheet|styleSheet|sst|table)\b/);
       if (!rootMatch) continue;
 
       const prefix = rootMatch[1];
