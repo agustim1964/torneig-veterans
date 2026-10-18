@@ -102,6 +102,45 @@ exports.participantList = async (req, res) => {
   });
 };
 
+exports.groupList = async (req, res) => {
+  const id = Number(req.params.id);
+  const [[competition]] = await db.query(
+    'SELECT * FROM competicions WHERE idcompeticio = ?', [id]
+  );
+  if (!competition) return res.status(404).send('Competició no trobada');
+
+  const [rows] = await db.query(`
+    SELECT c.idcategoria, c.nom AS categoria_nom,
+      g.idgrup, g.numero, g.nom AS grup_nom,
+      p.idparticipant, p.nom_mostrar, p.club, p.pais
+    FROM categories c
+    LEFT JOIN grups g ON g.idcategoria = c.idcategoria
+    LEFT JOIN grup_participants gp ON gp.idgrup = g.idgrup
+    LEFT JOIN participants p ON p.idparticipant = gp.idparticipant
+    WHERE c.idcompeticio = ?
+    ORDER BY c.tipus, c.sexe, c.edat_minima, c.nom,
+      g.numero, g.idgrup, gp.ordre_visual, gp.posicio_sorteig, p.nom_mostrar
+  `, [id]);
+
+  const categoryMap = new Map();
+  const groupMap = new Map();
+  for (const row of rows) {
+    if (!categoryMap.has(row.idcategoria)) {
+      categoryMap.set(row.idcategoria, { nom: row.categoria_nom, groups: [] });
+    }
+    if (!row.idgrup) continue;
+    if (!groupMap.has(row.idgrup)) {
+      const group = { numero: row.numero, nom: row.grup_nom, participants: [] };
+      groupMap.set(row.idgrup, group);
+      categoryMap.get(row.idcategoria).groups.push(group);
+    }
+    if (row.idparticipant) groupMap.get(row.idgrup).participants.push(row);
+  }
+  res.render('competitions/group-list', {
+    competition, categories: Array.from(categoryMap.values())
+  });
+};
+
 exports.create = async (req, res) => {
   const nom = String(req.body.nom || '').trim();
   if (!nom) return res.status(400).send('El nom de la competició és obligatori.');

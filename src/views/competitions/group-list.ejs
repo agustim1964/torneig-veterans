@@ -1,0 +1,62 @@
+<%- include('../partials/header', { title: `Grups · ${competition.nom}` }) %>
+
+<style>
+  .group-list-group { break-inside: avoid; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm; }
+    body { background: #fff; font-size: 10pt; }
+    .navbar, .no-print { display: none !important; }
+    .container { max-width: none !important; padding: 0 !important; }
+    .table-responsive { overflow: visible !important; }
+    tr { break-inside: avoid; }
+    h2, h3 { break-after: avoid; }
+  }
+</style>
+
+<div class="d-flex justify-content-between align-items-start mb-4 gap-2">
+  <div>
+    <a class="text-decoration-none no-print" href="/competitions">← Tornar a competicions</a>
+    <h1 class="h3 mt-2 mb-1"><%= competition.nom %></h1>
+    <div class="text-muted">Llistat de grups per categories</div>
+  </div>
+  <button class="btn btn-outline-primary no-print" type="button" onclick="window.print()">Imprimir llistat</button>
+</div>
+
+<% if (!categories.length) { %>
+  <div class="alert alert-info">Aquesta competició encara no té categories.</div>
+<% } %>
+
+<% categories.forEach(category => { %>
+  <section class="mb-4">
+    <h2 class="h4 border-bottom pb-2"><%= category.nom %></h2>
+    <% if (!category.groups.length) { %>
+      <p class="text-muted">Encara no hi ha grups creats.</p>
+    <% } %>
+    <% category.groups.forEach(group => { %>
+      <div class="group-list-group mb-3">
+        <h3 class="h6"><%= category.nom %> · G<%= group.numero %> · <%= group.nom %></h3>
+        <% if (!group.participants.length) { %>
+          <p class="text-muted">Sense jugadors assignats.</p>
+        <% } else { %>
+          <div class="table-responsive">
+            <table class="table table-sm table-striped mb-0">
+              <thead><tr><th scope="col">Ordre</th><th scope="col">Jugador / parella</th><th scope="col">Club</th><th scope="col">País</th></tr></thead>
+              <tbody>
+                <% group.participants.forEach((participant, index) => { %>
+                  <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= participant.nom_mostrar %></td>
+                    <td><%= participant.club || '—' %></td>
+                    <td><%= participant.pais || '—' %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </div>
+    <% }) %>
+  </section>
+<% }) %>
+
+<%- include('../partials/footer') %>
