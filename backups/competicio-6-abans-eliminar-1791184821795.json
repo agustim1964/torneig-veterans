@@ -1,0 +1,7469 @@
+{
+  "competition": {
+    "idcompeticio": 6,
+    "nom": "SALOU 2026 Veterans OK"
+  },
+  "createdAt": "2026-10-05T07:20:21.534Z",
+  "participants": [
+    {
+      "idparticipant": 726,
+      "idcategoria": 20,
+      "nom_mostrar": "Alan Ahmed",
+      "club": null,
+      "pais": "IRQ",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:24.000Z"
+    },
+    {
+      "idparticipant": 727,
+      "idcategoria": 20,
+      "nom_mostrar": "Cedric Merchez",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:24.000Z"
+    },
+    {
+      "idparticipant": 728,
+      "idcategoria": 20,
+      "nom_mostrar": "Marco Pedro",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:24.000Z"
+    },
+    {
+      "idparticipant": 729,
+      "idcategoria": 20,
+      "nom_mostrar": "Diego Crespo",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:24.000Z"
+    },
+    {
+      "idparticipant": 730,
+      "idcategoria": 20,
+      "nom_mostrar": "Femi Ajala Alade",
+      "club": null,
+      "pais": "NGA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:24.000Z"
+    },
+    {
+      "idparticipant": 731,
+      "idcategoria": 20,
+      "nom_mostrar": "Oscar Pastor",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:24.000Z"
+    },
+    {
+      "idparticipant": 732,
+      "idcategoria": 20,
+      "nom_mostrar": "Miquel Virgili",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:24.000Z"
+    },
+    {
+      "idparticipant": 733,
+      "idcategoria": 20,
+      "nom_mostrar": "David Irwin",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:24.000Z"
+    },
+    {
+      "idparticipant": 734,
+      "idcategoria": 20,
+      "nom_mostrar": "Yinka Olasoji",
+      "club": null,
+      "pais": "NGA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:25.000Z"
+    },
+    {
+      "idparticipant": 735,
+      "idcategoria": 20,
+      "nom_mostrar": "Nicolae Lisnic",
+      "club": null,
+      "pais": "MDA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:25.000Z"
+    },
+    {
+      "idparticipant": 736,
+      "idcategoria": 20,
+      "nom_mostrar": "Bart Beckers",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:25.000Z"
+    },
+    {
+      "idparticipant": 737,
+      "idcategoria": 20,
+      "nom_mostrar": "Enric Pàmies",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:25.000Z"
+    },
+    {
+      "idparticipant": 738,
+      "idcategoria": 20,
+      "nom_mostrar": "Francisco Montes",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:25.000Z"
+    },
+    {
+      "idparticipant": 739,
+      "idcategoria": 20,
+      "nom_mostrar": "Syed Mahmuduzzaman",
+      "club": null,
+      "pais": "BGD",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:25.000Z"
+    },
+    {
+      "idparticipant": 740,
+      "idcategoria": 20,
+      "nom_mostrar": "Alex Pérez Solsona",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:25.000Z"
+    },
+    {
+      "idparticipant": 741,
+      "idcategoria": 20,
+      "nom_mostrar": "Guillem Villaescusa",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:25.000Z"
+    },
+    {
+      "idparticipant": 742,
+      "idcategoria": 20,
+      "nom_mostrar": "Bartosz Prazmo",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:25.000Z"
+    },
+    {
+      "idparticipant": 743,
+      "idcategoria": 20,
+      "nom_mostrar": "Karol Kwardys",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:26.000Z"
+    },
+    {
+      "idparticipant": 744,
+      "idcategoria": 20,
+      "nom_mostrar": "Marcin BŁASZCZYK",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:26.000Z"
+    },
+    {
+      "idparticipant": 745,
+      "idcategoria": 20,
+      "nom_mostrar": "Filippo Sabatini",
+      "club": null,
+      "pais": "ARE",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:26.000Z"
+    },
+    {
+      "idparticipant": 746,
+      "idcategoria": 20,
+      "nom_mostrar": "Asad Zehtabi",
+      "club": null,
+      "pais": "IRN",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:26.000Z"
+    },
+    {
+      "idparticipant": 747,
+      "idcategoria": 20,
+      "nom_mostrar": "Robert Cybulski",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:26.000Z"
+    },
+    {
+      "idparticipant": 748,
+      "idcategoria": 20,
+      "nom_mostrar": "Juan Antonio Requena",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:26.000Z"
+    },
+    {
+      "idparticipant": 749,
+      "idcategoria": 21,
+      "nom_mostrar": "Eric Bourgeot",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:27:59.000Z"
+    },
+    {
+      "idparticipant": 750,
+      "idcategoria": 21,
+      "nom_mostrar": "Philippe Bourgeot",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:00.000Z"
+    },
+    {
+      "idparticipant": 751,
+      "idcategoria": 21,
+      "nom_mostrar": "Alexandu Policiuc",
+      "club": null,
+      "pais": "MDA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:00.000Z"
+    },
+    {
+      "idparticipant": 752,
+      "idcategoria": 21,
+      "nom_mostrar": "Alexandr Solodchii",
+      "club": null,
+      "pais": "MDA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:00.000Z"
+    },
+    {
+      "idparticipant": 753,
+      "idcategoria": 21,
+      "nom_mostrar": "Igor Bobeico",
+      "club": null,
+      "pais": "MDA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:00.000Z"
+    },
+    {
+      "idparticipant": 754,
+      "idcategoria": 21,
+      "nom_mostrar": "Karwan Mohammed Amely Ali",
+      "club": null,
+      "pais": "IRQ",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:00.000Z"
+    },
+    {
+      "idparticipant": 755,
+      "idcategoria": 21,
+      "nom_mostrar": "Ionel Trinca",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:00.000Z"
+    },
+    {
+      "idparticipant": 756,
+      "idcategoria": 21,
+      "nom_mostrar": "Joan Serret",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:00.000Z"
+    },
+    {
+      "idparticipant": 757,
+      "idcategoria": 21,
+      "nom_mostrar": "Alexander Struyanskiy",
+      "club": null,
+      "pais": "ISR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:00.000Z"
+    },
+    {
+      "idparticipant": 758,
+      "idcategoria": 21,
+      "nom_mostrar": "Carlos Loren",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:00.000Z"
+    },
+    {
+      "idparticipant": 759,
+      "idcategoria": 21,
+      "nom_mostrar": "Andrés González",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:01.000Z"
+    },
+    {
+      "idparticipant": 760,
+      "idcategoria": 21,
+      "nom_mostrar": "Iura Cojocari",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:01.000Z"
+    },
+    {
+      "idparticipant": 761,
+      "idcategoria": 21,
+      "nom_mostrar": "Ingo Vosseler",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:01.000Z"
+    },
+    {
+      "idparticipant": 762,
+      "idcategoria": 21,
+      "nom_mostrar": "Didier Vanden Abeele",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:01.000Z"
+    },
+    {
+      "idparticipant": 763,
+      "idcategoria": 21,
+      "nom_mostrar": "Ertan Huner",
+      "club": null,
+      "pais": "TUR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:01.000Z"
+    },
+    {
+      "idparticipant": 764,
+      "idcategoria": 21,
+      "nom_mostrar": "Ecrüment Serdar",
+      "club": null,
+      "pais": "TUR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:01.000Z"
+    },
+    {
+      "idparticipant": 765,
+      "idcategoria": 21,
+      "nom_mostrar": "Aydan Demir",
+      "club": null,
+      "pais": "TUR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:01.000Z"
+    },
+    {
+      "idparticipant": 766,
+      "idcategoria": 21,
+      "nom_mostrar": "Greg Swan",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:01.000Z"
+    },
+    {
+      "idparticipant": 767,
+      "idcategoria": 21,
+      "nom_mostrar": "Jean- Luc Le Lostec",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:02.000Z"
+    },
+    {
+      "idparticipant": 768,
+      "idcategoria": 21,
+      "nom_mostrar": "Haluk Yazici",
+      "club": null,
+      "pais": "TUR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:02.000Z"
+    },
+    {
+      "idparticipant": 769,
+      "idcategoria": 21,
+      "nom_mostrar": "DHARMESHKUMAR Desai",
+      "club": null,
+      "pais": "IND",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:02.000Z"
+    },
+    {
+      "idparticipant": 770,
+      "idcategoria": 21,
+      "nom_mostrar": "Jesús Cubells",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:02.000Z"
+    },
+    {
+      "idparticipant": 771,
+      "idcategoria": 21,
+      "nom_mostrar": "Begue Thierry",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:02.000Z"
+    },
+    {
+      "idparticipant": 772,
+      "idcategoria": 21,
+      "nom_mostrar": "Esteve Sapés",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:02.000Z"
+    },
+    {
+      "idparticipant": 773,
+      "idcategoria": 21,
+      "nom_mostrar": "Paulo Brito",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:02.000Z"
+    },
+    {
+      "idparticipant": 774,
+      "idcategoria": 21,
+      "nom_mostrar": "Pedro Vasco",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:02.000Z"
+    },
+    {
+      "idparticipant": 775,
+      "idcategoria": 21,
+      "nom_mostrar": "Alfred Dörr",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:02.000Z"
+    },
+    {
+      "idparticipant": 776,
+      "idcategoria": 21,
+      "nom_mostrar": "Rubinshtein Georgii",
+      "club": null,
+      "pais": "RUS",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:03.000Z"
+    },
+    {
+      "idparticipant": 777,
+      "idcategoria": 21,
+      "nom_mostrar": "Robert Shahnazari",
+      "club": null,
+      "pais": "USA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:03.000Z"
+    },
+    {
+      "idparticipant": 778,
+      "idcategoria": 21,
+      "nom_mostrar": "ALEX STUYCK",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:03.000Z"
+    },
+    {
+      "idparticipant": 779,
+      "idcategoria": 21,
+      "nom_mostrar": "Anibal Paçó",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:03.000Z"
+    },
+    {
+      "idparticipant": 780,
+      "idcategoria": 21,
+      "nom_mostrar": "Zbigniew Sobków",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:03.000Z"
+    },
+    {
+      "idparticipant": 781,
+      "idcategoria": 21,
+      "nom_mostrar": "Marian Wardzyński",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:03.000Z"
+    },
+    {
+      "idparticipant": 782,
+      "idcategoria": 21,
+      "nom_mostrar": "Jesús Cubells",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:03.000Z"
+    },
+    {
+      "idparticipant": 783,
+      "idcategoria": 21,
+      "nom_mostrar": "Jaume Querol",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:03.000Z"
+    },
+    {
+      "idparticipant": 784,
+      "idcategoria": 21,
+      "nom_mostrar": "Tomasz Poniatowski age 53",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:03.000Z"
+    },
+    {
+      "idparticipant": 785,
+      "idcategoria": 21,
+      "nom_mostrar": "Dariusz Sienko age 57",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:04.000Z"
+    },
+    {
+      "idparticipant": 786,
+      "idcategoria": 21,
+      "nom_mostrar": "Krzysztof Sulej 57",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:04.000Z"
+    },
+    {
+      "idparticipant": 787,
+      "idcategoria": 21,
+      "nom_mostrar": "Joao Freixinho",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:04.000Z"
+    },
+    {
+      "idparticipant": 788,
+      "idcategoria": 21,
+      "nom_mostrar": "Zdzilaw Czub",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:04.000Z"
+    },
+    {
+      "idparticipant": 789,
+      "idcategoria": 21,
+      "nom_mostrar": "Vladimir Duncko",
+      "club": null,
+      "pais": "SVK",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:04.000Z"
+    },
+    {
+      "idparticipant": 790,
+      "idcategoria": 21,
+      "nom_mostrar": "Claudio Sassi",
+      "club": null,
+      "pais": "ITA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:04.000Z"
+    },
+    {
+      "idparticipant": 791,
+      "idcategoria": 21,
+      "nom_mostrar": "Maxim Kuznetzov",
+      "club": null,
+      "pais": "ITA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:04.000Z"
+    },
+    {
+      "idparticipant": 792,
+      "idcategoria": 21,
+      "nom_mostrar": "Xavier Villoro",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:04.000Z"
+    },
+    {
+      "idparticipant": 793,
+      "idcategoria": 21,
+      "nom_mostrar": "Josep Ramon Martínez",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:04.000Z"
+    },
+    {
+      "idparticipant": 794,
+      "idcategoria": 21,
+      "nom_mostrar": "Gerard Veciana",
+      "club": null,
+      "pais": "AND",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:05.000Z"
+    },
+    {
+      "idparticipant": 795,
+      "idcategoria": 21,
+      "nom_mostrar": "Gintas Povilauskas",
+      "club": null,
+      "pais": "LTU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:05.000Z"
+    },
+    {
+      "idparticipant": 796,
+      "idcategoria": 21,
+      "nom_mostrar": "Sulaiman Adebola Aloba",
+      "club": null,
+      "pais": "NGA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:05.000Z"
+    },
+    {
+      "idparticipant": 797,
+      "idcategoria": 21,
+      "nom_mostrar": "Pascal Dupuis",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:05.000Z"
+    },
+    {
+      "idparticipant": 798,
+      "idcategoria": 21,
+      "nom_mostrar": "Lorestas Trumpauskas",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:05.000Z"
+    },
+    {
+      "idparticipant": 799,
+      "idcategoria": 21,
+      "nom_mostrar": "Marc Vicente",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:05.000Z"
+    },
+    {
+      "idparticipant": 800,
+      "idcategoria": 21,
+      "nom_mostrar": "Marc Dussart",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:05.000Z"
+    },
+    {
+      "idparticipant": 801,
+      "idcategoria": 21,
+      "nom_mostrar": "Ilian Helman",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:05.000Z"
+    },
+    {
+      "idparticipant": 802,
+      "idcategoria": 21,
+      "nom_mostrar": "Farzin Tavakolian",
+      "club": null,
+      "pais": "IRN",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:05.000Z"
+    },
+    {
+      "idparticipant": 803,
+      "idcategoria": 21,
+      "nom_mostrar": "Mariusz Gajda",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:06.000Z"
+    },
+    {
+      "idparticipant": 804,
+      "idcategoria": 21,
+      "nom_mostrar": "Sandijs Vasiljevs",
+      "club": null,
+      "pais": "LVA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:06.000Z"
+    },
+    {
+      "idparticipant": 805,
+      "idcategoria": 21,
+      "nom_mostrar": "Olegario Basilio Alcala",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:06.000Z"
+    },
+    {
+      "idparticipant": 806,
+      "idcategoria": 21,
+      "nom_mostrar": "Mark Grzeganek",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:06.000Z"
+    },
+    {
+      "idparticipant": 807,
+      "idcategoria": 21,
+      "nom_mostrar": "Sajid Hussain",
+      "club": null,
+      "pais": "PAK",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:06.000Z"
+    },
+    {
+      "idparticipant": 808,
+      "idcategoria": 21,
+      "nom_mostrar": "Milosz Sawczak",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:06.000Z"
+    },
+    {
+      "idparticipant": 809,
+      "idcategoria": 22,
+      "nom_mostrar": "Berendsen Rico",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:37.000Z"
+    },
+    {
+      "idparticipant": 810,
+      "idcategoria": 22,
+      "nom_mostrar": "Alejandro Chacón Simeón",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:37.000Z"
+    },
+    {
+      "idparticipant": 811,
+      "idcategoria": 22,
+      "nom_mostrar": "Albert Borras Vallbona",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:37.000Z"
+    },
+    {
+      "idparticipant": 812,
+      "idcategoria": 22,
+      "nom_mostrar": "Ulrich Jacobi",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:37.000Z"
+    },
+    {
+      "idparticipant": 813,
+      "idcategoria": 22,
+      "nom_mostrar": "Josep Manuel Maillo Pera",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:38.000Z"
+    },
+    {
+      "idparticipant": 814,
+      "idcategoria": 22,
+      "nom_mostrar": "Antoni Segura Domènech",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:38.000Z"
+    },
+    {
+      "idparticipant": 815,
+      "idcategoria": 22,
+      "nom_mostrar": "Johan Beghin",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:38.000Z"
+    },
+    {
+      "idparticipant": 816,
+      "idcategoria": 22,
+      "nom_mostrar": "Patrick Van Heurck",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:38.000Z"
+    },
+    {
+      "idparticipant": 817,
+      "idcategoria": 22,
+      "nom_mostrar": "Jose Antonio Cobos Fuentes",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:38.000Z"
+    },
+    {
+      "idparticipant": 818,
+      "idcategoria": 22,
+      "nom_mostrar": "Roman Caudet",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:38.000Z"
+    },
+    {
+      "idparticipant": 819,
+      "idcategoria": 22,
+      "nom_mostrar": "Jaume Ollé",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:38.000Z"
+    },
+    {
+      "idparticipant": 820,
+      "idcategoria": 22,
+      "nom_mostrar": "Gregori Sánchez Navarro",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:38.000Z"
+    },
+    {
+      "idparticipant": 821,
+      "idcategoria": 22,
+      "nom_mostrar": "Pere Porta Tardà",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:38.000Z"
+    },
+    {
+      "idparticipant": 822,
+      "idcategoria": 22,
+      "nom_mostrar": "José Carlos Alventosa",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:39.000Z"
+    },
+    {
+      "idparticipant": 823,
+      "idcategoria": 22,
+      "nom_mostrar": "Jaime Jofre",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:39.000Z"
+    },
+    {
+      "idparticipant": 824,
+      "idcategoria": 22,
+      "nom_mostrar": "Hipólito Rodal",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:39.000Z"
+    },
+    {
+      "idparticipant": 825,
+      "idcategoria": 22,
+      "nom_mostrar": "Felix Pons",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:39.000Z"
+    },
+    {
+      "idparticipant": 826,
+      "idcategoria": 22,
+      "nom_mostrar": "Antonio León Jiménez",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:39.000Z"
+    },
+    {
+      "idparticipant": 827,
+      "idcategoria": 22,
+      "nom_mostrar": "Martin Coenders",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:39.000Z"
+    },
+    {
+      "idparticipant": 828,
+      "idcategoria": 22,
+      "nom_mostrar": "Jaume Canela",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:39.000Z"
+    },
+    {
+      "idparticipant": 829,
+      "idcategoria": 22,
+      "nom_mostrar": "Fabi Alain",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:39.000Z"
+    },
+    {
+      "idparticipant": 830,
+      "idcategoria": 22,
+      "nom_mostrar": "Igor Fauquier",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:39.000Z"
+    },
+    {
+      "idparticipant": 831,
+      "idcategoria": 22,
+      "nom_mostrar": "Alix Pascal",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:40.000Z"
+    },
+    {
+      "idparticipant": 832,
+      "idcategoria": 22,
+      "nom_mostrar": "Graham Pickett",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:40.000Z"
+    },
+    {
+      "idparticipant": 833,
+      "idcategoria": 22,
+      "nom_mostrar": "Rui Agrela",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:40.000Z"
+    },
+    {
+      "idparticipant": 834,
+      "idcategoria": 22,
+      "nom_mostrar": "Joao Portela",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:40.000Z"
+    },
+    {
+      "idparticipant": 835,
+      "idcategoria": 22,
+      "nom_mostrar": "Fuad Maghrabi",
+      "club": null,
+      "pais": "PSE",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:40.000Z"
+    },
+    {
+      "idparticipant": 836,
+      "idcategoria": 22,
+      "nom_mostrar": "Mehmet Ziya",
+      "club": null,
+      "pais": "TUR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:40.000Z"
+    },
+    {
+      "idparticipant": 837,
+      "idcategoria": 22,
+      "nom_mostrar": "Francisco Javier Escolà",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:40.000Z"
+    },
+    {
+      "idparticipant": 838,
+      "idcategoria": 22,
+      "nom_mostrar": "Josep Serra Pallés",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:40.000Z"
+    },
+    {
+      "idparticipant": 839,
+      "idcategoria": 22,
+      "nom_mostrar": "Josep Martínez",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:40.000Z"
+    },
+    {
+      "idparticipant": 840,
+      "idcategoria": 22,
+      "nom_mostrar": "Ian Malcolm Grant",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:41.000Z"
+    },
+    {
+      "idparticipant": 841,
+      "idcategoria": 22,
+      "nom_mostrar": "David Jackson",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:41.000Z"
+    },
+    {
+      "idparticipant": 842,
+      "idcategoria": 22,
+      "nom_mostrar": "Miguel Ángel Daimiel",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:41.000Z"
+    },
+    {
+      "idparticipant": 843,
+      "idcategoria": 22,
+      "nom_mostrar": "Carl Versteden",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:41.000Z"
+    },
+    {
+      "idparticipant": 844,
+      "idcategoria": 22,
+      "nom_mostrar": "Rochus Fisches",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:41.000Z"
+    },
+    {
+      "idparticipant": 845,
+      "idcategoria": 22,
+      "nom_mostrar": "Mario Zucaro",
+      "club": null,
+      "pais": "ITA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:41.000Z"
+    },
+    {
+      "idparticipant": 846,
+      "idcategoria": 22,
+      "nom_mostrar": "Benito García",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:41.000Z"
+    },
+    {
+      "idparticipant": 847,
+      "idcategoria": 22,
+      "nom_mostrar": "José Martínez Garrido",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:41.000Z"
+    },
+    {
+      "idparticipant": 848,
+      "idcategoria": 22,
+      "nom_mostrar": "Frank Lukaschek",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:41.000Z"
+    },
+    {
+      "idparticipant": 849,
+      "idcategoria": 22,
+      "nom_mostrar": "Frank Cronfalk",
+      "club": null,
+      "pais": "DNK",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:42.000Z"
+    },
+    {
+      "idparticipant": 850,
+      "idcategoria": 22,
+      "nom_mostrar": "Robert Luger",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:42.000Z"
+    },
+    {
+      "idparticipant": 851,
+      "idcategoria": 22,
+      "nom_mostrar": "Mariano Estrada",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:42.000Z"
+    },
+    {
+      "idparticipant": 852,
+      "idcategoria": 22,
+      "nom_mostrar": "Yves Delafonteyne",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:42.000Z"
+    },
+    {
+      "idparticipant": 853,
+      "idcategoria": 22,
+      "nom_mostrar": "Dominique Grognet",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:42.000Z"
+    },
+    {
+      "idparticipant": 854,
+      "idcategoria": 22,
+      "nom_mostrar": "Francesco De Ninno",
+      "club": null,
+      "pais": "ITA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:42.000Z"
+    },
+    {
+      "idparticipant": 855,
+      "idcategoria": 22,
+      "nom_mostrar": "Paolo Mazzarella",
+      "club": null,
+      "pais": "ITA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:42.000Z"
+    },
+    {
+      "idparticipant": 856,
+      "idcategoria": 22,
+      "nom_mostrar": "Grzegorz Jaskulski",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:42.000Z"
+    },
+    {
+      "idparticipant": 857,
+      "idcategoria": 22,
+      "nom_mostrar": "Roman Piechnik",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:43.000Z"
+    },
+    {
+      "idparticipant": 858,
+      "idcategoria": 22,
+      "nom_mostrar": "Robert Rupa",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:43.000Z"
+    },
+    {
+      "idparticipant": 859,
+      "idcategoria": 22,
+      "nom_mostrar": "Darius Baruch",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:43.000Z"
+    },
+    {
+      "idparticipant": 860,
+      "idcategoria": 22,
+      "nom_mostrar": "Jean Lessire",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:43.000Z"
+    },
+    {
+      "idparticipant": 861,
+      "idcategoria": 22,
+      "nom_mostrar": "Jawahar Vashisht",
+      "club": null,
+      "pais": "IND",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:43.000Z"
+    },
+    {
+      "idparticipant": 862,
+      "idcategoria": 22,
+      "nom_mostrar": "Orhun Örer",
+      "club": null,
+      "pais": "TUR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:43.000Z"
+    },
+    {
+      "idparticipant": 863,
+      "idcategoria": 22,
+      "nom_mostrar": "Diccon Gray",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:43.000Z"
+    },
+    {
+      "idparticipant": 864,
+      "idcategoria": 22,
+      "nom_mostrar": "Tim Dyson",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:43.000Z"
+    },
+    {
+      "idparticipant": 865,
+      "idcategoria": 22,
+      "nom_mostrar": "Philippe Havez",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:43.000Z"
+    },
+    {
+      "idparticipant": 866,
+      "idcategoria": 22,
+      "nom_mostrar": "Christian Singer",
+      "club": null,
+      "pais": "AUT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:44.000Z"
+    },
+    {
+      "idparticipant": 867,
+      "idcategoria": 22,
+      "nom_mostrar": "Jose Emmanuel Disini",
+      "club": null,
+      "pais": "PHL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:44.000Z"
+    },
+    {
+      "idparticipant": 868,
+      "idcategoria": 22,
+      "nom_mostrar": "Antonio Aguinalde",
+      "club": null,
+      "pais": "PHL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:44.000Z"
+    },
+    {
+      "idparticipant": 869,
+      "idcategoria": 22,
+      "nom_mostrar": "Alejandro Vigolo",
+      "club": null,
+      "pais": "ARG",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:44.000Z"
+    },
+    {
+      "idparticipant": 870,
+      "idcategoria": 22,
+      "nom_mostrar": "José Luis Sastre",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:44.000Z"
+    },
+    {
+      "idparticipant": 871,
+      "idcategoria": 22,
+      "nom_mostrar": "Joaquim Veciana",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:44.000Z"
+    },
+    {
+      "idparticipant": 872,
+      "idcategoria": 22,
+      "nom_mostrar": "Marco Leone",
+      "club": null,
+      "pais": "ITA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:44.000Z"
+    },
+    {
+      "idparticipant": 873,
+      "idcategoria": 22,
+      "nom_mostrar": "Yusuf Tuna",
+      "club": null,
+      "pais": "TUR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:44.000Z"
+    },
+    {
+      "idparticipant": 874,
+      "idcategoria": 22,
+      "nom_mostrar": "Juan Marcos Timoner LLoret",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:44.000Z"
+    },
+    {
+      "idparticipant": 875,
+      "idcategoria": 22,
+      "nom_mostrar": "Rimas Dmukayskas",
+      "club": null,
+      "pais": "LTU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:45.000Z"
+    },
+    {
+      "idparticipant": 876,
+      "idcategoria": 22,
+      "nom_mostrar": "Michael Schaffner",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:45.000Z"
+    },
+    {
+      "idparticipant": 877,
+      "idcategoria": 22,
+      "nom_mostrar": "Olivier Bernard",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:45.000Z"
+    },
+    {
+      "idparticipant": 878,
+      "idcategoria": 22,
+      "nom_mostrar": "Jean - Loup Ravat",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:45.000Z"
+    },
+    {
+      "idparticipant": 879,
+      "idcategoria": 22,
+      "nom_mostrar": "Philippe Courcol",
+      "club": null,
+      "pais": "AND",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:45.000Z"
+    },
+    {
+      "idparticipant": 880,
+      "idcategoria": 22,
+      "nom_mostrar": "Álvaro Toscano",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:45.000Z"
+    },
+    {
+      "idparticipant": 881,
+      "idcategoria": 22,
+      "nom_mostrar": "Mark McAlister",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:45.000Z"
+    },
+    {
+      "idparticipant": 882,
+      "idcategoria": 22,
+      "nom_mostrar": "Juan Gatica",
+      "club": null,
+      "pais": "CHL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:28:45.000Z"
+    },
+    {
+      "idparticipant": 883,
+      "idcategoria": 23,
+      "nom_mostrar": "José Feliu Escolar",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:05.000Z"
+    },
+    {
+      "idparticipant": 884,
+      "idcategoria": 23,
+      "nom_mostrar": "Michal Cada",
+      "club": null,
+      "pais": "CZE",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:05.000Z"
+    },
+    {
+      "idparticipant": 885,
+      "idcategoria": 23,
+      "nom_mostrar": "Josep Gual Rebull",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:05.000Z"
+    },
+    {
+      "idparticipant": 886,
+      "idcategoria": 23,
+      "nom_mostrar": "Joaquim Azcon",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:05.000Z"
+    },
+    {
+      "idparticipant": 887,
+      "idcategoria": 23,
+      "nom_mostrar": "Raúl López Reyes",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:05.000Z"
+    },
+    {
+      "idparticipant": 888,
+      "idcategoria": 23,
+      "nom_mostrar": "Joao Oliveira",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:05.000Z"
+    },
+    {
+      "idparticipant": 889,
+      "idcategoria": 23,
+      "nom_mostrar": "Luis Eduardo Grebnicoff",
+      "club": null,
+      "pais": "ARG",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:06.000Z"
+    },
+    {
+      "idparticipant": 890,
+      "idcategoria": 23,
+      "nom_mostrar": "Rob Peverall",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:06.000Z"
+    },
+    {
+      "idparticipant": 891,
+      "idcategoria": 23,
+      "nom_mostrar": "John Murphy",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:06.000Z"
+    },
+    {
+      "idparticipant": 892,
+      "idcategoria": 23,
+      "nom_mostrar": "Amilcar Maria",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:06.000Z"
+    },
+    {
+      "idparticipant": 893,
+      "idcategoria": 23,
+      "nom_mostrar": "José Alvoeiro da Silva",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:06.000Z"
+    },
+    {
+      "idparticipant": 894,
+      "idcategoria": 23,
+      "nom_mostrar": "Orlando Saña",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:06.000Z"
+    },
+    {
+      "idparticipant": 895,
+      "idcategoria": 23,
+      "nom_mostrar": "Joaquim Barbosa",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:06.000Z"
+    },
+    {
+      "idparticipant": 896,
+      "idcategoria": 23,
+      "nom_mostrar": "Ramon Balaguer",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:06.000Z"
+    },
+    {
+      "idparticipant": 897,
+      "idcategoria": 23,
+      "nom_mostrar": "David Foreman",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:07.000Z"
+    },
+    {
+      "idparticipant": 898,
+      "idcategoria": 23,
+      "nom_mostrar": "John Daley Daley",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:07.000Z"
+    },
+    {
+      "idparticipant": 899,
+      "idcategoria": 23,
+      "nom_mostrar": "Peter Wagner",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:07.000Z"
+    },
+    {
+      "idparticipant": 900,
+      "idcategoria": 23,
+      "nom_mostrar": "David Wright",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:07.000Z"
+    },
+    {
+      "idparticipant": 901,
+      "idcategoria": 23,
+      "nom_mostrar": "Miguel Angel Schneider",
+      "club": null,
+      "pais": "ARG",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:07.000Z"
+    },
+    {
+      "idparticipant": 902,
+      "idcategoria": 23,
+      "nom_mostrar": "István Szalai",
+      "club": null,
+      "pais": "HUN",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:07.000Z"
+    },
+    {
+      "idparticipant": 903,
+      "idcategoria": 23,
+      "nom_mostrar": "Carsten Jacobsen",
+      "club": null,
+      "pais": "DNK",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:07.000Z"
+    },
+    {
+      "idparticipant": 904,
+      "idcategoria": 23,
+      "nom_mostrar": "Perben Christian Larsen",
+      "club": null,
+      "pais": "DNK",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:07.000Z"
+    },
+    {
+      "idparticipant": 905,
+      "idcategoria": 23,
+      "nom_mostrar": "Toni Aguilar",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:07.000Z"
+    },
+    {
+      "idparticipant": 906,
+      "idcategoria": 23,
+      "nom_mostrar": "Felipe González",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:08.000Z"
+    },
+    {
+      "idparticipant": 907,
+      "idcategoria": 23,
+      "nom_mostrar": "Mark Staron",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:08.000Z"
+    },
+    {
+      "idparticipant": 908,
+      "idcategoria": 23,
+      "nom_mostrar": "Gert Ellegaard",
+      "club": null,
+      "pais": "DNK",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:08.000Z"
+    },
+    {
+      "idparticipant": 909,
+      "idcategoria": 23,
+      "nom_mostrar": "Josep Rius",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:08.000Z"
+    },
+    {
+      "idparticipant": 910,
+      "idcategoria": 23,
+      "nom_mostrar": "Dapeng Liu",
+      "club": null,
+      "pais": "DNK",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:08.000Z"
+    },
+    {
+      "idparticipant": 911,
+      "idcategoria": 23,
+      "nom_mostrar": "Ruben Martin Palacio",
+      "club": null,
+      "pais": "ARG",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:08.000Z"
+    },
+    {
+      "idparticipant": 912,
+      "idcategoria": 23,
+      "nom_mostrar": "Gustavo GUGLIELMONE",
+      "club": null,
+      "pais": "ARG",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:08.000Z"
+    },
+    {
+      "idparticipant": 913,
+      "idcategoria": 23,
+      "nom_mostrar": "Carlos Larsson",
+      "club": null,
+      "pais": "ARG",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:08.000Z"
+    },
+    {
+      "idparticipant": 914,
+      "idcategoria": 23,
+      "nom_mostrar": "Roger Bustamante",
+      "club": null,
+      "pais": "ARG",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:08.000Z"
+    },
+    {
+      "idparticipant": 915,
+      "idcategoria": 23,
+      "nom_mostrar": "Gunars Jekabsons",
+      "club": null,
+      "pais": "LVA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:09.000Z"
+    },
+    {
+      "idparticipant": 916,
+      "idcategoria": 23,
+      "nom_mostrar": "Agustín Caparrós",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:09.000Z"
+    },
+    {
+      "idparticipant": 917,
+      "idcategoria": 23,
+      "nom_mostrar": "Guillermo León Hidalgo",
+      "club": null,
+      "pais": "CHL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:09.000Z"
+    },
+    {
+      "idparticipant": 918,
+      "idcategoria": 23,
+      "nom_mostrar": "Danor Quintero",
+      "club": null,
+      "pais": "CHL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:09.000Z"
+    },
+    {
+      "idparticipant": 919,
+      "idcategoria": 23,
+      "nom_mostrar": "Josep Pretel",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:09.000Z"
+    },
+    {
+      "idparticipant": 920,
+      "idcategoria": 23,
+      "nom_mostrar": "Francesc Castells",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:09.000Z"
+    },
+    {
+      "idparticipant": 921,
+      "idcategoria": 23,
+      "nom_mostrar": "Edgardo Astorga Font de la Vall",
+      "club": null,
+      "pais": "CHL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:09.000Z"
+    },
+    {
+      "idparticipant": 922,
+      "idcategoria": 23,
+      "nom_mostrar": "Marc Dagnelie",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:09.000Z"
+    },
+    {
+      "idparticipant": 923,
+      "idcategoria": 23,
+      "nom_mostrar": "Josep Madurell",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:09.000Z"
+    },
+    {
+      "idparticipant": 924,
+      "idcategoria": 25,
+      "nom_mostrar": "Katrin Adamson",
+      "club": null,
+      "pais": "EST",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:52.000Z"
+    },
+    {
+      "idparticipant": 925,
+      "idcategoria": 25,
+      "nom_mostrar": "Olga Calderó",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:52.000Z"
+    },
+    {
+      "idparticipant": 926,
+      "idcategoria": 25,
+      "nom_mostrar": "Joanna Zilotin",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:52.000Z"
+    },
+    {
+      "idparticipant": 927,
+      "idcategoria": 25,
+      "nom_mostrar": "Agnieszka Danczyszyn",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:53.000Z"
+    },
+    {
+      "idparticipant": 928,
+      "idcategoria": 25,
+      "nom_mostrar": "Stephanie De Fuster",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:53.000Z"
+    },
+    {
+      "idparticipant": 929,
+      "idcategoria": 25,
+      "nom_mostrar": "Leanne Irwin",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:53.000Z"
+    },
+    {
+      "idparticipant": 930,
+      "idcategoria": 25,
+      "nom_mostrar": "Gabi Schuchna",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:53.000Z"
+    },
+    {
+      "idparticipant": 931,
+      "idcategoria": 25,
+      "nom_mostrar": "Linda Roga",
+      "club": null,
+      "pais": "LVA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:53.000Z"
+    },
+    {
+      "idparticipant": 932,
+      "idcategoria": 25,
+      "nom_mostrar": "Aneta Sawczak",
+      "club": null,
+      "pais": "POL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:29:53.000Z"
+    },
+    {
+      "idparticipant": 933,
+      "idcategoria": 26,
+      "nom_mostrar": "Valentina Liss",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:19.000Z"
+    },
+    {
+      "idparticipant": 934,
+      "idcategoria": 26,
+      "nom_mostrar": "Alicia Padilla",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:19.000Z"
+    },
+    {
+      "idparticipant": 935,
+      "idcategoria": 26,
+      "nom_mostrar": "Mari González Valero",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:19.000Z"
+    },
+    {
+      "idparticipant": 936,
+      "idcategoria": 26,
+      "nom_mostrar": "Svetlana Skobkina",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:19.000Z"
+    },
+    {
+      "idparticipant": 937,
+      "idcategoria": 26,
+      "nom_mostrar": "Neza Kumer",
+      "club": null,
+      "pais": "SVN",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:19.000Z"
+    },
+    {
+      "idparticipant": 938,
+      "idcategoria": 26,
+      "nom_mostrar": "Besire Domaniku",
+      "club": null,
+      "pais": "XKX",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:19.000Z"
+    },
+    {
+      "idparticipant": 939,
+      "idcategoria": 26,
+      "nom_mostrar": "Inci Sefaj",
+      "club": null,
+      "pais": "XKX",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:20.000Z"
+    },
+    {
+      "idparticipant": 940,
+      "idcategoria": 26,
+      "nom_mostrar": "Marina Caterino",
+      "club": null,
+      "pais": "ITA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:20.000Z"
+    },
+    {
+      "idparticipant": 941,
+      "idcategoria": 26,
+      "nom_mostrar": "Anisoara Calin",
+      "club": null,
+      "pais": "ROU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:20.000Z"
+    },
+    {
+      "idparticipant": 942,
+      "idcategoria": 26,
+      "nom_mostrar": "Isabel Pires",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:20.000Z"
+    },
+    {
+      "idparticipant": 943,
+      "idcategoria": 26,
+      "nom_mostrar": "Elisabete Nunes",
+      "club": null,
+      "pais": "PRT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:20.000Z"
+    },
+    {
+      "idparticipant": 944,
+      "idcategoria": 26,
+      "nom_mostrar": "Lyudmila Hedger",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:20.000Z"
+    },
+    {
+      "idparticipant": 945,
+      "idcategoria": 26,
+      "nom_mostrar": "Cedrine Martínez",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:20.000Z"
+    },
+    {
+      "idparticipant": 946,
+      "idcategoria": 26,
+      "nom_mostrar": "Larisa Lavrukhina",
+      "club": null,
+      "pais": "RUS",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:20.000Z"
+    },
+    {
+      "idparticipant": 947,
+      "idcategoria": 26,
+      "nom_mostrar": "Nataliia Zhura",
+      "club": null,
+      "pais": "UKR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:21.000Z"
+    },
+    {
+      "idparticipant": 948,
+      "idcategoria": 26,
+      "nom_mostrar": "Hajdecka Grazyna",
+      "club": null,
+      "pais": "AUT",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 0,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:21.000Z"
+    },
+    {
+      "idparticipant": 949,
+      "idcategoria": 27,
+      "nom_mostrar": "Manuelle Bertrand",
+      "club": null,
+      "pais": "AND",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:48.000Z"
+    },
+    {
+      "idparticipant": 950,
+      "idcategoria": 27,
+      "nom_mostrar": "Sílvia Soteras",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:48.000Z"
+    },
+    {
+      "idparticipant": 951,
+      "idcategoria": 27,
+      "nom_mostrar": "Maria Jesus López",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:49.000Z"
+    },
+    {
+      "idparticipant": 952,
+      "idcategoria": 27,
+      "nom_mostrar": "Milena Kozar",
+      "club": null,
+      "pais": "SVN",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:49.000Z"
+    },
+    {
+      "idparticipant": 953,
+      "idcategoria": 27,
+      "nom_mostrar": "Rozalia Hribikova",
+      "club": null,
+      "pais": "SVK",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:49.000Z"
+    },
+    {
+      "idparticipant": 954,
+      "idcategoria": 27,
+      "nom_mostrar": "Asuman Atuk",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:49.000Z"
+    },
+    {
+      "idparticipant": 955,
+      "idcategoria": 27,
+      "nom_mostrar": "Elaine Wilson",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:49.000Z"
+    },
+    {
+      "idparticipant": 956,
+      "idcategoria": 27,
+      "nom_mostrar": "Pat Clements",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:49.000Z"
+    },
+    {
+      "idparticipant": 957,
+      "idcategoria": 27,
+      "nom_mostrar": "Jane Elizabeth Lynas",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:49.000Z"
+    },
+    {
+      "idparticipant": 958,
+      "idcategoria": 27,
+      "nom_mostrar": "Esen Yazici",
+      "club": null,
+      "pais": "TUR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:49.000Z"
+    },
+    {
+      "idparticipant": 959,
+      "idcategoria": 27,
+      "nom_mostrar": "Ángela Martín",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:49.000Z"
+    },
+    {
+      "idparticipant": 960,
+      "idcategoria": 27,
+      "nom_mostrar": "Maria Jesús Vila",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:50.000Z"
+    },
+    {
+      "idparticipant": 961,
+      "idcategoria": 27,
+      "nom_mostrar": "Isabel García",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:50.000Z"
+    },
+    {
+      "idparticipant": 962,
+      "idcategoria": 27,
+      "nom_mostrar": "Marina Vintila",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:50.000Z"
+    },
+    {
+      "idparticipant": 963,
+      "idcategoria": 27,
+      "nom_mostrar": "Virginia Stanescu",
+      "club": null,
+      "pais": "BEL",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:50.000Z"
+    },
+    {
+      "idparticipant": 964,
+      "idcategoria": 27,
+      "nom_mostrar": "Marta Beatriz BONNIN",
+      "club": null,
+      "pais": "ARG",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:50.000Z"
+    },
+    {
+      "idparticipant": 965,
+      "idcategoria": 27,
+      "nom_mostrar": "Márta Tóth",
+      "club": null,
+      "pais": "HUN",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:50.000Z"
+    },
+    {
+      "idparticipant": 966,
+      "idcategoria": 27,
+      "nom_mostrar": "Regis PROCHASSON",
+      "club": null,
+      "pais": "FRA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:50.000Z"
+    },
+    {
+      "idparticipant": 967,
+      "idcategoria": 27,
+      "nom_mostrar": "Birgit Matthies",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:50.000Z"
+    },
+    {
+      "idparticipant": 968,
+      "idcategoria": 27,
+      "nom_mostrar": "Núria Sapés",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:50.000Z"
+    },
+    {
+      "idparticipant": 969,
+      "idcategoria": 27,
+      "nom_mostrar": "Svea Onno",
+      "club": null,
+      "pais": "EST",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:51.000Z"
+    },
+    {
+      "idparticipant": 970,
+      "idcategoria": 27,
+      "nom_mostrar": "Mar Arxer",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:51.000Z"
+    },
+    {
+      "idparticipant": 971,
+      "idcategoria": 27,
+      "nom_mostrar": "Karin Berend",
+      "club": null,
+      "pais": "LUX",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:51.000Z"
+    },
+    {
+      "idparticipant": 972,
+      "idcategoria": 27,
+      "nom_mostrar": "Nurdin Saparbaev",
+      "club": null,
+      "pais": "KGZ",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:30:51.000Z"
+    },
+    {
+      "idparticipant": 973,
+      "idcategoria": 28,
+      "nom_mostrar": "Viktoria Sandul",
+      "club": null,
+      "pais": "MDA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:11.000Z"
+    },
+    {
+      "idparticipant": 974,
+      "idcategoria": 28,
+      "nom_mostrar": "Guerly Avila Parga",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:11.000Z"
+    },
+    {
+      "idparticipant": 975,
+      "idcategoria": 28,
+      "nom_mostrar": "Tina Bradshaw",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:11.000Z"
+    },
+    {
+      "idparticipant": 976,
+      "idcategoria": 28,
+      "nom_mostrar": "Barbara Dumphy",
+      "club": null,
+      "pais": "GBR",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:11.000Z"
+    },
+    {
+      "idparticipant": 977,
+      "idcategoria": 28,
+      "nom_mostrar": "Teresa Suárez",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:11.000Z"
+    },
+    {
+      "idparticipant": 978,
+      "idcategoria": 28,
+      "nom_mostrar": "Anne Stiewe",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:11.000Z"
+    },
+    {
+      "idparticipant": 979,
+      "idcategoria": 28,
+      "nom_mostrar": "Greda Kux - Sieberath",
+      "club": null,
+      "pais": "DEU",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:11.000Z"
+    },
+    {
+      "idparticipant": 980,
+      "idcategoria": 28,
+      "nom_mostrar": "Maria Angélica González",
+      "club": null,
+      "pais": "ARG",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:11.000Z"
+    },
+    {
+      "idparticipant": 981,
+      "idcategoria": 28,
+      "nom_mostrar": "Lili He",
+      "club": null,
+      "pais": "USA",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:12.000Z"
+    },
+    {
+      "idparticipant": 982,
+      "idcategoria": 28,
+      "nom_mostrar": "Julia Infante",
+      "club": null,
+      "pais": "ESP",
+      "ranking": 0,
+      "numero_inscripcio": null,
+      "actiu": 1,
+      "baixa": 0,
+      "observacions": null,
+      "data_creacio": "2026-10-04T07:31:12.000Z"
+    }
+  ],
+  "participant_jugadors": [
+    {
+      "idparticipant": 726,
+      "idjugador": 724,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 727,
+      "idjugador": 725,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 728,
+      "idjugador": 726,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 729,
+      "idjugador": 727,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 730,
+      "idjugador": 728,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 731,
+      "idjugador": 729,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 732,
+      "idjugador": 730,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 733,
+      "idjugador": 731,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 734,
+      "idjugador": 732,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 735,
+      "idjugador": 733,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 736,
+      "idjugador": 734,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 737,
+      "idjugador": 735,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 738,
+      "idjugador": 736,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 739,
+      "idjugador": 737,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 740,
+      "idjugador": 738,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 741,
+      "idjugador": 739,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 742,
+      "idjugador": 740,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 743,
+      "idjugador": 741,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 744,
+      "idjugador": 742,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 745,
+      "idjugador": 743,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 746,
+      "idjugador": 744,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 747,
+      "idjugador": 745,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 748,
+      "idjugador": 746,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 749,
+      "idjugador": 747,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 750,
+      "idjugador": 748,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 751,
+      "idjugador": 749,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 752,
+      "idjugador": 750,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 753,
+      "idjugador": 751,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 754,
+      "idjugador": 752,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 755,
+      "idjugador": 753,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 756,
+      "idjugador": 754,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 757,
+      "idjugador": 755,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 758,
+      "idjugador": 756,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 759,
+      "idjugador": 757,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 760,
+      "idjugador": 758,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 761,
+      "idjugador": 759,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 762,
+      "idjugador": 760,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 763,
+      "idjugador": 761,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 764,
+      "idjugador": 762,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 765,
+      "idjugador": 763,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 766,
+      "idjugador": 764,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 767,
+      "idjugador": 765,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 768,
+      "idjugador": 766,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 769,
+      "idjugador": 767,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 770,
+      "idjugador": 768,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 771,
+      "idjugador": 769,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 772,
+      "idjugador": 770,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 773,
+      "idjugador": 771,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 774,
+      "idjugador": 772,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 775,
+      "idjugador": 773,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 776,
+      "idjugador": 774,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 777,
+      "idjugador": 775,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 778,
+      "idjugador": 776,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 779,
+      "idjugador": 777,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 780,
+      "idjugador": 778,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 781,
+      "idjugador": 779,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 782,
+      "idjugador": 780,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 783,
+      "idjugador": 781,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 784,
+      "idjugador": 782,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 785,
+      "idjugador": 783,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 786,
+      "idjugador": 784,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 787,
+      "idjugador": 785,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 788,
+      "idjugador": 786,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 789,
+      "idjugador": 787,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 790,
+      "idjugador": 788,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 791,
+      "idjugador": 789,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 792,
+      "idjugador": 790,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 793,
+      "idjugador": 791,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 794,
+      "idjugador": 792,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 795,
+      "idjugador": 793,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 796,
+      "idjugador": 794,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 797,
+      "idjugador": 795,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 798,
+      "idjugador": 796,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 799,
+      "idjugador": 797,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 800,
+      "idjugador": 798,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 801,
+      "idjugador": 799,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 802,
+      "idjugador": 800,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 803,
+      "idjugador": 801,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 804,
+      "idjugador": 802,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 805,
+      "idjugador": 803,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 806,
+      "idjugador": 804,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 807,
+      "idjugador": 805,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 808,
+      "idjugador": 806,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 809,
+      "idjugador": 807,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 810,
+      "idjugador": 808,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 811,
+      "idjugador": 809,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 812,
+      "idjugador": 810,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 813,
+      "idjugador": 811,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 814,
+      "idjugador": 812,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 815,
+      "idjugador": 813,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 816,
+      "idjugador": 814,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 817,
+      "idjugador": 815,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 818,
+      "idjugador": 816,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 819,
+      "idjugador": 817,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 820,
+      "idjugador": 818,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 821,
+      "idjugador": 819,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 822,
+      "idjugador": 820,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 823,
+      "idjugador": 821,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 824,
+      "idjugador": 822,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 825,
+      "idjugador": 823,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 826,
+      "idjugador": 824,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 827,
+      "idjugador": 825,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 828,
+      "idjugador": 826,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 829,
+      "idjugador": 827,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 830,
+      "idjugador": 828,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 831,
+      "idjugador": 829,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 832,
+      "idjugador": 830,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 833,
+      "idjugador": 831,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 834,
+      "idjugador": 832,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 835,
+      "idjugador": 833,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 836,
+      "idjugador": 834,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 837,
+      "idjugador": 835,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 838,
+      "idjugador": 836,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 839,
+      "idjugador": 837,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 840,
+      "idjugador": 838,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 841,
+      "idjugador": 839,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 842,
+      "idjugador": 840,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 843,
+      "idjugador": 841,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 844,
+      "idjugador": 842,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 845,
+      "idjugador": 843,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 846,
+      "idjugador": 844,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 847,
+      "idjugador": 845,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 848,
+      "idjugador": 846,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 849,
+      "idjugador": 847,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 850,
+      "idjugador": 848,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 851,
+      "idjugador": 849,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 852,
+      "idjugador": 850,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 853,
+      "idjugador": 851,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 854,
+      "idjugador": 852,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 855,
+      "idjugador": 853,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 856,
+      "idjugador": 854,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 857,
+      "idjugador": 855,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 858,
+      "idjugador": 856,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 859,
+      "idjugador": 857,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 860,
+      "idjugador": 858,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 861,
+      "idjugador": 859,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 862,
+      "idjugador": 860,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 863,
+      "idjugador": 861,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 864,
+      "idjugador": 862,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 865,
+      "idjugador": 863,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 866,
+      "idjugador": 864,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 867,
+      "idjugador": 865,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 868,
+      "idjugador": 866,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 869,
+      "idjugador": 867,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 870,
+      "idjugador": 868,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 871,
+      "idjugador": 869,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 872,
+      "idjugador": 870,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 873,
+      "idjugador": 871,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 874,
+      "idjugador": 872,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 875,
+      "idjugador": 873,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 876,
+      "idjugador": 874,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 877,
+      "idjugador": 875,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 878,
+      "idjugador": 876,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 879,
+      "idjugador": 877,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 880,
+      "idjugador": 878,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 881,
+      "idjugador": 879,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 882,
+      "idjugador": 880,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 883,
+      "idjugador": 881,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 884,
+      "idjugador": 882,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 885,
+      "idjugador": 883,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 886,
+      "idjugador": 884,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 887,
+      "idjugador": 885,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 888,
+      "idjugador": 886,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 889,
+      "idjugador": 887,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 890,
+      "idjugador": 888,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 891,
+      "idjugador": 889,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 892,
+      "idjugador": 890,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 893,
+      "idjugador": 891,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 894,
+      "idjugador": 892,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 895,
+      "idjugador": 893,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 896,
+      "idjugador": 894,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 897,
+      "idjugador": 895,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 898,
+      "idjugador": 896,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 899,
+      "idjugador": 897,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 900,
+      "idjugador": 898,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 901,
+      "idjugador": 899,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 902,
+      "idjugador": 900,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 903,
+      "idjugador": 901,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 904,
+      "idjugador": 902,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 905,
+      "idjugador": 903,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 906,
+      "idjugador": 904,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 907,
+      "idjugador": 905,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 908,
+      "idjugador": 906,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 909,
+      "idjugador": 907,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 910,
+      "idjugador": 908,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 911,
+      "idjugador": 909,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 912,
+      "idjugador": 910,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 913,
+      "idjugador": 911,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 914,
+      "idjugador": 912,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 915,
+      "idjugador": 913,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 916,
+      "idjugador": 914,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 917,
+      "idjugador": 915,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 918,
+      "idjugador": 916,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 919,
+      "idjugador": 917,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 920,
+      "idjugador": 918,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 921,
+      "idjugador": 919,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 922,
+      "idjugador": 920,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 923,
+      "idjugador": 921,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 924,
+      "idjugador": 922,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 925,
+      "idjugador": 923,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 926,
+      "idjugador": 924,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 927,
+      "idjugador": 925,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 928,
+      "idjugador": 926,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 929,
+      "idjugador": 927,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 930,
+      "idjugador": 928,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 931,
+      "idjugador": 929,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 932,
+      "idjugador": 930,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 933,
+      "idjugador": 931,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 934,
+      "idjugador": 932,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 935,
+      "idjugador": 933,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 936,
+      "idjugador": 934,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 937,
+      "idjugador": 935,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 938,
+      "idjugador": 936,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 939,
+      "idjugador": 937,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 940,
+      "idjugador": 938,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 941,
+      "idjugador": 939,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 942,
+      "idjugador": 940,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 943,
+      "idjugador": 941,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 944,
+      "idjugador": 942,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 945,
+      "idjugador": 943,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 946,
+      "idjugador": 944,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 947,
+      "idjugador": 945,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 948,
+      "idjugador": 946,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 949,
+      "idjugador": 947,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 950,
+      "idjugador": 948,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 951,
+      "idjugador": 949,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 952,
+      "idjugador": 950,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 953,
+      "idjugador": 951,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 954,
+      "idjugador": 952,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 955,
+      "idjugador": 953,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 956,
+      "idjugador": 954,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 957,
+      "idjugador": 955,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 958,
+      "idjugador": 956,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 959,
+      "idjugador": 957,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 960,
+      "idjugador": 958,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 961,
+      "idjugador": 959,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 962,
+      "idjugador": 960,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 963,
+      "idjugador": 961,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 964,
+      "idjugador": 962,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 965,
+      "idjugador": 963,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 966,
+      "idjugador": 964,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 967,
+      "idjugador": 965,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 968,
+      "idjugador": 966,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 969,
+      "idjugador": 967,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 970,
+      "idjugador": 968,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 971,
+      "idjugador": 969,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 972,
+      "idjugador": 970,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 973,
+      "idjugador": 971,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 974,
+      "idjugador": 972,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 975,
+      "idjugador": 973,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 976,
+      "idjugador": 974,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 977,
+      "idjugador": 975,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 978,
+      "idjugador": 976,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 979,
+      "idjugador": 977,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 980,
+      "idjugador": 978,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 981,
+      "idjugador": 979,
+      "ordre": 1
+    },
+    {
+      "idparticipant": 982,
+      "idjugador": 980,
+      "ordre": 1
+    }
+  ],
+  "jugadors": [
+    {
+      "idjugador": 724,
+      "nom": "Alan",
+      "cognoms": "Ahmed",
+      "club": null,
+      "pais": "IRQ",
+      "sexe": "M",
+      "data_naixement": null,
+      "num_llicencia": "23",
+      "observacions": null
+    },
+    {
+      "idjugador": 725,
+      "nom": "Cedric",
+      "cognoms": "Merchez",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-06-01T00:00:00.000Z",
+      "num_llicencia": "24",
+      "observacions": null
+    },
+    {
+      "idjugador": 726,
+      "nom": "Marco",
+      "cognoms": "Pedro",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-06-02T00:00:00.000Z",
+      "num_llicencia": "65",
+      "observacions": null
+    },
+    {
+      "idjugador": 727,
+      "nom": "Diego",
+      "cognoms": "Crespo",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-30T00:00:00.000Z",
+      "num_llicencia": "78",
+      "observacions": null
+    },
+    {
+      "idjugador": 728,
+      "nom": "Femi Ajala",
+      "cognoms": "Alade",
+      "club": null,
+      "pais": "NGA",
+      "sexe": "M",
+      "data_naixement": "1905-06-01T00:00:00.000Z",
+      "num_llicencia": "87",
+      "observacions": null
+    },
+    {
+      "idjugador": 729,
+      "nom": "Oscar",
+      "cognoms": "Pastor",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-06-04T00:00:00.000Z",
+      "num_llicencia": "105",
+      "observacions": null
+    },
+    {
+      "idjugador": 730,
+      "nom": "Miquel",
+      "cognoms": "Virgili",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-31T00:00:00.000Z",
+      "num_llicencia": "118",
+      "observacions": null
+    },
+    {
+      "idjugador": 731,
+      "nom": "David",
+      "cognoms": "Irwin",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-06-01T00:00:00.000Z",
+      "num_llicencia": "123",
+      "observacions": null
+    },
+    {
+      "idjugador": 732,
+      "nom": "Yinka",
+      "cognoms": "Olasoji",
+      "club": null,
+      "pais": "NGA",
+      "sexe": "M",
+      "data_naixement": "1905-06-03T00:00:00.000Z",
+      "num_llicencia": "132",
+      "observacions": null
+    },
+    {
+      "idjugador": 733,
+      "nom": "Nicolae",
+      "cognoms": "Lisnic",
+      "club": null,
+      "pais": "MDA",
+      "sexe": "M",
+      "data_naixement": "1905-05-30T00:00:00.000Z",
+      "num_llicencia": "159",
+      "observacions": null
+    },
+    {
+      "idjugador": 734,
+      "nom": "Bart",
+      "cognoms": "Beckers",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-06-03T00:00:00.000Z",
+      "num_llicencia": "164",
+      "observacions": null
+    },
+    {
+      "idjugador": 735,
+      "nom": "Enric",
+      "cognoms": "Pàmies",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-06-05T00:00:00.000Z",
+      "num_llicencia": "174",
+      "observacions": null
+    },
+    {
+      "idjugador": 736,
+      "nom": "Francisco",
+      "cognoms": "Montes",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-06-05T00:00:00.000Z",
+      "num_llicencia": "182",
+      "observacions": null
+    },
+    {
+      "idjugador": 737,
+      "nom": "Syed",
+      "cognoms": "Mahmuduzzaman",
+      "club": null,
+      "pais": "BGD",
+      "sexe": "M",
+      "data_naixement": "1905-05-31T00:00:00.000Z",
+      "num_llicencia": "186",
+      "observacions": null
+    },
+    {
+      "idjugador": 738,
+      "nom": "Alex",
+      "cognoms": "Pérez Solsona",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-06-06T00:00:00.000Z",
+      "num_llicencia": "193",
+      "observacions": null
+    },
+    {
+      "idjugador": 739,
+      "nom": "Guillem",
+      "cognoms": "Villaescusa",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-06-08T00:00:00.000Z",
+      "num_llicencia": "194",
+      "observacions": null
+    },
+    {
+      "idjugador": 740,
+      "nom": "Bartosz",
+      "cognoms": "Prazmo",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-06-01T00:00:00.000Z",
+      "num_llicencia": "205",
+      "observacions": null
+    },
+    {
+      "idjugador": 741,
+      "nom": "Karol",
+      "cognoms": "Kwardys",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-06-08T00:00:00.000Z",
+      "num_llicencia": "228",
+      "observacions": null
+    },
+    {
+      "idjugador": 742,
+      "nom": "Marcin",
+      "cognoms": "BŁASZCZYK",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-06-07T00:00:00.000Z",
+      "num_llicencia": "229",
+      "observacions": null
+    },
+    {
+      "idjugador": 743,
+      "nom": "Filippo",
+      "cognoms": "Sabatini",
+      "club": null,
+      "pais": "ARE",
+      "sexe": "M",
+      "data_naixement": "1905-06-04T00:00:00.000Z",
+      "num_llicencia": "232",
+      "observacions": null
+    },
+    {
+      "idjugador": 744,
+      "nom": "Asad",
+      "cognoms": "Zehtabi",
+      "club": null,
+      "pais": "IRN",
+      "sexe": "M",
+      "data_naixement": "1905-05-30T00:00:00.000Z",
+      "num_llicencia": "237",
+      "observacions": null
+    },
+    {
+      "idjugador": 745,
+      "nom": "Robert",
+      "cognoms": "Cybulski",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-06-02T00:00:00.000Z",
+      "num_llicencia": "239",
+      "observacions": null
+    },
+    {
+      "idjugador": 746,
+      "nom": "Juan Antonio",
+      "cognoms": "Requena",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-06-08T00:00:00.000Z",
+      "num_llicencia": "259",
+      "observacions": null
+    },
+    {
+      "idjugador": 747,
+      "nom": "Eric",
+      "cognoms": "Bourgeot",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-24T00:00:00.000Z",
+      "num_llicencia": "13",
+      "observacions": null
+    },
+    {
+      "idjugador": 748,
+      "nom": "Philippe",
+      "cognoms": "Bourgeot",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-24T00:00:00.000Z",
+      "num_llicencia": "14",
+      "observacions": null
+    },
+    {
+      "idjugador": 749,
+      "nom": "Alexandu",
+      "cognoms": "Policiuc",
+      "club": null,
+      "pais": "MDA",
+      "sexe": "M",
+      "data_naixement": "1905-05-27T00:00:00.000Z",
+      "num_llicencia": "15",
+      "observacions": null
+    },
+    {
+      "idjugador": 750,
+      "nom": "Alexandr",
+      "cognoms": "Solodchii",
+      "club": null,
+      "pais": "MDA",
+      "sexe": "M",
+      "data_naixement": "1905-05-27T00:00:00.000Z",
+      "num_llicencia": "16",
+      "observacions": null
+    },
+    {
+      "idjugador": 751,
+      "nom": "Igor",
+      "cognoms": "Bobeico",
+      "club": null,
+      "pais": "MDA",
+      "sexe": "M",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "17",
+      "observacions": null
+    },
+    {
+      "idjugador": 752,
+      "nom": "Karwan",
+      "cognoms": "Mohammed Amely Ali",
+      "club": null,
+      "pais": "IRQ",
+      "sexe": "M",
+      "data_naixement": "1905-05-23T00:00:00.000Z",
+      "num_llicencia": "22",
+      "observacions": null
+    },
+    {
+      "idjugador": 753,
+      "nom": "Ionel",
+      "cognoms": "Trinca",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "28",
+      "observacions": null
+    },
+    {
+      "idjugador": 754,
+      "nom": "Joan",
+      "cognoms": "Serret",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-24T00:00:00.000Z",
+      "num_llicencia": "29",
+      "observacions": null
+    },
+    {
+      "idjugador": 755,
+      "nom": "Alexander",
+      "cognoms": "Struyanskiy",
+      "club": null,
+      "pais": "ISR",
+      "sexe": "M",
+      "data_naixement": "1905-05-30T00:00:00.000Z",
+      "num_llicencia": "30",
+      "observacions": null
+    },
+    {
+      "idjugador": 756,
+      "nom": "Carlos",
+      "cognoms": "Loren",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-26T00:00:00.000Z",
+      "num_llicencia": "38",
+      "observacions": null
+    },
+    {
+      "idjugador": 757,
+      "nom": "Andrés",
+      "cognoms": "González",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-22T00:00:00.000Z",
+      "num_llicencia": "40",
+      "observacions": null
+    },
+    {
+      "idjugador": 758,
+      "nom": "Iura",
+      "cognoms": "Cojocari",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "44",
+      "observacions": null
+    },
+    {
+      "idjugador": 759,
+      "nom": "Ingo",
+      "cognoms": "Vosseler",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-23T00:00:00.000Z",
+      "num_llicencia": "57",
+      "observacions": null
+    },
+    {
+      "idjugador": 760,
+      "nom": "Didier",
+      "cognoms": "Vanden Abeele",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "70",
+      "observacions": null
+    },
+    {
+      "idjugador": 761,
+      "nom": "Ertan",
+      "cognoms": "Huner",
+      "club": null,
+      "pais": "TUR",
+      "sexe": "M",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "73",
+      "observacions": null
+    },
+    {
+      "idjugador": 762,
+      "nom": "Ecrüment",
+      "cognoms": "Serdar",
+      "club": null,
+      "pais": "TUR",
+      "sexe": "M",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "84",
+      "observacions": null
+    },
+    {
+      "idjugador": 763,
+      "nom": "Aydan",
+      "cognoms": "Demir",
+      "club": null,
+      "pais": "TUR",
+      "sexe": "M",
+      "data_naixement": "1905-05-19T00:00:00.000Z",
+      "num_llicencia": "85",
+      "observacions": null
+    },
+    {
+      "idjugador": 764,
+      "nom": "Greg",
+      "cognoms": "Swan",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-26T00:00:00.000Z",
+      "num_llicencia": "103",
+      "observacions": null
+    },
+    {
+      "idjugador": 765,
+      "nom": "Jean- Luc",
+      "cognoms": "Le Lostec",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-20T00:00:00.000Z",
+      "num_llicencia": "104",
+      "observacions": null
+    },
+    {
+      "idjugador": 766,
+      "nom": "Haluk",
+      "cognoms": "Yazici",
+      "club": null,
+      "pais": "TUR",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "107",
+      "observacions": null
+    },
+    {
+      "idjugador": 767,
+      "nom": "DHARMESHKUMAR",
+      "cognoms": "Desai",
+      "club": null,
+      "pais": "IND",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "108",
+      "observacions": null
+    },
+    {
+      "idjugador": 768,
+      "nom": "Jesús",
+      "cognoms": "Cubells",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-20T00:00:00.000Z",
+      "num_llicencia": "133",
+      "observacions": null
+    },
+    {
+      "idjugador": 769,
+      "nom": "Begue",
+      "cognoms": "Thierry",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "136",
+      "observacions": null
+    },
+    {
+      "idjugador": 770,
+      "nom": "Esteve",
+      "cognoms": "Sapés",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-23T00:00:00.000Z",
+      "num_llicencia": "138",
+      "observacions": null
+    },
+    {
+      "idjugador": 771,
+      "nom": "Paulo",
+      "cognoms": "Brito",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-27T00:00:00.000Z",
+      "num_llicencia": "145",
+      "observacions": null
+    },
+    {
+      "idjugador": 772,
+      "nom": "Pedro",
+      "cognoms": "Vasco",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "146",
+      "observacions": null
+    },
+    {
+      "idjugador": 773,
+      "nom": "Alfred",
+      "cognoms": "Dörr",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "149",
+      "observacions": null
+    },
+    {
+      "idjugador": 774,
+      "nom": "Rubinshtein",
+      "cognoms": "Georgii",
+      "club": null,
+      "pais": "RUS",
+      "sexe": "M",
+      "data_naixement": "1905-05-23T00:00:00.000Z",
+      "num_llicencia": "151",
+      "observacions": null
+    },
+    {
+      "idjugador": 775,
+      "nom": "Robert",
+      "cognoms": "Shahnazari",
+      "club": null,
+      "pais": "USA",
+      "sexe": "M",
+      "data_naixement": "1905-05-22T00:00:00.000Z",
+      "num_llicencia": "152",
+      "observacions": null
+    },
+    {
+      "idjugador": 776,
+      "nom": "ALEX",
+      "cognoms": "STUYCK",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-27T00:00:00.000Z",
+      "num_llicencia": "157",
+      "observacions": null
+    },
+    {
+      "idjugador": 777,
+      "nom": "Anibal",
+      "cognoms": "Paçó",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-26T00:00:00.000Z",
+      "num_llicencia": "163",
+      "observacions": null
+    },
+    {
+      "idjugador": 778,
+      "nom": "Zbigniew",
+      "cognoms": "Sobków",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-22T00:00:00.000Z",
+      "num_llicencia": "165",
+      "observacions": null
+    },
+    {
+      "idjugador": 779,
+      "nom": "Marian",
+      "cognoms": "Wardzyński",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-26T00:00:00.000Z",
+      "num_llicencia": "167",
+      "observacions": null
+    },
+    {
+      "idjugador": 780,
+      "nom": "Jesús",
+      "cognoms": "Cubells",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-20T00:00:00.000Z",
+      "num_llicencia": "172",
+      "observacions": null
+    },
+    {
+      "idjugador": 781,
+      "nom": "Jaume",
+      "cognoms": "Querol",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-24T00:00:00.000Z",
+      "num_llicencia": "173",
+      "observacions": null
+    },
+    {
+      "idjugador": 782,
+      "nom": "Tomasz Poniatowski age 53",
+      "cognoms": null,
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": null,
+      "num_llicencia": "178",
+      "observacions": null
+    },
+    {
+      "idjugador": 783,
+      "nom": "Dariusz Sienko age 57",
+      "cognoms": null,
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": null,
+      "num_llicencia": "179",
+      "observacions": null
+    },
+    {
+      "idjugador": 784,
+      "nom": "Krzysztof Sulej 57",
+      "cognoms": null,
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": null,
+      "num_llicencia": "180",
+      "observacions": null
+    },
+    {
+      "idjugador": 785,
+      "nom": "Joao",
+      "cognoms": "Freixinho",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "181",
+      "observacions": null
+    },
+    {
+      "idjugador": 786,
+      "nom": "Zdzilaw",
+      "cognoms": "Czub",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "184",
+      "observacions": null
+    },
+    {
+      "idjugador": 787,
+      "nom": "Vladimir",
+      "cognoms": "Duncko",
+      "club": null,
+      "pais": "SVK",
+      "sexe": "M",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "198",
+      "observacions": null
+    },
+    {
+      "idjugador": 788,
+      "nom": "Claudio",
+      "cognoms": "Sassi",
+      "club": null,
+      "pais": "ITA",
+      "sexe": "M",
+      "data_naixement": "1905-05-29T00:00:00.000Z",
+      "num_llicencia": "199",
+      "observacions": null
+    },
+    {
+      "idjugador": 789,
+      "nom": "Maxim",
+      "cognoms": "Kuznetzov",
+      "club": null,
+      "pais": "ITA",
+      "sexe": "M",
+      "data_naixement": "1905-05-30T00:00:00.000Z",
+      "num_llicencia": "200",
+      "observacions": null
+    },
+    {
+      "idjugador": 790,
+      "nom": "Xavier",
+      "cognoms": "Villoro",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "203",
+      "observacions": null
+    },
+    {
+      "idjugador": 791,
+      "nom": "Josep Ramon",
+      "cognoms": "Martínez",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "204",
+      "observacions": null
+    },
+    {
+      "idjugador": 792,
+      "nom": "Gerard",
+      "cognoms": "Veciana",
+      "club": null,
+      "pais": "AND",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "210",
+      "observacions": null
+    },
+    {
+      "idjugador": 793,
+      "nom": "Gintas",
+      "cognoms": "Povilauskas",
+      "club": null,
+      "pais": "LTU",
+      "sexe": "M",
+      "data_naixement": "1905-05-20T00:00:00.000Z",
+      "num_llicencia": "220",
+      "observacions": null
+    },
+    {
+      "idjugador": 794,
+      "nom": "Sulaiman Adebola",
+      "cognoms": "Aloba",
+      "club": null,
+      "pais": "NGA",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "223",
+      "observacions": null
+    },
+    {
+      "idjugador": 795,
+      "nom": "Pascal",
+      "cognoms": "Dupuis",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "224",
+      "observacions": null
+    },
+    {
+      "idjugador": 796,
+      "nom": "Lorestas",
+      "cognoms": "Trumpauskas",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-22T00:00:00.000Z",
+      "num_llicencia": "230",
+      "observacions": null
+    },
+    {
+      "idjugador": 797,
+      "nom": "Marc",
+      "cognoms": "Vicente",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-22T00:00:00.000Z",
+      "num_llicencia": "233",
+      "observacions": null
+    },
+    {
+      "idjugador": 798,
+      "nom": "Marc",
+      "cognoms": "Dussart",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "234",
+      "observacions": null
+    },
+    {
+      "idjugador": 799,
+      "nom": "Ilian",
+      "cognoms": "Helman",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-23T00:00:00.000Z",
+      "num_llicencia": "236",
+      "observacions": null
+    },
+    {
+      "idjugador": 800,
+      "nom": "Farzin",
+      "cognoms": "Tavakolian",
+      "club": null,
+      "pais": "IRN",
+      "sexe": "M",
+      "data_naixement": "1905-05-22T00:00:00.000Z",
+      "num_llicencia": "238",
+      "observacions": null
+    },
+    {
+      "idjugador": 801,
+      "nom": "Mariusz",
+      "cognoms": "Gajda",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-23T00:00:00.000Z",
+      "num_llicencia": "240",
+      "observacions": null
+    },
+    {
+      "idjugador": 802,
+      "nom": "Sandijs",
+      "cognoms": "Vasiljevs",
+      "club": null,
+      "pais": "LVA",
+      "sexe": "M",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "242",
+      "observacions": null
+    },
+    {
+      "idjugador": 803,
+      "nom": "Olegario Basilio",
+      "cognoms": "Alcala",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "243",
+      "observacions": null
+    },
+    {
+      "idjugador": 804,
+      "nom": "Mark",
+      "cognoms": "Grzeganek",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "M",
+      "data_naixement": "1905-05-26T00:00:00.000Z",
+      "num_llicencia": "247",
+      "observacions": null
+    },
+    {
+      "idjugador": 805,
+      "nom": "Sajid",
+      "cognoms": "Hussain",
+      "club": null,
+      "pais": "PAK",
+      "sexe": "M",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "260",
+      "observacions": null
+    },
+    {
+      "idjugador": 806,
+      "nom": "Milosz",
+      "cognoms": "Sawczak",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-26T00:00:00.000Z",
+      "num_llicencia": "263",
+      "observacions": null
+    },
+    {
+      "idjugador": 807,
+      "nom": "Berendsen",
+      "cognoms": "Rico",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-19T00:00:00.000Z",
+      "num_llicencia": "1",
+      "observacions": null
+    },
+    {
+      "idjugador": 808,
+      "nom": "Alejandro",
+      "cognoms": "Chacón Simeón",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-11T00:00:00.000Z",
+      "num_llicencia": "2",
+      "observacions": null
+    },
+    {
+      "idjugador": 809,
+      "nom": "Albert",
+      "cognoms": "Borras Vallbona",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "4",
+      "observacions": null
+    },
+    {
+      "idjugador": 810,
+      "nom": "Ulrich",
+      "cognoms": "Jacobi",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "8",
+      "observacions": null
+    },
+    {
+      "idjugador": 811,
+      "nom": "Josep Manuel",
+      "cognoms": "Maillo Pera",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "11",
+      "observacions": null
+    },
+    {
+      "idjugador": 812,
+      "nom": "Antoni",
+      "cognoms": "Segura Domènech",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-12T00:00:00.000Z",
+      "num_llicencia": "18",
+      "observacions": null
+    },
+    {
+      "idjugador": 813,
+      "nom": "Johan",
+      "cognoms": "Beghin",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-28T00:00:00.000Z",
+      "num_llicencia": "25",
+      "observacions": null
+    },
+    {
+      "idjugador": 814,
+      "nom": "Patrick",
+      "cognoms": "Van Heurck",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "26",
+      "observacions": null
+    },
+    {
+      "idjugador": 815,
+      "nom": "Jose Antonio",
+      "cognoms": "Cobos Fuentes",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-11T00:00:00.000Z",
+      "num_llicencia": "27",
+      "observacions": null
+    },
+    {
+      "idjugador": 816,
+      "nom": "Roman",
+      "cognoms": "Caudet",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-12T00:00:00.000Z",
+      "num_llicencia": "35",
+      "observacions": null
+    },
+    {
+      "idjugador": 817,
+      "nom": "Jaume",
+      "cognoms": "Ollé",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-16T00:00:00.000Z",
+      "num_llicencia": "37",
+      "observacions": null
+    },
+    {
+      "idjugador": 818,
+      "nom": "Gregori",
+      "cognoms": "Sánchez Navarro",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "39",
+      "observacions": null
+    },
+    {
+      "idjugador": 819,
+      "nom": "Pere",
+      "cognoms": "Porta Tardà",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-10T00:00:00.000Z",
+      "num_llicencia": "41",
+      "observacions": null
+    },
+    {
+      "idjugador": 820,
+      "nom": "José Carlos",
+      "cognoms": "Alventosa",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "42",
+      "observacions": null
+    },
+    {
+      "idjugador": 821,
+      "nom": "Jaime",
+      "cognoms": "Jofre",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "45",
+      "observacions": null
+    },
+    {
+      "idjugador": 822,
+      "nom": "Hipólito",
+      "cognoms": "Rodal",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "46",
+      "observacions": null
+    },
+    {
+      "idjugador": 823,
+      "nom": "Felix",
+      "cognoms": "Pons",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-16T00:00:00.000Z",
+      "num_llicencia": "47",
+      "observacions": null
+    },
+    {
+      "idjugador": 824,
+      "nom": "Antonio",
+      "cognoms": "León Jiménez",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-10T00:00:00.000Z",
+      "num_llicencia": "49",
+      "observacions": null
+    },
+    {
+      "idjugador": 825,
+      "nom": "Martin",
+      "cognoms": "Coenders",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "51",
+      "observacions": null
+    },
+    {
+      "idjugador": 826,
+      "nom": "Jaume",
+      "cognoms": "Canela",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": null,
+      "num_llicencia": "52",
+      "observacions": null
+    },
+    {
+      "idjugador": 827,
+      "nom": "Fabi",
+      "cognoms": "Alain",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "54",
+      "observacions": null
+    },
+    {
+      "idjugador": 828,
+      "nom": "Igor",
+      "cognoms": "Fauquier",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "58",
+      "observacions": null
+    },
+    {
+      "idjugador": 829,
+      "nom": "Alix",
+      "cognoms": "Pascal",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-17T00:00:00.000Z",
+      "num_llicencia": "59",
+      "observacions": null
+    },
+    {
+      "idjugador": 830,
+      "nom": "Graham",
+      "cognoms": "Pickett",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "63",
+      "observacions": null
+    },
+    {
+      "idjugador": 831,
+      "nom": "Rui",
+      "cognoms": "Agrela",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-17T00:00:00.000Z",
+      "num_llicencia": "67",
+      "observacions": null
+    },
+    {
+      "idjugador": 832,
+      "nom": "Joao",
+      "cognoms": "Portela",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "69",
+      "observacions": null
+    },
+    {
+      "idjugador": 833,
+      "nom": "Fuad",
+      "cognoms": "Maghrabi",
+      "club": null,
+      "pais": "PSE",
+      "sexe": "M",
+      "data_naixement": "1905-05-19T00:00:00.000Z",
+      "num_llicencia": "72",
+      "observacions": null
+    },
+    {
+      "idjugador": 834,
+      "nom": "Mehmet",
+      "cognoms": "Ziya",
+      "club": null,
+      "pais": "TUR",
+      "sexe": "M",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "79",
+      "observacions": null
+    },
+    {
+      "idjugador": 835,
+      "nom": "Francisco Javier",
+      "cognoms": "Escolà",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-20T00:00:00.000Z",
+      "num_llicencia": "80",
+      "observacions": null
+    },
+    {
+      "idjugador": 836,
+      "nom": "Josep",
+      "cognoms": "Serra Pallés",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "81",
+      "observacions": null
+    },
+    {
+      "idjugador": 837,
+      "nom": "Josep",
+      "cognoms": "Martínez",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "82",
+      "observacions": null
+    },
+    {
+      "idjugador": 838,
+      "nom": "Ian",
+      "cognoms": "Malcolm Grant",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-08T00:00:00.000Z",
+      "num_llicencia": "89",
+      "observacions": null
+    },
+    {
+      "idjugador": 839,
+      "nom": "David",
+      "cognoms": "Jackson",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "92",
+      "observacions": null
+    },
+    {
+      "idjugador": 840,
+      "nom": "Miguel Ángel",
+      "cognoms": "Daimiel",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "98",
+      "observacions": null
+    },
+    {
+      "idjugador": 841,
+      "nom": "Carl",
+      "cognoms": "Versteden",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "101",
+      "observacions": null
+    },
+    {
+      "idjugador": 842,
+      "nom": "Rochus",
+      "cognoms": "Fisches",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "M",
+      "data_naixement": null,
+      "num_llicencia": "109",
+      "observacions": null
+    },
+    {
+      "idjugador": 843,
+      "nom": "Mario",
+      "cognoms": "Zucaro",
+      "club": null,
+      "pais": "ITA",
+      "sexe": "M",
+      "data_naixement": "1905-05-16T00:00:00.000Z",
+      "num_llicencia": "110",
+      "observacions": null
+    },
+    {
+      "idjugador": 844,
+      "nom": "Benito",
+      "cognoms": "García",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-12T00:00:00.000Z",
+      "num_llicencia": "115",
+      "observacions": null
+    },
+    {
+      "idjugador": 845,
+      "nom": "José",
+      "cognoms": "Martínez Garrido",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "116",
+      "observacions": null
+    },
+    {
+      "idjugador": 846,
+      "nom": "Frank",
+      "cognoms": "Lukaschek",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "M",
+      "data_naixement": "1905-05-12T00:00:00.000Z",
+      "num_llicencia": "119",
+      "observacions": null
+    },
+    {
+      "idjugador": 847,
+      "nom": "Frank",
+      "cognoms": "Cronfalk",
+      "club": null,
+      "pais": "DNK",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "121",
+      "observacions": null
+    },
+    {
+      "idjugador": 848,
+      "nom": "Robert",
+      "cognoms": "Luger",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "M",
+      "data_naixement": "1905-05-10T00:00:00.000Z",
+      "num_llicencia": "122",
+      "observacions": null
+    },
+    {
+      "idjugador": 849,
+      "nom": "Mariano",
+      "cognoms": "Estrada",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-10T00:00:00.000Z",
+      "num_llicencia": "139",
+      "observacions": null
+    },
+    {
+      "idjugador": 850,
+      "nom": "Yves",
+      "cognoms": "Delafonteyne",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-17T00:00:00.000Z",
+      "num_llicencia": "141",
+      "observacions": null
+    },
+    {
+      "idjugador": 851,
+      "nom": "Dominique",
+      "cognoms": "Grognet",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "142",
+      "observacions": null
+    },
+    {
+      "idjugador": 852,
+      "nom": "Francesco",
+      "cognoms": "De Ninno",
+      "club": null,
+      "pais": "ITA",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "161",
+      "observacions": null
+    },
+    {
+      "idjugador": 853,
+      "nom": "Paolo",
+      "cognoms": "Mazzarella",
+      "club": null,
+      "pais": "ITA",
+      "sexe": "M",
+      "data_naixement": "1905-05-17T00:00:00.000Z",
+      "num_llicencia": "162",
+      "observacions": null
+    },
+    {
+      "idjugador": 854,
+      "nom": "Grzegorz",
+      "cognoms": "Jaskulski",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "166",
+      "observacions": null
+    },
+    {
+      "idjugador": 855,
+      "nom": "Roman",
+      "cognoms": "Piechnik",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-17T00:00:00.000Z",
+      "num_llicencia": "168",
+      "observacions": null
+    },
+    {
+      "idjugador": 856,
+      "nom": "Robert",
+      "cognoms": "Rupa",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "169",
+      "observacions": null
+    },
+    {
+      "idjugador": 857,
+      "nom": "Darius",
+      "cognoms": "Baruch",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "170",
+      "observacions": null
+    },
+    {
+      "idjugador": 858,
+      "nom": "Jean",
+      "cognoms": "Lessire",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "171",
+      "observacions": null
+    },
+    {
+      "idjugador": 859,
+      "nom": "Jawahar",
+      "cognoms": "Vashisht",
+      "club": null,
+      "pais": "IND",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "183",
+      "observacions": null
+    },
+    {
+      "idjugador": 860,
+      "nom": "Orhun",
+      "cognoms": "Örer",
+      "club": null,
+      "pais": "TUR",
+      "sexe": "M",
+      "data_naixement": "1905-05-17T00:00:00.000Z",
+      "num_llicencia": "185",
+      "observacions": null
+    },
+    {
+      "idjugador": 861,
+      "nom": "Diccon",
+      "cognoms": "Gray",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "188",
+      "observacions": null
+    },
+    {
+      "idjugador": 862,
+      "nom": "Tim",
+      "cognoms": "Dyson",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-16T00:00:00.000Z",
+      "num_llicencia": "189",
+      "observacions": null
+    },
+    {
+      "idjugador": 863,
+      "nom": "Philippe",
+      "cognoms": "Havez",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "191",
+      "observacions": null
+    },
+    {
+      "idjugador": 864,
+      "nom": "Christian",
+      "cognoms": "Singer",
+      "club": null,
+      "pais": "AUT",
+      "sexe": "M",
+      "data_naixement": "1905-07-18T00:00:00.000Z",
+      "num_llicencia": "192",
+      "observacions": null
+    },
+    {
+      "idjugador": 865,
+      "nom": "Jose Emmanuel",
+      "cognoms": "Disini",
+      "club": null,
+      "pais": "PHL",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "195",
+      "observacions": null
+    },
+    {
+      "idjugador": 866,
+      "nom": "Antonio",
+      "cognoms": "Aguinalde",
+      "club": null,
+      "pais": "PHL",
+      "sexe": "M",
+      "data_naixement": "1905-05-19T00:00:00.000Z",
+      "num_llicencia": "196",
+      "observacions": null
+    },
+    {
+      "idjugador": 867,
+      "nom": "Alejandro",
+      "cognoms": "Vigolo",
+      "club": null,
+      "pais": "ARG",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "197",
+      "observacions": null
+    },
+    {
+      "idjugador": 868,
+      "nom": "José Luis",
+      "cognoms": "Sastre",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "201",
+      "observacions": null
+    },
+    {
+      "idjugador": 869,
+      "nom": "Joaquim",
+      "cognoms": "Veciana",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "209",
+      "observacions": null
+    },
+    {
+      "idjugador": 870,
+      "nom": "Marco",
+      "cognoms": "Leone",
+      "club": null,
+      "pais": "ITA",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "212",
+      "observacions": null
+    },
+    {
+      "idjugador": 871,
+      "nom": "Yusuf",
+      "cognoms": "Tuna",
+      "club": null,
+      "pais": "TUR",
+      "sexe": "M",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "213",
+      "observacions": null
+    },
+    {
+      "idjugador": 872,
+      "nom": "Juan Marcos",
+      "cognoms": "Timoner LLoret",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-17T00:00:00.000Z",
+      "num_llicencia": "215",
+      "observacions": null
+    },
+    {
+      "idjugador": 873,
+      "nom": "Rimas",
+      "cognoms": "Dmukayskas",
+      "club": null,
+      "pais": "LTU",
+      "sexe": "M",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "219",
+      "observacions": null
+    },
+    {
+      "idjugador": 874,
+      "nom": "Michael",
+      "cognoms": "Schaffner",
+      "club": null,
+      "pais": "POL",
+      "sexe": "M",
+      "data_naixement": "1905-05-11T00:00:00.000Z",
+      "num_llicencia": "221",
+      "observacions": null
+    },
+    {
+      "idjugador": 875,
+      "nom": "Olivier",
+      "cognoms": "Bernard",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-17T00:00:00.000Z",
+      "num_llicencia": "225",
+      "observacions": null
+    },
+    {
+      "idjugador": 876,
+      "nom": "Jean - Loup",
+      "cognoms": "Ravat",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-10T00:00:00.000Z",
+      "num_llicencia": "226",
+      "observacions": null
+    },
+    {
+      "idjugador": 877,
+      "nom": "Philippe",
+      "cognoms": "Courcol",
+      "club": null,
+      "pais": "AND",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "227",
+      "observacions": null
+    },
+    {
+      "idjugador": 878,
+      "nom": "Álvaro",
+      "cognoms": "Toscano",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "231",
+      "observacions": null
+    },
+    {
+      "idjugador": 879,
+      "nom": "Mark",
+      "cognoms": "McAlister",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "249",
+      "observacions": null
+    },
+    {
+      "idjugador": 880,
+      "nom": "Juan",
+      "cognoms": "Gatica",
+      "club": null,
+      "pais": "CHL",
+      "sexe": "M",
+      "data_naixement": "1905-05-11T00:00:00.000Z",
+      "num_llicencia": "254",
+      "observacions": null
+    },
+    {
+      "idjugador": 881,
+      "nom": "José",
+      "cognoms": "Feliu Escolar",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "3",
+      "observacions": null
+    },
+    {
+      "idjugador": 882,
+      "nom": "Michal",
+      "cognoms": "Cada",
+      "club": null,
+      "pais": "CZE",
+      "sexe": "M",
+      "data_naixement": "1905-05-03T00:00:00.000Z",
+      "num_llicencia": "5",
+      "observacions": null
+    },
+    {
+      "idjugador": 883,
+      "nom": "Josep",
+      "cognoms": "Gual Rebull",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-07T00:00:00.000Z",
+      "num_llicencia": "7",
+      "observacions": null
+    },
+    {
+      "idjugador": 884,
+      "nom": "Joaquim",
+      "cognoms": "Azcon",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "9",
+      "observacions": null
+    },
+    {
+      "idjugador": 885,
+      "nom": "Raúl",
+      "cognoms": "López Reyes",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "10",
+      "observacions": null
+    },
+    {
+      "idjugador": 886,
+      "nom": "Joao",
+      "cognoms": "Oliveira",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-02T00:00:00.000Z",
+      "num_llicencia": "12",
+      "observacions": null
+    },
+    {
+      "idjugador": 887,
+      "nom": "Luis Eduardo",
+      "cognoms": "Grebnicoff",
+      "club": null,
+      "pais": "ARG",
+      "sexe": "M",
+      "data_naixement": "1905-05-03T00:00:00.000Z",
+      "num_llicencia": "19",
+      "observacions": null
+    },
+    {
+      "idjugador": 888,
+      "nom": "Rob",
+      "cognoms": "Peverall",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "61",
+      "observacions": null
+    },
+    {
+      "idjugador": 889,
+      "nom": "John",
+      "cognoms": "Murphy",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "62",
+      "observacions": null
+    },
+    {
+      "idjugador": 890,
+      "nom": "Amilcar",
+      "cognoms": "Maria",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-06T00:00:00.000Z",
+      "num_llicencia": "64",
+      "observacions": null
+    },
+    {
+      "idjugador": 891,
+      "nom": "José",
+      "cognoms": "Alvoeiro da Silva",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-03T00:00:00.000Z",
+      "num_llicencia": "66",
+      "observacions": null
+    },
+    {
+      "idjugador": 892,
+      "nom": "Orlando",
+      "cognoms": "Saña",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "68",
+      "observacions": null
+    },
+    {
+      "idjugador": 893,
+      "nom": "Joaquim",
+      "cognoms": "Barbosa",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "M",
+      "data_naixement": "1905-05-07T00:00:00.000Z",
+      "num_llicencia": "74",
+      "observacions": null
+    },
+    {
+      "idjugador": 894,
+      "nom": "Ramon",
+      "cognoms": "Balaguer",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-04T00:00:00.000Z",
+      "num_llicencia": "83",
+      "observacions": null
+    },
+    {
+      "idjugador": 895,
+      "nom": "David",
+      "cognoms": "Foreman",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-03T00:00:00.000Z",
+      "num_llicencia": "86",
+      "observacions": null
+    },
+    {
+      "idjugador": 896,
+      "nom": "John Daley",
+      "cognoms": "Daley",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-01T00:00:00.000Z",
+      "num_llicencia": "88",
+      "observacions": null
+    },
+    {
+      "idjugador": 897,
+      "nom": "Peter",
+      "cognoms": "Wagner",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-05T00:00:00.000Z",
+      "num_llicencia": "95",
+      "observacions": null
+    },
+    {
+      "idjugador": 898,
+      "nom": "David",
+      "cognoms": "Wright",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "M",
+      "data_naixement": "1905-05-03T00:00:00.000Z",
+      "num_llicencia": "96",
+      "observacions": null
+    },
+    {
+      "idjugador": 899,
+      "nom": "Miguel Angel",
+      "cognoms": "Schneider",
+      "club": null,
+      "pais": "ARG",
+      "sexe": "M",
+      "data_naixement": "1905-05-05T00:00:00.000Z",
+      "num_llicencia": "128",
+      "observacions": null
+    },
+    {
+      "idjugador": 900,
+      "nom": "István",
+      "cognoms": "Szalai",
+      "club": null,
+      "pais": "HUN",
+      "sexe": "M",
+      "data_naixement": "1905-04-28T00:00:00.000Z",
+      "num_llicencia": "130",
+      "observacions": null
+    },
+    {
+      "idjugador": 901,
+      "nom": "Carsten",
+      "cognoms": "Jacobsen",
+      "club": null,
+      "pais": "DNK",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "134",
+      "observacions": null
+    },
+    {
+      "idjugador": 902,
+      "nom": "Perben Christian",
+      "cognoms": "Larsen",
+      "club": null,
+      "pais": "DNK",
+      "sexe": "M",
+      "data_naixement": "1905-05-10T00:00:00.000Z",
+      "num_llicencia": "135",
+      "observacions": null
+    },
+    {
+      "idjugador": 903,
+      "nom": "Toni",
+      "cognoms": "Aguilar",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-06T00:00:00.000Z",
+      "num_llicencia": "140",
+      "observacions": null
+    },
+    {
+      "idjugador": 904,
+      "nom": "Felipe",
+      "cognoms": "González",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-02T00:00:00.000Z",
+      "num_llicencia": "143",
+      "observacions": null
+    },
+    {
+      "idjugador": 905,
+      "nom": "Mark",
+      "cognoms": "Staron",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "148",
+      "observacions": null
+    },
+    {
+      "idjugador": 906,
+      "nom": "Gert",
+      "cognoms": "Ellegaard",
+      "club": null,
+      "pais": "DNK",
+      "sexe": "M",
+      "data_naixement": "1905-05-04T00:00:00.000Z",
+      "num_llicencia": "153",
+      "observacions": null
+    },
+    {
+      "idjugador": 907,
+      "nom": "Josep",
+      "cognoms": "Rius",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": null,
+      "num_llicencia": "158",
+      "observacions": null
+    },
+    {
+      "idjugador": 908,
+      "nom": "Dapeng",
+      "cognoms": "Liu",
+      "club": null,
+      "pais": "DNK",
+      "sexe": "M",
+      "data_naixement": "1905-05-08T00:00:00.000Z",
+      "num_llicencia": "160",
+      "observacions": null
+    },
+    {
+      "idjugador": 909,
+      "nom": "Ruben",
+      "cognoms": "Martin Palacio",
+      "club": null,
+      "pais": "ARG",
+      "sexe": "M",
+      "data_naixement": "1905-05-03T00:00:00.000Z",
+      "num_llicencia": "176",
+      "observacions": null
+    },
+    {
+      "idjugador": 910,
+      "nom": "Gustavo",
+      "cognoms": "GUGLIELMONE",
+      "club": null,
+      "pais": "ARG",
+      "sexe": "M",
+      "data_naixement": "1905-05-10T00:00:00.000Z",
+      "num_llicencia": "187",
+      "observacions": null
+    },
+    {
+      "idjugador": 911,
+      "nom": "Carlos",
+      "cognoms": "Larsson",
+      "club": null,
+      "pais": "ARG",
+      "sexe": "M",
+      "data_naixement": "1905-04-30T00:00:00.000Z",
+      "num_llicencia": "206",
+      "observacions": null
+    },
+    {
+      "idjugador": 912,
+      "nom": "Roger",
+      "cognoms": "Bustamante",
+      "club": null,
+      "pais": "ARG",
+      "sexe": "M",
+      "data_naixement": "1905-05-08T00:00:00.000Z",
+      "num_llicencia": "207",
+      "observacions": null
+    },
+    {
+      "idjugador": 913,
+      "nom": "Gunars",
+      "cognoms": "Jekabsons",
+      "club": null,
+      "pais": "LVA",
+      "sexe": "M",
+      "data_naixement": "1905-04-23T00:00:00.000Z",
+      "num_llicencia": "217",
+      "observacions": null
+    },
+    {
+      "idjugador": 914,
+      "nom": "Agustín",
+      "cognoms": "Caparrós",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-05-08T00:00:00.000Z",
+      "num_llicencia": "241",
+      "observacions": null
+    },
+    {
+      "idjugador": 915,
+      "nom": "Guillermo",
+      "cognoms": "León Hidalgo",
+      "club": null,
+      "pais": "CHL",
+      "sexe": "M",
+      "data_naixement": "1905-05-08T00:00:00.000Z",
+      "num_llicencia": "245",
+      "observacions": null
+    },
+    {
+      "idjugador": 916,
+      "nom": "Danor",
+      "cognoms": "Quintero",
+      "club": null,
+      "pais": "CHL",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "246",
+      "observacions": null
+    },
+    {
+      "idjugador": 917,
+      "nom": "Josep",
+      "cognoms": "Pretel",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": null,
+      "num_llicencia": "251",
+      "observacions": null
+    },
+    {
+      "idjugador": 918,
+      "nom": "Francesc",
+      "cognoms": "Castells",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": null,
+      "num_llicencia": "252",
+      "observacions": null
+    },
+    {
+      "idjugador": 919,
+      "nom": "Edgardo",
+      "cognoms": "Astorga Font de la Vall",
+      "club": null,
+      "pais": "CHL",
+      "sexe": "M",
+      "data_naixement": "1905-05-08T00:00:00.000Z",
+      "num_llicencia": "253",
+      "observacions": null
+    },
+    {
+      "idjugador": 920,
+      "nom": "Marc",
+      "cognoms": "Dagnelie",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "M",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "255",
+      "observacions": null
+    },
+    {
+      "idjugador": 921,
+      "nom": "Josep",
+      "cognoms": "Madurell",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "M",
+      "data_naixement": "1905-04-21T00:00:00.000Z",
+      "num_llicencia": "256",
+      "observacions": null
+    },
+    {
+      "idjugador": 922,
+      "nom": "Katrin",
+      "cognoms": "Adamson",
+      "club": null,
+      "pais": "EST",
+      "sexe": "F",
+      "data_naixement": "1905-05-30T00:00:00.000Z",
+      "num_llicencia": "20",
+      "observacions": null
+    },
+    {
+      "idjugador": 923,
+      "nom": "Olga",
+      "cognoms": "Calderó",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-06-03T00:00:00.000Z",
+      "num_llicencia": "33",
+      "observacions": null
+    },
+    {
+      "idjugador": 924,
+      "nom": "Joanna",
+      "cognoms": "Zilotin",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-06-04T00:00:00.000Z",
+      "num_llicencia": "48",
+      "observacions": null
+    },
+    {
+      "idjugador": 925,
+      "nom": "Agnieszka",
+      "cognoms": "Danczyszyn",
+      "club": null,
+      "pais": "POL",
+      "sexe": "F",
+      "data_naixement": "1905-06-05T00:00:00.000Z",
+      "num_llicencia": "60",
+      "observacions": null
+    },
+    {
+      "idjugador": 926,
+      "nom": "Stephanie",
+      "cognoms": "De Fuster",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "F",
+      "data_naixement": "1905-05-30T00:00:00.000Z",
+      "num_llicencia": "99",
+      "observacions": null
+    },
+    {
+      "idjugador": 927,
+      "nom": "Leanne",
+      "cognoms": "Irwin",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "F",
+      "data_naixement": "1905-06-02T00:00:00.000Z",
+      "num_llicencia": "124",
+      "observacions": null
+    },
+    {
+      "idjugador": 928,
+      "nom": "Gabi",
+      "cognoms": "Schuchna",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "F",
+      "data_naixement": null,
+      "num_llicencia": "156",
+      "observacions": null
+    },
+    {
+      "idjugador": 929,
+      "nom": "Linda",
+      "cognoms": "Roga",
+      "club": null,
+      "pais": "LVA",
+      "sexe": "F",
+      "data_naixement": "1905-05-30T00:00:00.000Z",
+      "num_llicencia": "216",
+      "observacions": null
+    },
+    {
+      "idjugador": 930,
+      "nom": "Aneta",
+      "cognoms": "Sawczak",
+      "club": null,
+      "pais": "POL",
+      "sexe": "F",
+      "data_naixement": "1905-06-02T00:00:00.000Z",
+      "num_llicencia": "262",
+      "observacions": null
+    },
+    {
+      "idjugador": 931,
+      "nom": "Valentina",
+      "cognoms": "Liss",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "F",
+      "data_naixement": "1905-05-26T00:00:00.000Z",
+      "num_llicencia": "6",
+      "observacions": null
+    },
+    {
+      "idjugador": 932,
+      "nom": "Alicia",
+      "cognoms": "Padilla",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-27T00:00:00.000Z",
+      "num_llicencia": "31",
+      "observacions": null
+    },
+    {
+      "idjugador": 933,
+      "nom": "Mari",
+      "cognoms": "González Valero",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-21T00:00:00.000Z",
+      "num_llicencia": "32",
+      "observacions": null
+    },
+    {
+      "idjugador": 934,
+      "nom": "Svetlana",
+      "cognoms": "Skobkina",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "53",
+      "observacions": null
+    },
+    {
+      "idjugador": 935,
+      "nom": "Neza",
+      "cognoms": "Kumer",
+      "club": null,
+      "pais": "SVN",
+      "sexe": "F",
+      "data_naixement": "1905-05-20T00:00:00.000Z",
+      "num_llicencia": "56",
+      "observacions": null
+    },
+    {
+      "idjugador": 936,
+      "nom": "Besire",
+      "cognoms": "Domaniku",
+      "club": null,
+      "pais": "XKX",
+      "sexe": "F",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "76",
+      "observacions": null
+    },
+    {
+      "idjugador": 937,
+      "nom": "Inci",
+      "cognoms": "Sefaj",
+      "club": null,
+      "pais": "XKX",
+      "sexe": "F",
+      "data_naixement": "1905-05-22T00:00:00.000Z",
+      "num_llicencia": "77",
+      "observacions": null
+    },
+    {
+      "idjugador": 938,
+      "nom": "Marina",
+      "cognoms": "Caterino",
+      "club": null,
+      "pais": "ITA",
+      "sexe": "F",
+      "data_naixement": "1905-05-24T00:00:00.000Z",
+      "num_llicencia": "100",
+      "observacions": null
+    },
+    {
+      "idjugador": 939,
+      "nom": "Anisoara",
+      "cognoms": "Calin",
+      "club": null,
+      "pais": "ROU",
+      "sexe": "F",
+      "data_naixement": "1905-05-20T00:00:00.000Z",
+      "num_llicencia": "126",
+      "observacions": null
+    },
+    {
+      "idjugador": 940,
+      "nom": "Isabel",
+      "cognoms": "Pires",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "F",
+      "data_naixement": "1905-05-27T00:00:00.000Z",
+      "num_llicencia": "144",
+      "observacions": null
+    },
+    {
+      "idjugador": 941,
+      "nom": "Elisabete",
+      "cognoms": "Nunes",
+      "club": null,
+      "pais": "PRT",
+      "sexe": "F",
+      "data_naixement": "1905-05-25T00:00:00.000Z",
+      "num_llicencia": "147",
+      "observacions": null
+    },
+    {
+      "idjugador": 942,
+      "nom": "Lyudmila",
+      "cognoms": "Hedger",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "F",
+      "data_naixement": "1905-05-26T00:00:00.000Z",
+      "num_llicencia": "208",
+      "observacions": null
+    },
+    {
+      "idjugador": 943,
+      "nom": "Cedrine",
+      "cognoms": "Martínez",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "F",
+      "data_naixement": "1905-05-29T00:00:00.000Z",
+      "num_llicencia": "211",
+      "observacions": null
+    },
+    {
+      "idjugador": 944,
+      "nom": "Larisa",
+      "cognoms": "Lavrukhina",
+      "club": null,
+      "pais": "RUS",
+      "sexe": "F",
+      "data_naixement": "1905-05-24T00:00:00.000Z",
+      "num_llicencia": "244",
+      "observacions": null
+    },
+    {
+      "idjugador": 945,
+      "nom": "Nataliia",
+      "cognoms": "Zhura",
+      "club": null,
+      "pais": "UKR",
+      "sexe": "F",
+      "data_naixement": "1905-05-27T00:00:00.000Z",
+      "num_llicencia": "258",
+      "observacions": null
+    },
+    {
+      "idjugador": 946,
+      "nom": "Hajdecka",
+      "cognoms": "Grazyna",
+      "club": null,
+      "pais": "AUT",
+      "sexe": "F",
+      "data_naixement": "1905-05-24T00:00:00.000Z",
+      "num_llicencia": "261",
+      "observacions": null
+    },
+    {
+      "idjugador": 947,
+      "nom": "Manuelle",
+      "cognoms": "Bertrand",
+      "club": null,
+      "pais": "AND",
+      "sexe": "F",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "21",
+      "observacions": null
+    },
+    {
+      "idjugador": 948,
+      "nom": "Sílvia",
+      "cognoms": "Soteras",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-12T00:00:00.000Z",
+      "num_llicencia": "34",
+      "observacions": null
+    },
+    {
+      "idjugador": 949,
+      "nom": "Maria Jesus",
+      "cognoms": "López",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-19T00:00:00.000Z",
+      "num_llicencia": "36",
+      "observacions": null
+    },
+    {
+      "idjugador": 950,
+      "nom": "Milena",
+      "cognoms": "Kozar",
+      "club": null,
+      "pais": "SVN",
+      "sexe": "F",
+      "data_naixement": "1905-05-19T00:00:00.000Z",
+      "num_llicencia": "55",
+      "observacions": null
+    },
+    {
+      "idjugador": 951,
+      "nom": "Rozalia",
+      "cognoms": "Hribikova",
+      "club": null,
+      "pais": "SVK",
+      "sexe": "F",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "71",
+      "observacions": null
+    },
+    {
+      "idjugador": 952,
+      "nom": "Asuman",
+      "cognoms": "Atuk",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "F",
+      "data_naixement": "1905-05-16T00:00:00.000Z",
+      "num_llicencia": "75",
+      "observacions": null
+    },
+    {
+      "idjugador": 953,
+      "nom": "Elaine",
+      "cognoms": "Wilson",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "F",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "90",
+      "observacions": null
+    },
+    {
+      "idjugador": 954,
+      "nom": "Pat",
+      "cognoms": "Clements",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "F",
+      "data_naixement": "1905-05-10T00:00:00.000Z",
+      "num_llicencia": "91",
+      "observacions": null
+    },
+    {
+      "idjugador": 955,
+      "nom": "Jane Elizabeth",
+      "cognoms": "Lynas",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "F",
+      "data_naixement": "1905-05-12T00:00:00.000Z",
+      "num_llicencia": "97",
+      "observacions": null
+    },
+    {
+      "idjugador": 956,
+      "nom": "Esen",
+      "cognoms": "Yazici",
+      "club": null,
+      "pais": "TUR",
+      "sexe": "F",
+      "data_naixement": "1905-05-18T00:00:00.000Z",
+      "num_llicencia": "106",
+      "observacions": null
+    },
+    {
+      "idjugador": 957,
+      "nom": "Ángela",
+      "cognoms": "Martín",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-11T00:00:00.000Z",
+      "num_llicencia": "111",
+      "observacions": null
+    },
+    {
+      "idjugador": 958,
+      "nom": "Maria Jesús",
+      "cognoms": "Vila",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "112",
+      "observacions": null
+    },
+    {
+      "idjugador": 959,
+      "nom": "Isabel",
+      "cognoms": "García",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-11T00:00:00.000Z",
+      "num_llicencia": "114",
+      "observacions": null
+    },
+    {
+      "idjugador": 960,
+      "nom": "Marina",
+      "cognoms": "Vintila",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "120",
+      "observacions": null
+    },
+    {
+      "idjugador": 961,
+      "nom": "Virginia",
+      "cognoms": "Stanescu",
+      "club": null,
+      "pais": "BEL",
+      "sexe": "F",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "125",
+      "observacions": null
+    },
+    {
+      "idjugador": 962,
+      "nom": "Marta Beatriz",
+      "cognoms": "BONNIN",
+      "club": null,
+      "pais": "ARG",
+      "sexe": "F",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "129",
+      "observacions": null
+    },
+    {
+      "idjugador": 963,
+      "nom": "Márta",
+      "cognoms": "Tóth",
+      "club": null,
+      "pais": "HUN",
+      "sexe": "F",
+      "data_naixement": "1905-05-15T00:00:00.000Z",
+      "num_llicencia": "131",
+      "observacions": null
+    },
+    {
+      "idjugador": 964,
+      "nom": "Regis",
+      "cognoms": "PROCHASSON",
+      "club": null,
+      "pais": "FRA",
+      "sexe": "F",
+      "data_naixement": "1905-05-16T00:00:00.000Z",
+      "num_llicencia": "150",
+      "observacions": null
+    },
+    {
+      "idjugador": 965,
+      "nom": "Birgit",
+      "cognoms": "Matthies",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "F",
+      "data_naixement": "1905-05-19T00:00:00.000Z",
+      "num_llicencia": "190",
+      "observacions": null
+    },
+    {
+      "idjugador": 966,
+      "nom": "Núria",
+      "cognoms": "Sapés",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-16T00:00:00.000Z",
+      "num_llicencia": "202",
+      "observacions": null
+    },
+    {
+      "idjugador": 967,
+      "nom": "Svea",
+      "cognoms": "Onno",
+      "club": null,
+      "pais": "EST",
+      "sexe": "F",
+      "data_naixement": "1905-05-10T00:00:00.000Z",
+      "num_llicencia": "214",
+      "observacions": null
+    },
+    {
+      "idjugador": 968,
+      "nom": "Mar",
+      "cognoms": "Arxer",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-14T00:00:00.000Z",
+      "num_llicencia": "222",
+      "observacions": null
+    },
+    {
+      "idjugador": 969,
+      "nom": "Karin",
+      "cognoms": "Berend",
+      "club": null,
+      "pais": "LUX",
+      "sexe": "F",
+      "data_naixement": "1905-05-19T00:00:00.000Z",
+      "num_llicencia": "235",
+      "observacions": null
+    },
+    {
+      "idjugador": 970,
+      "nom": "Nurdin",
+      "cognoms": "Saparbaev",
+      "club": null,
+      "pais": "KGZ",
+      "sexe": "F",
+      "data_naixement": "1905-05-13T00:00:00.000Z",
+      "num_llicencia": "257",
+      "observacions": null
+    },
+    {
+      "idjugador": 971,
+      "nom": "Viktoria",
+      "cognoms": "Sandul",
+      "club": null,
+      "pais": "MDA",
+      "sexe": "F",
+      "data_naixement": "1905-05-06T00:00:00.000Z",
+      "num_llicencia": "43",
+      "observacions": null
+    },
+    {
+      "idjugador": 972,
+      "nom": "Guerly",
+      "cognoms": "Avila Parga",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-04-28T00:00:00.000Z",
+      "num_llicencia": "50",
+      "observacions": null
+    },
+    {
+      "idjugador": 973,
+      "nom": "Tina",
+      "cognoms": "Bradshaw",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "F",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "93",
+      "observacions": null
+    },
+    {
+      "idjugador": 974,
+      "nom": "Barbara",
+      "cognoms": "Dumphy",
+      "club": null,
+      "pais": "GBR",
+      "sexe": "F",
+      "data_naixement": "1950-05-02T23:00:00.000Z",
+      "num_llicencia": "94",
+      "observacions": null
+    },
+    {
+      "idjugador": 975,
+      "nom": "Teresa",
+      "cognoms": "Suárez",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": "1905-05-11T00:00:00.000Z",
+      "num_llicencia": "113",
+      "observacions": null
+    },
+    {
+      "idjugador": 976,
+      "nom": "Anne",
+      "cognoms": "Stiewe",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "F",
+      "data_naixement": null,
+      "num_llicencia": "154",
+      "observacions": null
+    },
+    {
+      "idjugador": 977,
+      "nom": "Greda",
+      "cognoms": "Kux - Sieberath",
+      "club": null,
+      "pais": "DEU",
+      "sexe": "F",
+      "data_naixement": null,
+      "num_llicencia": "155",
+      "observacions": null
+    },
+    {
+      "idjugador": 978,
+      "nom": "Maria Angélica",
+      "cognoms": "González",
+      "club": null,
+      "pais": "ARG",
+      "sexe": "F",
+      "data_naixement": "1905-05-06T00:00:00.000Z",
+      "num_llicencia": "175",
+      "observacions": null
+    },
+    {
+      "idjugador": 979,
+      "nom": "Lili",
+      "cognoms": "He",
+      "club": null,
+      "pais": "USA",
+      "sexe": "F",
+      "data_naixement": "1905-05-09T00:00:00.000Z",
+      "num_llicencia": "218",
+      "observacions": null
+    },
+    {
+      "idjugador": 980,
+      "nom": "Julia",
+      "cognoms": "Infante",
+      "club": null,
+      "pais": "ESP",
+      "sexe": "F",
+      "data_naixement": null,
+      "num_llicencia": "250",
+      "observacions": null
+    }
+  ],
+  "classificacions_fase": [],
+  "grup_participants": [],
+  "quadre_posicions": []
+}

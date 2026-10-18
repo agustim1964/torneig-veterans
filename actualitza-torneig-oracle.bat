@@ -8,7 +8,7 @@ rem CONFIGURACIO
 rem ============================================================
 set "SSH_USER=ubuntu"
 set "SSH_HOST=competicio.masip.info"
-set "SSH_DIR=C:\Users\agust\OneDrive\Oracle\ssh"
+set "SSH_DIR=C:\Users\agust\.ssh"
 set "REMOTE_DIR=/home/ubuntu/torneig-veterans"
 set "PM2_APP=torneig-veterans"
 set "WEB_URL=https://competicio.masip.info"

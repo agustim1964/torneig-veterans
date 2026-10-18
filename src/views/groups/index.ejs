@@ -28,11 +28,18 @@
             class="d-flex gap-2 align-items-end flex-wrap"
             onsubmit="return confirm('Tornar a sortejar els grups amb la mida seleccionada?')">
         <div>
-          <label class="form-label small mb-1">Jugadors per grup</label>
+          <label class="form-label small mb-1">Jugadors per grup (N)</label>
           <select class="form-select form-select-sm" name="maxGroupSize">
             <% for (let n = 3; n <= 8; n++) { %>
               <option value="<%= n %>" <%= n === 4 ? 'selected' : '' %>><%= n %></option>
             <% } %>
+          </select>
+        </div>
+        <div>
+          <label class="form-label small mb-1">Mides dels grups</label>
+          <select class="form-select form-select-sm" name="sizeAdjustment">
+            <option value="-1">N i N−1</option>
+            <option value="1">N i N+1</option>
           </select>
         </div>
         <div>
@@ -56,8 +63,8 @@
   </div>
 <% } else { %>
   <div class="alert alert-secondary">
-    Tria la mida màxima del grup entre 3 i 8. El sistema només crearà grups de
-    <strong>N</strong> o <strong>N-1</strong> jugadors, maximitzant els grups de N.
+    Tria N entre 3 i 8 i si vols grups de <strong>N i N−1</strong> o
+    <strong>N i N+1</strong> jugadors, maximitzant els grups de N.
     També respecta els blocs de rànquing i intenta minimitzar coincidències de
     <strong>club</strong> i després de <strong>país</strong>.
   </div>

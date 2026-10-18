@@ -7,21 +7,25 @@ function shuffle(items) {
   return copy;
 }
 
-function calculateGroupSizes(total, maxSize = 4) {
+function calculateGroupSizes(total, maxSize = 4, sizeAdjustment = -1) {
   total = Number(total);
   maxSize = Number(maxSize);
+  sizeAdjustment = Number(sizeAdjustment);
 
   if (!Number.isInteger(total) || total < 2) {
     throw new Error('Calen com a mínim 2 participants per fer grups.');
   }
 
   if (!Number.isInteger(maxSize) || maxSize < 3 || maxSize > 8) {
-    throw new Error('La mida màxima del grup ha d\'estar entre 3 i 8.');
+    throw new Error('La mida N del grup ha d\'estar entre 3 i 8.');
+  }
+  if (![-1, 1].includes(sizeAdjustment)) {
+    throw new Error('Tria grups de N i N-1 o de N i N+1.');
   }
 
-  const minSize = maxSize - 1;
+  const minSize = maxSize + sizeAdjustment;
 
-  // Només grups de N o N-1, maximitzant els grups de N.
+  // Maximitza els grups de N amb la mida alternativa seleccionada.
   for (let countMax = Math.floor(total / maxSize); countMax >= 0; countMax--) {
     const remaining = total - countMax * maxSize;
 
@@ -40,7 +44,7 @@ function calculateGroupSizes(total, maxSize = 4) {
 
   throw new Error(
     `Amb ${total} participants no es poden fer només grups de ${maxSize} i ${minSize}. ` +
-    `Tria una altra mida màxima.`
+    `Tria una altra mida N o combinació de mides.`
   );
 }
 
@@ -109,7 +113,7 @@ function buildSnakeSlots(groups) {
   return slots;
 }
 
-function drawGroups(participants, blockSize = 4, maxGroupSize = 4) {
+function drawGroups(participants, blockSize = 4, maxGroupSize = 4, sizeAdjustment = -1) {
   blockSize = Number(blockSize);
   if (![2, 4].includes(blockSize)) {
     throw new Error('El sorteig ha de ser serp 2x2 o serp 4x4.');
@@ -120,7 +124,7 @@ function drawGroups(participants, blockSize = 4, maxGroupSize = 4) {
     return d || String(a.nom_mostrar).localeCompare(String(b.nom_mostrar), 'ca');
   });
 
-  const sizes = calculateGroupSizes(sorted.length, maxGroupSize);
+  const sizes = calculateGroupSizes(sorted.length, maxGroupSize, sizeAdjustment);
   const groups = sizes.map((size, i) => ({
     number: i + 1,
     size,

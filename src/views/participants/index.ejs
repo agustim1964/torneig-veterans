@@ -102,18 +102,25 @@
         <p class="small text-muted">
           Els caps de sèrie van directament per rànquing. Dins dels blocs 2×2 o 4×4 el programa intenta evitar coincidències de club i, després, de país.
         </p>
-        <div class="d-grid gap-2">
-          <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
-                onsubmit="return confirm('Esborrar el sorteig actual i generar-lo de nou amb serp 2x2?')">
-            <input type="hidden" name="snakeBlockSize" value="2">
-            <button class="btn btn-outline-primary w-100">Sorteig serp 2 × 2</button>
-          </form>
-          <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
-                onsubmit="return confirm('Esborrar el sorteig actual i generar-lo de nou amb serp 4x4?')">
-            <input type="hidden" name="snakeBlockSize" value="4">
-            <button class="btn btn-primary w-100">Sorteig serp 4 × 4</button>
-          </form>
-        </div>
+        <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
+              onsubmit="return confirm('Esborrar el sorteig actual i generar-lo de nou amb les mides seleccionades?')">
+          <label class="form-label" for="draw-size">Jugadors per grup (N)</label>
+          <select class="form-select mb-2" id="draw-size" name="maxGroupSize">
+            <% for (let n = 3; n <= 8; n++) { %>
+              <option value="<%= n %>" <%= n === 4 ? 'selected' : '' %>><%= n %></option>
+            <% } %>
+          </select>
+          <label class="form-label" for="draw-adjustment">Mides dels grups</label>
+          <select class="form-select mb-2" id="draw-adjustment" name="sizeAdjustment">
+            <option value="-1">N i N−1</option>
+            <option value="1">N i N+1</option>
+          </select>
+          <p class="small text-muted">Es maximitzen els grups de N jugadors.</p>
+          <div class="d-grid gap-2">
+            <button class="btn btn-outline-primary" name="snakeBlockSize" value="2">Sorteig serp 2 × 2</button>
+            <button class="btn btn-primary" name="snakeBlockSize" value="4">Sorteig serp 4 × 4</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

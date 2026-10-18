@@ -76,11 +76,17 @@ exports.draw = async (req, res) => {
 
   const snakeBlockSize = Number(req.body.snakeBlockSize || 4);
   const maxGroupSize = Number(req.body.maxGroupSize || 4);
+  const sizeAdjustment = Number(req.body.sizeAdjustment ?? -1);
   const isTopX = category.format_competicio === 'GRUP_UNIC';
 
-  const groups = isTopX
-    ? buildSingleGroup(participants)
-    : drawGroups(participants, snakeBlockSize, maxGroupSize);
+  let groups;
+  try {
+    groups = isTopX
+      ? buildSingleGroup(participants)
+      : drawGroups(participants, snakeBlockSize, maxGroupSize, sizeAdjustment);
+  } catch (error) {
+    return res.status(400).type('text').send(error.message);
+  }
 
   const connection = await db.getConnection();
 
@@ -159,7 +165,7 @@ exports.draw = async (req, res) => {
       categoryId,
       isTopX
         ? `Top ${participants.length} creat amb un únic grup segons rànquing`
-        : `Sorteig serp ${snakeBlockSize}x${snakeBlockSize}, grup màxim ${maxGroupSize}, generat amb ${participants.length} participants i ${groups.length} grups`
+        : `Sorteig serp ${snakeBlockSize}x${snakeBlockSize}, grups de ${maxGroupSize} i ${maxGroupSize + sizeAdjustment}, generat amb ${participants.length} participants i ${groups.length} grups`
     ]);
 
     await connection.commit();
