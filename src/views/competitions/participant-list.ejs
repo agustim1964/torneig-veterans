@@ -94,6 +94,7 @@
           <thead>
             <tr>
               <th style="width:90px">Rànquing</th>
+              <th>Dorsal</th>
               <th>Participant</th>
               <th style="width:80px">País</th>
               <th style="width:90px">Estat</th>
@@ -103,6 +104,7 @@
             <% category.participants.forEach(participant => { %>
               <tr class="<%= participant.isActive ? '' : 'text-muted' %>">
                 <td class="text-end"><%= participant.ranking || 0 %></td>
+                <td class="text-nowrap"><%= participant.dorsal || '—' %></td>
                 <td><%= participant.nom_mostrar %></td>
                 <td><%= participant.pais || '—' %></td>
                 <td>

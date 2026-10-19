@@ -46,6 +46,12 @@ exports.participantList = async (req, res) => {
       c.edat_minima,
       p.idparticipant,
       p.nom_mostrar,
+      (
+        SELECT GROUP_CONCAT(NULLIF(j.num_llicencia, '') ORDER BY pj.ordre SEPARATOR ' / ')
+        FROM participant_jugadors pj
+        INNER JOIN jugadors j ON j.idjugador = pj.idjugador
+        WHERE pj.idparticipant = p.idparticipant
+      ) AS dorsal,
       p.pais,
       p.ranking,
       p.actiu,
@@ -87,6 +93,7 @@ exports.participantList = async (req, res) => {
     category.participants.push({
       idparticipant: row.idparticipant,
       nom_mostrar: row.nom_mostrar,
+      dorsal: row.dorsal,
       pais: row.pais,
       ranking: row.ranking,
       isActive
