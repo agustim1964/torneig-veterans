@@ -58,6 +58,7 @@ function placementPenalty(participant, group) {
   let penalty = 0;
 
   for (const existing of group.participants) {
+    if (!existing) continue;
     if (club && club === normalizeText(existing.club)) penalty += 100;
     if (country && country === normalizeText(existing.pais)) penalty += 25;
   }
@@ -84,6 +85,12 @@ function bestPermutationForSlots(block, slotGroupIndexes, groups) {
     let penalty = 0;
     for (let i = 0; i < candidate.length; i++) {
       penalty += placementPenalty(candidate[i], groups[slotGroupIndexes[i]]);
+      // Un bloc pot travessar dues files de la serp i repetir un grup.
+      for (let j = 0; j < i; j++) {
+        if (slotGroupIndexes[j] === slotGroupIndexes[i]) {
+          penalty += placementPenalty(candidate[i], { participants: [candidate[j]] });
+        }
+      }
     }
 
     if (penalty < bestPenalty) {
@@ -113,7 +120,7 @@ function buildSnakeSlots(groups) {
   return slots;
 }
 
-function drawGroups(participants, blockSize = 4, maxGroupSize = 4, sizeAdjustment = -1) {
+function drawGroupsOnce(participants, blockSize = 4, maxGroupSize = 4, sizeAdjustment = -1) {
   blockSize = Number(blockSize);
   if (![2, 4].includes(blockSize)) {
     throw new Error('El sorteig ha de ser serp 2x2 o serp 4x4.');
@@ -140,19 +147,71 @@ function drawGroups(participants, blockSize = 4, maxGroupSize = 4, sizeAdjustmen
   const slots = buildSnakeSlots(groups);
 
   let cursor = 0;
+  const blocks = [];
   for (let start = 0; start < remaining.length; start += blockSize) {
     const block = remaining.slice(start, start + blockSize);
     const blockSlots = slots.slice(cursor, cursor + block.length);
     const chosen = bestPermutationForSlots(block, blockSlots, groups);
 
+    const positions = [];
     chosen.forEach((participant, i) => {
+      positions.push({ group: groups[blockSlots[i]], index: groups[blockSlots[i]].participants.length });
       groups[blockSlots[i]].participants.push(participant);
     });
+    blocks.push(positions);
 
     cursor += block.length;
   }
 
+  // Revisa els blocs anteriors amb tots els grups ja formats. Només es
+  // permeten intercanvis dins del bloc original, sense moure caps de sèrie.
+  for (let pass = 0; pass < 10; pass++) {
+    let improved = false;
+    for (const positions of blocks) {
+      for (let i = 0; i < positions.length; i++) {
+        for (let j = i + 1; j < positions.length; j++) {
+          const a = positions[i];
+          const b = positions[j];
+          if (a.group === b.group) continue;
+          const playerA = a.group.participants[a.index];
+          const playerB = b.group.participants[b.index];
+          a.group.participants[a.index] = null;
+          b.group.participants[b.index] = null;
+          const before = placementPenalty(playerA, a.group) + placementPenalty(playerB, b.group);
+          const after = placementPenalty(playerB, a.group) + placementPenalty(playerA, b.group);
+          const swap = after < before;
+          a.group.participants[a.index] = swap ? playerB : playerA;
+          b.group.participants[b.index] = swap ? playerA : playerB;
+          if (swap) improved = true;
+        }
+      }
+    }
+    if (!improved) break;
+  }
   return groups;
+}
+
+function drawPenalty(groups) {
+  return groups.reduce((total, group) => total + group.participants.reduce(
+    (sum, player, index) => sum + placementPenalty(player, { participants: group.participants.slice(0, index) }), 0
+  ), 0);
+}
+
+function drawGroups(participants, blockSize = 4, maxGroupSize = 4, sizeAdjustment = -1) {
+  let best;
+  let bestPenalty = Infinity;
+  // Diversos desempats aleatoris eviten que una decisió inicial condicioni
+  // tot el sorteig. Sense club, la penalització depèn només del país.
+  for (let attempt = 0; attempt < 24; attempt++) {
+    const groups = drawGroupsOnce(participants, blockSize, maxGroupSize, sizeAdjustment);
+    const penalty = drawPenalty(groups);
+    if (penalty < bestPenalty) {
+      best = groups;
+      bestPenalty = penalty;
+    }
+    if (bestPenalty === 0) break;
+  }
+  return best;
 }
 
 

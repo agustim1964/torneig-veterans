@@ -100,7 +100,7 @@
       <div class="card-header">Sorteig</div>
       <div class="card-body">
         <p class="small text-muted">
-          Els caps de sèrie van directament per rànquing. Dins dels blocs 2×2 o 4×4 el programa intenta evitar coincidències de club i, després, de país.
+          Els caps de sèrie van directament per rànquing. Dins dels blocs 2×2 o 4×4 el programa compara diversos repartiments per reduir coincidències de club i de país. Si no hi ha club informat, es guia pel país.
         </p>
         <form action="/groups/category/<%= category.idcategoria %>/draw" method="post"
               onsubmit="return confirm('Esborrar el sorteig actual i generar-lo de nou amb les mides seleccionades?')">
