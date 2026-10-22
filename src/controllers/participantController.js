@@ -3,6 +3,7 @@ const path = require('path');
 const ExcelJS = require('exceljs');
 const JSZip = require('jszip');
 const db = require('../config/db');
+const { deleteCategoryDraw } = require('../services/categoryResetService');
 
 async function getCategory(id) {
   const [[category]] = await db.query(
@@ -228,7 +229,75 @@ exports.edit = async (req, res) => {
     ORDER BY pj.ordre, j.idjugador
   `, [id]);
 
-  res.render('participants/edit', { category, participant, players });
+  const [categories] = await db.query(`
+    SELECT idcategoria, nom FROM categories
+    WHERE idcompeticio = ? AND tipus = ? AND idcategoria <> ?
+    ORDER BY sexe, edat_minima, nom
+  `, [category.idcompeticio, category.tipus, category.idcategoria]);
+  res.render('participants/edit', { category, participant, players, categories });
+};
+
+exports.changeCategory = async (req, res) => {
+  const id = Number(req.params.id);
+  const targetId = Number(req.body.idcategoria);
+  if (!Number.isSafeInteger(targetId) || targetId <= 0) {
+    return res.status(400).send('Categoria de destí no vàlida.');
+  }
+  const connection = await db.getConnection();
+  try {
+    await connection.beginTransaction();
+    const [[participant]] = await connection.query(
+      'SELECT * FROM participants WHERE idparticipant = ? FOR UPDATE', [id]
+    );
+    if (!participant) {
+      await connection.rollback();
+      return res.status(404).send('Participant no trobat.');
+    }
+    const [categories] = await connection.query(`
+      SELECT * FROM categories WHERE idcategoria IN (?, ?)
+      ORDER BY idcategoria FOR UPDATE
+    `, [participant.idcategoria, targetId]);
+    const source = categories.find(c => c.idcategoria === participant.idcategoria);
+    const target = categories.find(c => c.idcategoria === targetId);
+    if (!source || !target || source.idcompeticio !== target.idcompeticio || source.tipus !== target.tipus) {
+      await connection.rollback();
+      return res.status(400).send('Tria una categoria de la mateixa competició i modalitat.');
+    }
+    if (source.idcategoria !== targetId) {
+      // Els resultats parcials també compten com a partits jugats; els BYE no.
+      const [played] = await connection.query(`
+        SELECT pa.idpartit FROM partits pa
+        LEFT JOIN grups g ON g.idgrup = pa.idgrup
+        LEFT JOIN fases f ON f.idfase = pa.idfase
+        WHERE (g.idcategoria IN (?, ?) OR f.idcategoria IN (?, ?))
+          AND COALESCE(pa.bye, 0) = 0
+          AND (pa.estat <> 'PENDENT' OR COALESCE(pa.resultat1, 0) <> 0
+            OR COALESCE(pa.resultat2, 0) <> 0 OR pa.guanyador IS NOT NULL
+            OR EXISTS (SELECT 1 FROM partit_jocs pj WHERE pj.idpartit = pa.idpartit))
+        FOR UPDATE
+      `, [source.idcategoria, targetId, source.idcategoria, targetId]);
+      if (played.length) {
+        await connection.rollback();
+        return res.status(409).send('No es pot canviar la categoria: la categoria d’origen o de destí té partits començats o amb resultats desats.');
+      }
+      for (const category of categories) {
+        await deleteCategoryDraw(connection, category.idcategoria);
+        await connection.query("UPDATE categories SET estat = 'PREPARACIO' WHERE idcategoria = ?", [category.idcategoria]);
+      }
+      await connection.query('UPDATE participants SET idcategoria = ? WHERE idparticipant = ?', [targetId, id]);
+      await connection.query(`
+        INSERT INTO log_canvis (accio, entitat, identitat, descripcio)
+        VALUES ('CANVI_CATEGORIA', 'participant', ?, ?)
+      `, [id, `Categoria canviada de ${source.nom} a ${target.nom}. Sortejos afectats eliminats.`]);
+    }
+    await connection.commit();
+    res.redirect(`/participants/category/${targetId}`);
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
 };
 
 function asArray(value) {

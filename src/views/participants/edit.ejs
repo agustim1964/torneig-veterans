@@ -112,4 +112,27 @@
   </div>
 </form>
 
+<div class="card shadow-sm mt-4">
+  <div class="card-header">Canviar de categoria</div>
+  <div class="card-body">
+    <p>El participant es traslladarà amb les seves dades a la categoria seleccionada.
+      S’eliminaran els grups, els partits pendents i les fases finals de les categories d’origen i de destí.
+      Caldrà tornar a fer els sortejos. El canvi només es permet si cap de les dues categories té partits començats o resultats desats.</p>
+    <% if (categories.length) { %>
+      <form action="/participants/<%= participant.idparticipant %>/category" method="post">
+        <label class="form-label" for="target-category">Categoria de destí</label>
+        <select class="form-select mb-3" id="target-category" name="idcategoria" required>
+          <option value="">Selecciona una categoria</option>
+          <% categories.forEach(c => { %>
+            <option value="<%= c.idcategoria %>"><%= c.nom %></option>
+          <% }) %>
+        </select>
+        <button class="btn btn-warning" type="submit">Canviar categoria i eliminar els sortejos afectats</button>
+      </form>
+    <% } else { %>
+      <p class="text-muted mb-0">No hi ha altres categories de la mateixa modalitat en aquesta competició.</p>
+    <% } %>
+  </div>
+</div>
+
 <%- include('../partials/footer') %>

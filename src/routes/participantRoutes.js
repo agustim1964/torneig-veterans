@@ -13,6 +13,9 @@ router.post('/category/:categoryId/import', upload.single('fitxer'), (req, res, 
 });
 router.get('/:id/edit', controller.edit);
 router.post('/:id/update', controller.update);
+router.post('/:id/category', (req, res, next) => {
+  controller.changeCategory(req, res).catch(next);
+});
 router.post('/:id/toggle', controller.toggleActive);
 
 module.exports = router;
