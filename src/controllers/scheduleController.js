@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { expandExcelScheduleRows, MARKER } = require('../services/excelMasterService');
 const { generateMaster, generateGlobalMaster, generateSessionMaster, isoDate } = require('../services/scheduleService');
 
 async function getCompetition(id) {
@@ -18,7 +19,7 @@ exports.show = async (req, res) => {
   if (!competition) return res.status(404).send('Competició no trobada.');
 
   const [tables] = await db.query(`SELECT * FROM taules WHERE activa = 1 ORDER BY numero LIMIT ?`, [Number(competition.nombre_taules_disponibles || 1)]);
-  const [rows] = await db.query(`
+  let [rows] = await db.query(`
     SELECT
       pg.*,
       g.numero AS grup_numero,
@@ -41,6 +42,7 @@ exports.show = async (req, res) => {
     ORDER BY pg.data, pg.hora_inici, t.numero, cat.nom, g.numero
   `, [id]);
 
+  rows = await expandExcelScheduleRows(db, rows, id);
   const [sessions] = await db.query(`
     SELECT *
     FROM sessions_competicio
@@ -58,6 +60,10 @@ exports.generate = async (req, res) => {
   const id = Number(req.params.competitionId);
   const competition = await getCompetition(id);
   if (!competition) return res.status(404).send('Competició no trobada.');
+  const [[imported]] = await db.query(`SELECT COUNT(*) AS total FROM programacio_grups pg
+    JOIN grups g ON g.idgrup = pg.idgrup JOIN categories c ON c.idcategoria = g.idcategoria
+    WHERE c.idcompeticio = ? AND pg.observacions LIKE ?`, [id, `${MARKER}%`]);
+  if (Number(imported.total)) return res.status(409).send('El màster està importat de l’Excel. Cal tornar a importar l’Excel per modificar-ne els horaris.');
 
   const planDate = req.body.data || isoDate(competition.data_inici || new Date());
   const globalMode = req.body.mode === 'global';
@@ -191,6 +197,8 @@ exports.generate = async (req, res) => {
 
 exports.update = async (req, res) => {
   const idprogramacio = Number(req.params.id);
+  const [[imported]] = await db.query('SELECT observacions FROM programacio_grups WHERE idprogramacio = ?', [idprogramacio]);
+  if (imported?.observacions?.startsWith(MARKER)) return res.status(409).send('Aquest horari prové del màster Excel i es gestiona per partit.');
   const idtaula = req.body.idtaula ? Number(req.body.idtaula) : null;
 
   const [[row]] = await db.query(`
@@ -327,7 +335,7 @@ exports.print = async (req, res) => {
     LIMIT ?
   `, [Number(competition.nombre_taules_disponibles || 1)]);
 
-  const [rows] = await db.query(`
+  let [rows] = await db.query(`
     SELECT
       pg.*,
       g.numero AS grup_numero,
@@ -346,6 +354,7 @@ exports.print = async (req, res) => {
     ORDER BY pg.data, pg.hora_inici, t.numero
   `, [id]);
 
+  rows = await expandExcelScheduleRows(db, rows, id);
   const byDate = new Map();
 
   for (const row of rows) {

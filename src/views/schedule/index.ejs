@@ -142,6 +142,16 @@
       </thead>
       <tbody>
       <% rows.forEach(r => { %>
+        <% if (r.excel_imported) { %>
+          <tr>
+            <td><%= new Date(r.data + 'T12:00:00').toLocaleDateString('ca-ES') %></td>
+            <td><%= r.categoria_nom %></td><td>Grup <%= r.grup_numero %></td>
+            <td><%= r.participants_grup %></td><td><%= r.taula_nom %></td>
+            <td><%= r.hora_inici.substring(0,5) %></td><td><%= r.hora_final.substring(0,5) %></td>
+            <td><%= r.durada_partit %> min</td><td colspan="2"><span class="badge text-bg-info">Màster Excel</span></td>
+          </tr>
+          <% return; %>
+        <% } %>
         <tr>
           <form action="/schedule/<%= r.idprogramacio %>/update" method="post">
             <input type="hidden" name="competitionId" value="<%= competition.idcompeticio %>">

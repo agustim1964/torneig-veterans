@@ -330,11 +330,13 @@ async function loadPrintableGroup(groupId) {
       pa.*,
       p1.nom_mostrar AS participant1_nom,
       p2.nom_mostrar AS participant2_nom,
-      arb.nom_mostrar AS arbitre_nom
+      arb.nom_mostrar AS arbitre_nom,
+      mt.numero AS taula_numero, mt.nom AS taula_nom
     FROM partits pa
     LEFT JOIN participants p1 ON p1.idparticipant = pa.participant1
     LEFT JOIN participants p2 ON p2.idparticipant = pa.participant2
     LEFT JOIN participants arb ON arb.idparticipant = pa.idarbitre_participant
+    LEFT JOIN taules mt ON mt.idtaula = pa.idtaula
     WHERE pa.idgrup = ?
     ORDER BY pa.data_hora, pa.numero_partit
   `, [groupId]);

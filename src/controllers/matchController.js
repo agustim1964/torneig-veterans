@@ -134,6 +134,10 @@ exports.listByCategory = async (req, res) => {
 };
 
 async function generateOneGroup(cx, categoryId, group, startingNumber = 1, isTopX = false, externalReferees = false, tableMode = 'UNA_PER_GRUP') {
+  const [[imported]] = await cx.query('SELECT observacions FROM programacio_grups WHERE idgrup = ?', [group.idgrup]);
+  if (imported?.observacions?.startsWith('MASTER_EXCEL')) {
+    throw new Error('Aquest grup segueix el màster Excel. Cal importar-ne les franges per regenerar els partits.');
+  }
   const [participants] = await cx.query(`
     SELECT p.idparticipant, p.nom_mostrar, gp.ordre_visual
     FROM grup_participants gp

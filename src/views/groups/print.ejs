@@ -104,10 +104,12 @@
       </div>
 
       <div class="meta">
-        <div class="box"><strong>Data</strong><br><%= group.data ? new Date(group.data).toLocaleDateString('ca-ES') : '—' %></div>
-        <div class="box"><strong>Taula</strong><br><%= group.taula_nom || (group.taula_numero ? 'Taula ' + group.taula_numero : '—') %></div>
-        <div class="box"><strong>Inici</strong><br><%= group.hora_inici ? String(group.hora_inici).substring(0,5) : '—' %></div>
-        <div class="box"><strong>Final prevista</strong><br><%= group.hora_final ? String(group.hora_final).substring(0,5) : '—' %></div>
+        <% const matchDays = [...new Set(matches.filter(m => m.data_hora).map(m => new Date(m.data_hora).toLocaleDateString('ca-ES')))];
+           const matchTables = [...new Set(matches.map(m => m.taula_numero).filter(Boolean))]; %>
+        <div class="box"><strong>Dates</strong><br><%= matchDays.length ? matchDays.join(' · ') : (group.data ? new Date(group.data).toLocaleDateString('ca-ES') : '—') %></div>
+        <div class="box"><strong>Taules</strong><br><%= matchTables.length ? matchTables.join(', ') : (group.taula_numero || '—') %></div>
+        <div class="box"><strong>Inici</strong><br><%= matchDays.length > 1 ? 'Vegeu cada partit' : (group.hora_inici ? String(group.hora_inici).substring(0,5) : '—') %></div>
+        <div class="box"><strong>Final prevista</strong><br><%= matchDays.length > 1 ? 'Vegeu cada partit' : (group.hora_final ? String(group.hora_final).substring(0,5) : '—') %></div>
       </div>
 
       <table>
@@ -129,7 +131,7 @@
         <thead>
           <tr>
             <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %><th>Franja</th><% } %>
-            <th>Hora</th><th>Partit</th><th>Àrbitre</th>
+            <th>Dia</th><th>Hora</th><th>Taula</th><th>Partit</th><th>Àrbitre</th>
             <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>Resultat</th>
           </tr>
         </thead>
@@ -139,7 +141,9 @@
             <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %>
               <td class="center"><%= match.ronda_grup || '' %></td>
             <% } %>
+            <td class="nowrap"><%= match.data_hora ? new Date(match.data_hora).toLocaleDateString('ca-ES', {day:'2-digit',month:'2-digit'}) : '' %></td>
             <td class="nowrap"><%= match.data_hora ? new Date(match.data_hora).toLocaleTimeString('ca-ES',{hour:'2-digit',minute:'2-digit'}) : '' %></td>
+            <td class="center"><%= match.taula_numero || '' %></td>
             <td><%= match.participant1_nom %> — <%= match.participant2_nom %></td>
             <td><%= match.arbitre_nom || '' %></td>
             <% for (let gameNumber = 1; gameNumber <= 5; gameNumber++) {
@@ -158,7 +162,7 @@
         <% }) %>
         <% if (!matches.length) { %>
           <tr>
-            <td colspan="<%= (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') ? 10 : 9 %>" class="center">
+            <td colspan="<%= (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') ? 12 : 11 %>" class="center">
               Genera els partits des de “Partits i classificació” abans d’imprimir l’acta.
             </td>
           </tr>

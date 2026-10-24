@@ -1,5 +1,24 @@
 # Torneig Veterans
 
+## Importar el màster Excel i imprimir grups de dos dies
+
+`node import-master.js ruta/Master.xlsx 6` valida les pestanyes DIMECRES i DIJOUS
+amb els grups de la competició, sense modificar la base de dades. Les dates
+es dedueixen del període de la competició; si hi ha més d'un dimecres o dijous,
+la importació s'atura perquè les dates serien ambigües.
+
+Afegint `--apply` es desen els partits, els arbitratges i les franges exactes.
+La importació exigeix que encara no hi hagi partits a la competició i desa
+una còpia prèvia de la programació a `output/`. Valida que tots els jugadors
+tinguin partit cadascun dels dies del grup i que no coincideixin jugant o
+arbitrant en dues taules. El fitxer Excel original es conserva.
+
+El màster mostra cada bloc del grup amb la seva data i taula. Les actes
+inclouen dia, hora, taula, jugadors i àrbitre a cada partit. Els grups importats
+es gestionen des de l'Excel; la generació automàtica no en substitueix les franges.
+`node export-competition-print.js 6` exporta les actes i el màster a HTML
+imprimible a `output/impressio/`, amb la capçalera inclosa.
+
 Primera versió del gestor del torneig de veterans de tennis taula.
 
 ## Funcions incloses
