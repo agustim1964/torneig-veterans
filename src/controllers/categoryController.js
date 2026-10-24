@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { buildCategorySummary } = require('../services/categorySummaryService');
 const { hasFinishedKnockoutMatches, deleteCategoryDraw } = require('../services/categoryResetService');
 
 exports.list = async (req, res) => {
@@ -15,6 +16,7 @@ exports.list = async (req, res) => {
 
   let competition = null;
   let categories = [];
+  let groups = [];
 
   if (competitionId) {
     [[competition]] = await db.query(
@@ -33,6 +35,14 @@ exports.list = async (req, res) => {
       GROUP BY c.idcategoria
       ORDER BY c.tipus, c.sexe, c.edat_minima, c.nom
     `, [competitionId]);
+    [groups] = await db.query(`
+      SELECT g.idgrup, g.idcategoria, COUNT(gp.idparticipant) AS participants
+      FROM grups g
+      INNER JOIN categories c ON c.idcategoria = g.idcategoria
+      LEFT JOIN grup_participants gp ON gp.idgrup = g.idgrup
+      WHERE c.idcompeticio = ?
+      GROUP BY g.idgrup, g.idcategoria
+    `, [competitionId]);
   }
 
   const [competitions] = await db.query(`
@@ -43,7 +53,8 @@ exports.list = async (req, res) => {
   `);
 
   res.render('categories/index', {
-    categories, competitions, competition, competitionId
+    categories, competitions, competition, competitionId,
+    summary: buildCategorySummary(categories, groups)
   });
 };
 
