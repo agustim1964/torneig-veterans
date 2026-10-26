@@ -44,7 +44,11 @@ async function run() {
   }
   await save('groups/print', { pageTitle: 'Actes · SALOU 2026', sheets }, path.join(dir, 'Actes-tots-els-grups.html'));
   const master = await capture(scheduleController.print, { params: { competitionId: id } });
-  assert.strictEqual(master.data.days.length, 2);
+  const matchDays = new Set(sheets.flatMap(sheet => sheet.matches.map(match => {
+    const date = new Date(match.data_hora);
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  })));
+  assert.strictEqual(master.data.days.length, matchDays.size);
   const occupied = master.data.days.reduce((sum, day) => sum + day.slots.reduce((count, slot) => count + slot.cells.filter(Boolean).length, 0), 0);
   assert.strictEqual(occupied, sheets.reduce((sum, sheet) => sum + sheet.matches.length, 0));
   await save(master.view, master.data, path.join(dir, 'Master-competicio.html'));

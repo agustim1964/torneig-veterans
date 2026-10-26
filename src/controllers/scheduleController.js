@@ -53,7 +53,11 @@ exports.show = async (req, res) => {
   const dates = [...new Set(rows.map(r => isoDate(r.data)).filter(Boolean))];
   const defaultDate = isoDate(req.query.data || competition.data_inici || new Date());
 
-  res.render('schedule/index', { competition, tables, rows, sessions, dates, defaultDate, isoDate });
+  const [unscheduled] = await db.query(`SELECT g.idgrup,g.numero,c.nom AS categoria_nom,COUNT(*) AS total
+    FROM partits pa JOIN grups g ON g.idgrup=pa.idgrup JOIN categories c ON c.idcategoria=g.idcategoria
+    WHERE c.idcompeticio=? AND (pa.data_hora IS NULL OR pa.idtaula IS NULL)
+    GROUP BY g.idgrup,g.numero,c.nom ORDER BY c.nom,g.numero`,[id]);
+  res.render('schedule/index', { competition, tables, rows, sessions, dates, defaultDate, isoDate, unscheduled });
 };
 
 exports.generate = async (req, res) => {
@@ -198,7 +202,7 @@ exports.generate = async (req, res) => {
 exports.update = async (req, res) => {
   const idprogramacio = Number(req.params.id);
   const [[imported]] = await db.query('SELECT observacions FROM programacio_grups WHERE idprogramacio = ?', [idprogramacio]);
-  if (imported?.observacions?.startsWith(MARKER)) return res.status(409).send('Aquest horari prové del màster Excel i es gestiona per partit.');
+  if (imported?.observacions?.startsWith(MARKER)) return res.status(409).send('Aquest horari es gestiona per partit. Utilitza «Afegir / horaris» a la pantalla de grups.');
   const idtaula = req.body.idtaula ? Number(req.body.idtaula) : null;
 
   const [[row]] = await db.query(`

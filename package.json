@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "node test-import-data.js && node test-draw.js && node test-change-category.js && node test-category-summary.js && node test-excel-master.js"
+    "test": "node test-import-data.js && node test-draw.js && node test-change-category.js && node test-category-summary.js && node test-excel-master.js && node test-group-adjustment.js"
   },
   "dependencies": {
     "dotenv": "^16.4.7",

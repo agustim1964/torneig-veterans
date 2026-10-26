@@ -1,4 +1,11 @@
 <%- include('../partials/header', { title: 'Màster - ' + competition.nom }) %>
+<% if (typeof unscheduled !== 'undefined' && unscheduled.length) { %>
+  <div class="alert alert-warning"><strong>Hi ha partits pendents de programar.</strong>
+    <% unscheduled.forEach(item => { %>
+      <div><a href="/groups/<%= item.idgrup %>/adjust"><%= item.categoria_nom %> · Grup <%= item.numero %>: <%= item.total %> partits sense hora o taula</a></div>
+    <% }) %>
+  </div>
+<% } %>
 
 <div class="d-flex justify-content-between align-items-start mb-4 gap-3">
   <div>
@@ -145,7 +152,7 @@
         <% if (r.excel_imported) { %>
           <tr>
             <td><%= new Date(r.data + 'T12:00:00').toLocaleDateString('ca-ES') %></td>
-            <td><%= r.categoria_nom %></td><td>Grup <%= r.grup_numero %></td>
+            <td><%= r.categoria_nom %></td><td><a href="/groups/<%= r.idgrup %>/adjust">Grup <%= r.grup_numero %></a></td>
             <td><%= r.participants_grup %></td><td><%= r.taula_nom %></td>
             <td><%= r.hora_inici.substring(0,5) %></td><td><%= r.hora_final.substring(0,5) %></td>
             <td><%= r.durada_partit %> min</td><td colspan="2"><span class="badge text-bg-info">Màster Excel</span></td>

@@ -14,7 +14,7 @@ function readMasterSlots(workbook, dates, tables) {
         if (ci < 2) return;
         const label = String(cell.value?.text || cell.value || '').trim();
         if (!label) return;
-        if (!/^G\d+(M\d+|F\d+|DBM\d+|DBF\d+|XDB\d+)$/.test(label)) {
+        if (!/^G\d+(M\d+|F\d+|DBM\d+|DBF\d+|XDB\d+|PARKM|PARKDB)$/.test(label)) {
           throw new Error(`Etiqueta desconeguda: ${name}!${cell.address}: ${label}`);
         }
         const time = row.getCell(1).value;
@@ -30,7 +30,7 @@ function readMasterSlots(workbook, dates, tables) {
 }
 
 function buildExcelMatches(slots, groups, participants, members) {
-  const byLabel = new Map(groups.map(g => [`G${g.numero}${g.categoria_nom.replace(/^MDB/, 'DBM').replace(/^FDB/, 'DBF')}`, g]));
+  const byLabel = new Map(groups.map(g => [`G${g.numero}${g.categoria_nom.replace(/^MDB/, 'DBM').replace(/^FDB/, 'DBF').replace(/^PARKINSONM$/, 'PARKM').replace(/^PARKINSONDB$/, 'PARKDB')}`, g]));
   const membersByParticipant = new Map();
   for (const m of members) {
     if (!membersByParticipant.has(m.idparticipant)) membersByParticipant.set(m.idparticipant, []);

@@ -1,0 +1,54 @@
+<%- include('../partials/header', { title: 'Ajustar grup · ' + group.categoria_nom }) %>
+<a href="/groups/category/<%= group.idcategoria %>">← Grups</a>
+<h1 class="mt-3">Grup <%= group.numero %> · <%= group.categoria_nom %></h1>
+<% if(message) { %><div class="alert alert-success"><%= message %></div><% } %>
+<p>Incorpora un participant ja inscrit a la categoria i sense grup. Els partits actuals conserven els jugadors, els arbitratges i els horaris.</p>
+<div class="alert alert-info">Primer dona d’alta el jugador o la parella a <a href="/participants/category/<%= group.idcategoria %>/new">Nou participant</a>.
+  Els partits nous es poden deixar pendents d’hora o programar en una data, taula i franja concretes.
+  La comprovació utilitza els partits i les reserves desats a l’aplicació; els canvis no modifiquen el fitxer Excel.
+  Si la categoria té fases finals creades, cal revisar-les abans d’afegir participants.</div>
+<% const everyone=[...roster,...available]; const playerName=id=>everyone.find(p=>p.idparticipant===id)?.nom_mostrar||id;
+   const localTime=value=>value?String(new Date(value).getHours()).padStart(2,'0')+':'+String(new Date(value).getMinutes()).padStart(2,'0'):''; %>
+<div class="card mb-4"><div class="card-header">Afegir al grup sense tornar a sortejar</div><div class="card-body">
+<% if(available.length) { %>
+<form action="/groups/<%= group.idgrup %>/adjust/preview" method="post" class="row g-3">
+  <div class="col-md-6"><label for="participant" class="form-label">Participant sense grup</label><select id="participant" name="participantId" class="form-select" required>
+  <% available.forEach(p=>{ %><option value="<%= p.idparticipant %>" <%= Number(body.participantId)===p.idparticipant?'selected':'' %>><%= p.nom_mostrar %></option><% }) %>
+  </select></div>
+  <div class="col-md-6"><label for="mode" class="form-label">Horaris dels partits nous</label><select id="mode" name="mode" class="form-select">
+    <option value="manual" <%= body.mode!=='auto'?'selected':'' %>>Assignar-los manualment després</option>
+    <option value="auto" <%= body.mode==='auto'?'selected':'' %>>Buscar lloc dins de la franja indicada</option>
+  </select></div>
+  <div class="col-md-3"><label class="form-label" for="date">Data (mode automàtic)</label><input id="date" name="date" type="date" class="form-control" min="<%= isoDate(group.data_inici) %>" max="<%= isoDate(group.data_fi) %>" value="<%= body.date||isoDate(group.data_inici) %>"></div>
+  <div class="col-md-3"><label class="form-label" for="start">A partir de</label><input id="start" name="start" type="time" class="form-control" value="<%= body.start||'15:00' %>"></div>
+  <div class="col-md-3"><label class="form-label" for="end">Acabar abans de</label><input id="end" name="end" type="time" class="form-control" value="<%= body.end||'19:00' %>"></div>
+  <div class="col-md-3"><label class="form-label" for="table">Taula</label><select id="table" name="tableId" class="form-select"><% tables.forEach(t=>{ %><option value="<%= t.idtaula %>" <%= Number(body.tableId)===t.idtaula?'selected':'' %>><%= t.nom %></option><% }) %></select></div>
+  <div class="col-12"><button class="btn btn-primary">Previsualitzar els partits nous</button></div>
+</form>
+<% } else { %><p class="mb-0">No hi ha participants actius sense grup en aquesta categoria.</p><% } %>
+</div></div>
+<% if(preview) { %>
+<div class="card mb-4 border-primary"><div class="card-header">Proposta: <%= preview.matches.length %> partits nous</div><div class="card-body">
+  <table class="table"><thead><tr><th>Partit</th><th>Àrbitre</th><th>Data i hora</th><th>Taula</th></tr></thead><tbody>
+  <% preview.matches.forEach(m=>{ %><tr><td><%= playerName(m.participant1) %> — <%= playerName(m.participant2) %></td><td><%= playerName(m.idarbitre_participant) %></td><td><%= m.data_hora||'Pendent d’assignar' %></td><td><%= tables.find(t=>t.idtaula===m.idtaula)?.numero||'—' %></td></tr><% }) %>
+  </tbody></table>
+  <form action="/groups/<%= group.idgrup %>/adjust/add" method="post">
+    <% for(const key of ['participantId','mode','date','start','end','tableId']) { %><input type="hidden" name="<%= key %>" value="<%= body[key]||'' %>"><% } %>
+    <input type="hidden" name="digest" value="<%= preview.digest %>">
+    <button class="btn btn-success">Confirmar alta i crear aquests partits</button>
+  </form>
+</div></div>
+<% } %>
+<h2 class="h4">Horaris i àrbitres dels partits del grup</h2>
+<p>Els partits sense hora no apareixen al màster fins que els programes. Les actes s’actualitzen en desar.</p>
+<div class="table-responsive"><table class="table align-middle"><thead><tr><th>Partit</th><th>Data</th><th>Hora</th><th>Taula</th><th>Àrbitre</th><th></th></tr></thead><tbody>
+<% matches.forEach(m=>{ const formId='match-'+m.idpartit; %>
+<tr><td><%= playerName(m.participant1) %> — <%= playerName(m.participant2) %></td>
+<td><input form="<%= formId %>" class="form-control" name="date" type="date" min="<%= isoDate(group.data_inici) %>" max="<%= isoDate(group.data_fi) %>" value="<%= m.data_hora?isoDate(m.data_hora):'' %>" required></td>
+<td><input form="<%= formId %>" class="form-control" name="start" type="time" value="<%= localTime(m.data_hora) %>" required></td>
+<td><select form="<%= formId %>" class="form-select" name="tableId" required><option value="">Taula</option><% tables.forEach(t=>{ %><option value="<%= t.idtaula %>" <%= m.idtaula===t.idtaula?'selected':'' %>><%= t.nom %></option><% }) %></select></td>
+<td><select form="<%= formId %>" class="form-select" name="refereeId" required><% roster.filter(p=>![m.participant1,m.participant2].includes(p.idparticipant)).forEach(p=>{ %><option value="<%= p.idparticipant %>" <%= m.idarbitre_participant===p.idparticipant?'selected':'' %>><%= p.nom_mostrar %></option><% }) %></select></td>
+<td><form id="<%= formId %>" action="/groups/<%= group.idgrup %>/adjust/schedule" method="post"><input type="hidden" name="matchId" value="<%= m.idpartit %>"><button class="btn btn-outline-primary">Desar</button></form></td></tr>
+<% }) %>
+</tbody></table></div>
+<%- include('../partials/footer') %>
