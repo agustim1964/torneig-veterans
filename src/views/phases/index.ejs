@@ -24,6 +24,16 @@
   <% } %>
 </div>
 
+<% if (phases.some(phase => phase.nom === 'Final A') && phases.some(phase => phase.nom === 'Consolació')) { %>
+  <div class="mb-4">
+    <a href="/phases/category/<%= category.idcategoria %>/print-brackets"
+       target="_blank"
+       class="btn btn-dark">
+      🖨 Imprimir quadres A i B
+    </a>
+  </div>
+<% } %>
+
 <% if (!groupsFinished) { %>
   <div class="alert alert-warning">
     <strong>Encara no es pot fer el sorteig.</strong>

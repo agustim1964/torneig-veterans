@@ -497,13 +497,7 @@ exports.printRoundSheets = async (req, res) => {
   });
 };
 
-exports.printBracket = async (req, res) => {
-  const phaseId = Number(req.params.phaseId);
-
-  if (!Number.isInteger(phaseId) || phaseId <= 0) {
-    return res.status(400).send('Quadre no vàlid.');
-  }
-
+async function loadPrintableBracket(phaseId) {
   const [[phase]] = await db.query(`
     SELECT
       f.idfase,
@@ -523,7 +517,7 @@ exports.printBracket = async (req, res) => {
       AND f.tipus = 'ELIMINATORIA'
   `, [phaseId]);
 
-  if (!phase) return res.status(404).send('Quadre eliminatori no trobat.');
+  if (!phase) return null;
 
   const [rounds] = await db.query(`
     SELECT idronda, nom, ordre, mida_quadre
@@ -588,11 +582,55 @@ exports.printBracket = async (req, res) => {
     ? Number(rounds[0].mida_quadre || rounds[0].matches.length * 2)
     : 0;
 
-  res.render('phases/print-bracket', {
+  return {
     phase,
     rounds,
     bracketSize
-  });
+  };
+}
+
+exports.printBracket = async (req, res) => {
+  const phaseId = Number(req.params.phaseId);
+  if (!Number.isInteger(phaseId) || phaseId <= 0) {
+    return res.status(400).send('Quadre no vàlid.');
+  }
+
+  const bracket = await loadPrintableBracket(phaseId);
+  if (!bracket) return res.status(404).send('Quadre eliminatori no trobat.');
+
+  res.render('phases/print-bracket', { ...bracket, brackets: [bracket] });
+};
+
+exports.printCategoryBrackets = async (req, res) => {
+  const categoryId = Number(req.params.categoryId);
+  if (!Number.isInteger(categoryId) || categoryId <= 0) {
+    return res.status(400).send('Categoria no vàlida.');
+  }
+
+  const [phases] = await db.query(`
+    SELECT idfase
+    FROM fases
+    WHERE idcategoria = ?
+      AND tipus = 'ELIMINATORIA'
+      AND nom IN ('Final A', 'Consolació')
+    ORDER BY ordre, idfase
+  `, [categoryId]);
+
+  if (phases.length !== 2) {
+    return res.status(400).send('Cal haver generat el Quadre A i la Consolació per imprimir-los junts.');
+  }
+
+  const brackets = [];
+  for (const phase of phases) {
+    const bracket = await loadPrintableBracket(Number(phase.idfase));
+    if (bracket) brackets.push(bracket);
+  }
+
+  if (brackets.length !== 2) {
+    return res.status(404).send('No s’han pogut carregar els dos quadres eliminatoris.');
+  }
+
+  res.render('phases/print-bracket', { ...brackets[0], brackets });
 };
 
 exports.generate = async (req, res) => {

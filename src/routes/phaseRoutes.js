@@ -4,6 +4,7 @@ const controller = require('../controllers/phaseController');
 const router = express.Router();
 
 router.get('/category/:categoryId', controller.show);
+router.get('/category/:categoryId/print-brackets', controller.printCategoryBrackets);
 router.get('/round/:roundId/print', controller.printRoundSheets);
 router.get('/:phaseId/print-bracket', controller.printBracket);
 router.post('/category/:categoryId/generate', controller.generate);

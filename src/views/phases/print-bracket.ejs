@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="ca">
 <head>
+  <% const printBrackets = Array.isArray(brackets) && brackets.length ? brackets : [{ phase, rounds, bracketSize }]; %>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quadre · <%= phase.competicio_nom %> · <%= phase.categoria_nom %> · <%= phase.fase_nom %></title>
+  <title>Quadres · <%= printBrackets[0].phase.competicio_nom %> · <%= printBrackets[0].phase.categoria_nom %></title>
   <style>
     @page {
       size: A4 portrait;
@@ -43,6 +44,8 @@
       overflow: hidden;
       background: #fff;
     }
+
+    .page.page-break { page-break-after: always; }
 
     .page-header {
       height: 22mm;
@@ -280,13 +283,18 @@
 </head>
 <body>
   <div class="controls">
-    <button type="button" onclick="window.print()">🖨 Imprimir quadre</button>
+    <button type="button" onclick="window.print()">🖨 Imprimir <%= printBrackets.length > 1 ? 'quadres A i B' : 'quadre' %></button>
     <span style="margin-left:10px">
-      <%= phase.fase_nom %> · quadre de <%= bracketSize %> · els noms pendents queden en blanc
+      <%= printBrackets.map(item => item.phase.fase_nom).join(' + ') %> · els noms pendents queden en blanc
     </span>
   </div>
 
-  <main class="page">
+  <% printBrackets.forEach((item, bracketIndex) => {
+       const phase = item.phase;
+       const rounds = item.rounds;
+       const bracketSize = item.bracketSize;
+  %>
+  <main class="page <%= bracketIndex < printBrackets.length - 1 ? 'page-break' : '' %>">
     <header class="page-header">
       <div class="brand">
         <img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula">
@@ -380,5 +388,6 @@
       <% }); %>
     </section>
   </main>
+  <% }); %>
 </body>
 </html>
