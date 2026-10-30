@@ -87,6 +87,7 @@
        const participants = sheet.participants;
        const matches = sheet.matches;
        const standings = sheet.standings || [];
+       const bestOf = String(group.categoria_nom || '').toUpperCase() === 'PARKINSONDB' ? 3 : 5;
   %>
     <article class="sheet">
       <div class="capcalera-fctt">
@@ -132,7 +133,10 @@
           <tr>
             <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %><th>Franja</th><% } %>
             <th>Dia</th><th>Hora</th><th>Taula</th><th>Partit</th><th>Àrbitre</th>
-            <th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>Resultat</th>
+            <% for (let gameNumber = 1; gameNumber <= bestOf; gameNumber++) { %>
+              <th>J<%= gameNumber %></th>
+            <% } %>
+            <th>Resultat</th>
           </tr>
         </thead>
         <tbody>
@@ -146,7 +150,7 @@
             <td class="center"><%= match.taula_numero || '' %></td>
             <td><%= match.participant1_nom %> — <%= match.participant2_nom %></td>
             <td><%= match.arbitre_nom || '' %></td>
-            <% for (let gameNumber = 1; gameNumber <= 5; gameNumber++) {
+            <% for (let gameNumber = 1; gameNumber <= bestOf; gameNumber++) {
                  const game = (match.jocs || []).find(item => Number(item.numero_joc) === gameNumber);
             %>
               <td class="center <%= game ? 'saved-score' : '' %>">
@@ -162,7 +166,7 @@
         <% }) %>
         <% if (!matches.length) { %>
           <tr>
-            <td colspan="<%= (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') ? 12 : 11 %>" class="center">
+            <td colspan="<%= 6 + bestOf + ((group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') ? 1 : 0) %>" class="center">
               Genera els partits des de “Partits i classificació” abans d’imprimir l’acta.
             </td>
           </tr>

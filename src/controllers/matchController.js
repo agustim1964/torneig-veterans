@@ -2,6 +2,7 @@ const db = require('../config/db');
 const { buildGroupMatchOrder, assignGroupReferees } = require('../services/matchService');
 const { classifyGroup } = require('../services/classificationService');
 const { propagateWinner } = require('../services/phaseService');
+const { groupBestOf, gamesToWin } = require('../services/gameFormatService');
 
 async function getCategory(categoryId) {
   const [[category]] = await db.query(`
@@ -14,6 +15,7 @@ async function getCategory(categoryId) {
       ON cc.idcompeticio = comp.idcompeticio
     WHERE c.idcategoria = ?
   `, [categoryId]);
+  if (category) category.bestOf = groupBestOf(category.nom);
   return category;
 }
 
@@ -406,16 +408,21 @@ exports.saveResult = async (req, res) => {
   }
 
   const [[match]] = await db.query(`
-    SELECT participant1, participant2, idfase, idronda, idgrup, guanyador AS guanyador_anterior
-    FROM partits
-    WHERE idpartit = ?
+    SELECT pa.participant1, pa.participant2, pa.idfase, pa.idronda, pa.idgrup,
+      pa.guanyador AS guanyador_anterior, c.nom AS categoria_nom
+    FROM partits pa
+    INNER JOIN categories c ON c.idcategoria = pa.idcategoria
+    WHERE pa.idpartit = ?
   `, [matchId]);
 
   if (!match) return res.status(404).send('Partit no trobat.');
 
+  const bestOf = match.idgrup ? groupBestOf(match.categoria_nom) : 5;
+  const winsNeeded = gamesToWin(bestOf);
+
   const games = [];
 
-  for (let n = 1; n <= 5; n++) {
+  for (let n = 1; n <= bestOf; n++) {
     const raw1 = req.body[`joc${n}_p1`];
     const raw2 = req.body[`joc${n}_p2`];
     const hasScore1 = raw1 !== undefined && raw1 !== '';
@@ -463,7 +470,7 @@ exports.saveResult = async (req, res) => {
   const validGames = [];
 
   for (const game of games.sort((a, b) => a.numero_joc - b.numero_joc)) {
-    if (r1 >= 3 || r2 >= 3) break;
+    if (r1 >= winsNeeded || r2 >= winsNeeded) break;
 
     // No comptem un joc empatat com a joc finalitzat.
     if (game.punts1 === game.punts2) continue;
@@ -475,8 +482,8 @@ exports.saveResult = async (req, res) => {
   }
 
   let winner = null;
-  if (r1 === 3) winner = match.participant1;
-  if (r2 === 3) winner = match.participant2;
+  if (r1 === winsNeeded) winner = match.participant1;
+  if (r2 === winsNeeded) winner = match.participant2;
 
   const connection = await db.getConnection();
 

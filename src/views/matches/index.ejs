@@ -124,7 +124,7 @@
                 <input type="hidden" name="groupId" value="<%= selectedGroupId %>">
               <% } %>
 
-              <% for (let joc = 1; joc <= 5; joc++) {
+              <% for (let joc = 1; joc <= category.bestOf; joc++) {
                    const saved = (m.jocs || []).find(x => Number(x.numero_joc) === joc);
               %>
                 <div class="d-flex align-items-center gap-1 border rounded px-1 py-1">
@@ -259,6 +259,8 @@
 
 <script>
 (function () {
+  const bestOf = <%= category.bestOf %>;
+  const winsNeeded = Math.floor(bestOf / 2) + 1;
   const forms = document.querySelectorAll('.match-result-form');
 
   function readGame(form, game) {
@@ -274,14 +276,14 @@
     let wins2 = 0;
     let clinchGame = null;
 
-    for (let game = 1; game <= 5; game++) {
+    for (let game = 1; game <= bestOf; game++) {
       const { va, vb } = readGame(form, game);
       if (va === null || vb === null || va === vb) continue;
 
       if (va > vb) wins1++;
       else wins2++;
 
-      if ((wins1 === 3 || wins2 === 3) && clinchGame === null) {
+      if ((wins1 === winsNeeded || wins2 === winsNeeded) && clinchGame === null) {
         clinchGame = game;
         break;
       }
@@ -294,7 +296,7 @@
     const { wins1, wins2, clinchGame } = completedScore(form);
     const summary = form.querySelector('.match-summary');
 
-    for (let game = 1; game <= 5; game++) {
+    for (let game = 1; game <= bestOf; game++) {
       const { a, b } = readGame(form, game);
       const afterMatch = clinchGame !== null && game > clinchGame;
 
@@ -316,7 +318,7 @@
 
   function focusNextGame(form, currentGame) {
     const nextGame = currentGame + 1;
-    if (nextGame > 5) return;
+    if (nextGame > bestOf) return;
 
     const next = form.querySelector(
       `[data-game="${nextGame}"][data-player="1"]:not(:disabled)`
@@ -421,7 +423,7 @@
       }
 
       const nextGame = game + 1;
-      const next = nextGame <= 5
+      const next = nextGame <= bestOf
         ? form.querySelector(`[data-game="${nextGame}"][data-player="1"]:not(:disabled)`)
         : null;
 
