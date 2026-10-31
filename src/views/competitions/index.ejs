@@ -78,6 +78,8 @@
                  href="/competitions/<%= c.idcompeticio %>/participants">Llistat participants</a>
               <a class="btn btn-outline-primary btn-sm"
                  href="/competitions/<%= c.idcompeticio %>/groups">Llistat de grups</a>
+              <a class="btn btn-outline-warning btn-sm" target="_blank"
+                 href="/competitions/<%= c.idcompeticio %>/honor-board">Quadre d'honor</a>
               <form action="/competitions/<%= c.idcompeticio %>/toggle" method="post">
                 <button class="btn btn-outline-secondary btn-sm">
                   <%= c.activa ? 'Desactivar' : 'Activar' %>

@@ -540,6 +540,13 @@ async function loadPrintableBracket(phaseId) {
         p.guanyador,
         p.bye,
         DATE_FORMAT(p.data_hora, '%H:%i') AS hora_partit,
+        CONCAT(
+          CASE DAYOFWEEK(p.data_hora)
+            WHEN 1 THEN 'Dg' WHEN 2 THEN 'Dl' WHEN 3 THEN 'Dt'
+            WHEN 4 THEN 'Dc' WHEN 5 THEN 'Dj' WHEN 6 THEN 'Dv' WHEN 7 THEN 'Ds'
+          END,
+          ' ', DATE_FORMAT(p.data_hora, '%d/%m'), ' · ', DATE_FORMAT(p.data_hora, '%H:%i')
+        ) AS dia_hora_partit,
         t.numero AS taula_numero,
         p1.nom_mostrar AS participant1_nom,
         p1.club AS participant1_club,

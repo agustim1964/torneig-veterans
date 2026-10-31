@@ -358,8 +358,8 @@
               <div class="match-meta">
                 <span>Acta <%= match.acta_numero %></span>
                 <span class="match-schedule">
-                  <% if (match.taula_numero || match.hora_partit) { %>
-                    <%= match.taula_numero ? ('Taula ' + match.taula_numero) : '' %><%= match.taula_numero && match.hora_partit ? ' · ' : '' %><%= match.hora_partit || '' %>
+                  <% if (match.taula_numero || match.dia_hora_partit || match.hora_partit) { %>
+                    <%= match.taula_numero ? ('Taula ' + match.taula_numero) : '' %><%= match.taula_numero && (match.dia_hora_partit || match.hora_partit) ? ' · ' : '' %><%= match.dia_hora_partit || match.hora_partit || '' %>
                   <% } %>
                 </span>
                 <span class="match-result"><%= match.resultat %></span>

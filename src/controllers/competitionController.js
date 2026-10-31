@@ -148,6 +148,66 @@ exports.groupList = async (req, res) => {
   });
 };
 
+function phasePodium(phase) {
+  const rounds = [...phase.rounds.values()].sort((a, b) => a.ordre - b.ordre);
+  const finalRound = rounds.at(-1);
+  const semifinalRound = rounds.at(-2);
+  const finalMatch = finalRound?.matches.find(match => !Number(match.bye)) || finalRound?.matches[0];
+  const participant = (match, side) => {
+    const id = Number(match?.[`participant${side}`] || 0);
+    return id ? { id, name: match[`participant${side}_nom`], country: match[`participant${side}_pais`] || '' } : null;
+  };
+  const finalists = finalMatch ? [participant(finalMatch, 1), participant(finalMatch, 2)].filter(Boolean) : [];
+  const winner = finalists.find(item => item.id === Number(finalMatch?.guanyador)) || null;
+  const runnerUp = finalists.find(item => winner && item.id !== winner.id) || null;
+  const thirds = (semifinalRound?.matches || [])
+    .filter(match => !Number(match.bye))
+    .map(match => [participant(match, 1), participant(match, 2)]
+      .find(item => item && Number(match.guanyador) && item.id !== Number(match.guanyador)) || null)
+    .filter(Boolean).slice(0, 2);
+  return { winner, runnerUp, thirds, complete: Boolean(winner && runnerUp && thirds.length === 2) };
+}
+
+exports.honorBoard = async (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) return res.status(400).send('Competició no vàlida.');
+  const [[competition]] = await db.query('SELECT * FROM competicions WHERE idcompeticio = ?', [id]);
+  if (!competition) return res.status(404).send('Competició no trobada.');
+  const [rows] = await db.query(`
+    SELECT c.idcategoria, c.nom AS categoria_nom,
+           f.idfase, f.nom AS fase_nom, f.ordre AS fase_ordre,
+           r.idronda, r.nom AS ronda_nom, r.ordre AS ronda_ordre,
+           p.idpartit, p.numero_partit, p.bye, p.guanyador,
+           p.participant1, p1.nom_mostrar AS participant1_nom, p1.pais AS participant1_pais,
+           p.participant2, p2.nom_mostrar AS participant2_nom, p2.pais AS participant2_pais
+      FROM categories c
+      JOIN fases f ON f.idcategoria=c.idcategoria AND f.tipus='ELIMINATORIA'
+        AND f.nom IN ('Final A','Consolació')
+      JOIN rondes r ON r.idfase=f.idfase
+      JOIN partits p ON p.idronda=r.idronda
+      LEFT JOIN participants p1 ON p1.idparticipant=p.participant1
+      LEFT JOIN participants p2 ON p2.idparticipant=p.participant2
+     WHERE c.idcompeticio=?
+     ORDER BY c.tipus,c.sexe,c.edat_minima,c.nom,f.ordre,r.ordre,p.numero_partit,p.idpartit
+  `, [id]);
+  const categories = new Map();
+  for (const row of rows) {
+    if (!categories.has(row.idcategoria)) categories.set(row.idcategoria, { name: row.categoria_nom, phases: new Map() });
+    const category = categories.get(row.idcategoria);
+    if (!category.phases.has(row.idfase)) category.phases.set(row.idfase, { name: row.fase_nom, rounds: new Map() });
+    const phase = category.phases.get(row.idfase);
+    if (!phase.rounds.has(row.idronda)) phase.rounds.set(row.idronda, { ordre: Number(row.ronda_ordre), matches: [] });
+    phase.rounds.get(row.idronda).matches.push(row);
+  }
+  const honor = [...categories.values()].map(category => {
+    const phases = [...category.phases.values()];
+    const main = phases.find(phase => phase.name === 'Final A');
+    const consolation = phases.find(phase => phase.name === 'Consolació');
+    return { name: category.name, main: main ? phasePodium(main) : null, consolation: consolation ? phasePodium(consolation) : null };
+  });
+  res.render('competitions/honor-board', { competition, honor });
+};
+
 exports.create = async (req, res) => {
   const nom = String(req.body.nom || '').trim();
   if (!nom) return res.status(400).send('El nom de la competició és obligatori.');
