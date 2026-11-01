@@ -161,7 +161,7 @@
 
             <div class="text-center mb-2">
               <% if (round.printable) { %>
-                <a href="/phases/round/<%= round.idronda %>/print?bestOf=5"
+                <a href="/phases/round/<%= round.idronda %>/print?bestOf=<%= category.bestOf %>"
                    target="_blank"
                    class="btn btn-sm btn-outline-primary">
                   🖨 Imprimir actes
@@ -251,13 +251,14 @@
                 <% if (!match.bye && match.participant1 && match.participant2) { %>
                   <form action="/matches/<%= match.idpartit %>/result"
                         method="post"
-                        class="mt-2 phase-result-form">
+                        class="mt-2 phase-result-form"
+                        data-best-of="<%= category.bestOf %>">
                     <input type="hidden" name="categoryId" value="<%= category.idcategoria %>">
                     <input type="hidden" name="returnTo" value="phases">
                     <input type="hidden" name="ajax" value="1">
 
                     <div class="d-flex gap-1 flex-wrap align-items-center">
-                      <% for (let joc = 1; joc <= 5; joc++) {
+                      <% for (let joc = 1; joc <= category.bestOf; joc++) {
                            const saved = match.jocs?.find(j => Number(j.numero_joc) === joc);
                       %>
                         <div class="d-flex align-items-center border rounded p-1">
@@ -431,7 +432,8 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async event => {
       event.preventDefault();
 
-      for (let game = 1; game <= 5; game++) {
+      const bestOf = Number(form.dataset.bestOf || 5);
+      for (let game = 1; game <= bestOf; game++) {
         const input1 = form.querySelector(`[name="joc${game}_p1"]`);
         const input2 = form.querySelector(`[name="joc${game}_p2"]`);
         const raw1 = input1.value.trim();

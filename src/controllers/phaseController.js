@@ -1,5 +1,6 @@
 const db = require('../config/db');
 const { createPhase, propagateWinner } = require('../services/phaseService');
+const { groupBestOf } = require('../services/gameFormatService');
 
 async function loadCategory(categoryId) {
   const [[category]] = await db.query(`
@@ -18,6 +19,7 @@ exports.show = async (req, res) => {
   const category = await loadCategory(categoryId);
 
   if (!category) return res.status(404).send('Categoria no trobada.');
+  category.bestOf = groupBestOf(category.nom);
 
   const [tables] = await db.query(`
     SELECT idtaula, numero, nom, activa

@@ -417,7 +417,7 @@ exports.saveResult = async (req, res) => {
 
   if (!match) return res.status(404).send('Partit no trobat.');
 
-  const bestOf = match.idgrup ? groupBestOf(match.categoria_nom) : 5;
+  const bestOf = groupBestOf(match.categoria_nom);
   const winsNeeded = gamesToWin(bestOf);
 
   const games = [];
@@ -463,8 +463,8 @@ exports.saveResult = async (req, res) => {
     }
   }
 
-  // En un partit al millor de 5 només són vàlids els jocs
-  // disputats fins que un participant arriba a 3 jocs guanyats.
+  // Només són vàlids els jocs disputats fins que un participant
+  // arriba al nombre de victòries requerit pel format de la categoria.
   let r1 = 0;
   let r2 = 0;
   const validGames = [];
