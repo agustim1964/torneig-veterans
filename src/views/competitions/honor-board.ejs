@@ -8,7 +8,7 @@
 <% const places = podium => podium ? [{r:'1r',p:podium.winner},{r:'2n',p:podium.runnerUp},{r:'3r',p:podium.thirds[0]},{r:'3r',p:podium.thirds[1]}] : []; %>
 <% for(let i=0;i<honor.length;i+=2){ %><main class="page">
 <header class="event-header"><div><h1>Quadre d'honor</h1><p><%= competition.nom %></p></div><div class="event-meta"><div><%= competition.lloc||'' %></div><div><%= competition.data_inici?new Date(competition.data_inici).toLocaleDateString('ca-ES',{timeZone:'UTC'}):'' %></div></div></header>
-<% honor.slice(i,i+2).forEach(category=>{ const main=places(category.main), consolation=places(category.consolation); %>
+<% honor.slice(i,i+2).forEach(category=>{ const main=places(category.main), consolation=category.consolation?[{r:'1r',p:category.consolation.winner},{r:'2n',p:category.consolation.runnerUp},{r:'3r',p:category.consolation.thirdToChampion||category.consolation.thirds[0]}]:[]; %>
 <section class="category"><h2 class="category-name"><%= category.name %></h2><div class="podiums">
 <div class="podium podium-a"><div class="podium-title"><span>Quadre A</span><span class="badge">PRINCIPAL</span></div><div class="places">
 <% if(main.length){main.forEach(x=>{ %><div class="place"><div class="rank"><%= x.r %></div><div class="name <%= x.p?'':'pending' %>"><%= x.p?x.p.name:'Pendent' %><% if(x.p?.country){ %><span class="country"><%= x.p.country %></span><% } %></div></div><% })}else{ %><div class="place pending">Quadre no disponible</div><% } %>

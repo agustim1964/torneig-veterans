@@ -165,7 +165,14 @@ function phasePodium(phase) {
     .map(match => [participant(match, 1), participant(match, 2)]
       .find(item => item && Number(match.guanyador) && item.id !== Number(match.guanyador)) || null)
     .filter(Boolean).slice(0, 2);
-  return { winner, runnerUp, thirds, complete: Boolean(winner && runnerUp && thirds.length === 2) };
+  const championSemifinal = (semifinalRound?.matches || []).find(
+    match => winner && Number(match.guanyador) === winner.id
+  );
+  const thirdToChampion = championSemifinal
+    ? [participant(championSemifinal, 1), participant(championSemifinal, 2)]
+        .find(item => item && winner && item.id !== winner.id) || null
+    : null;
+  return { winner, runnerUp, thirds, thirdToChampion, complete: Boolean(winner && runnerUp && thirds.length === 2) };
 }
 
 exports.honorBoard = async (req, res) => {
