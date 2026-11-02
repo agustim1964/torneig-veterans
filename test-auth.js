@@ -29,6 +29,10 @@ const app = require('./src/app');
     assert.strictEqual(response.status, 302);
     assert(response.headers.get('set-cookie').includes('torneig_locale=fr'));
 
+    response = await fetch(`${base}/login?lang=pt`);
+    assert.strictEqual(response.status, 200);
+    assert((await response.text()).includes('Acesso ao campeonato'));
+
     response = await fetch(`${base}/login`, {
       method: 'POST', redirect: 'manual',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },

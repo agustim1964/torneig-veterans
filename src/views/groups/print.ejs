@@ -107,7 +107,7 @@
       </div>
 
       <div class="meta">
-        <% const localeCode = {ca:'ca-ES',es:'es-ES',fr:'fr-FR',en:'en-GB',ru:'ru-RU'}[viewLocale] || 'ca-ES';
+        <% const localeCode = {ca:'ca-ES',es:'es-ES',fr:'fr-FR',en:'en-GB',pt:'pt-PT',ru:'ru-RU'}[viewLocale] || 'ca-ES';
            const matchDays = [...new Set(matches.filter(m => m.data_hora).map(m => new Date(m.data_hora).toLocaleDateString(localeCode)))];
            const matchTables = [...new Set(matches.map(m => m.taula_numero).filter(Boolean))]; %>
         <div class="box"><strong><%= tr('dates') %></strong><br><%= matchDays.length ? matchDays.join(' · ') : (group.data ? new Date(group.data).toLocaleDateString(localeCode) : '—') %></div>

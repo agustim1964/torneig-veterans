@@ -30,7 +30,7 @@
       <% if (signedInUser?.role === 'admin') { %><a class="nav-link" href="/tables"><%= translate('tables') %></a><% } %>
     </div>
     <div class="ms-auto d-flex align-items-center gap-2 text-white">
-      <form method="post" action="/language" class="m-0 language-form"><input type="hidden" name="returnTo" value="<%= typeof requestUrl !== 'undefined' ? requestUrl : '/competitions' %>"><select class="form-select form-select-sm" name="locale" onchange="this.form.submit()" aria-label="<%= translate('language') %>"><% [['ca','CA'],['es','ES'],['fr','FR'],['en','EN'],['ru','RU']].forEach(([code,label])=>{ %><option value="<%= code %>" <%= viewLocale===code?'selected':'' %>><%= label %></option><% }) %></select></form>
+      <form method="post" action="/language" class="m-0 language-form"><input type="hidden" name="returnTo" value="<%= typeof requestUrl !== 'undefined' ? requestUrl : '/competitions' %>"><select class="form-select form-select-sm" name="locale" onchange="this.form.submit()" aria-label="<%= translate('language') %>"><% [['ca','CA'],['es','ES'],['fr','FR'],['en','EN'],['pt','PT'],['ru','RU']].forEach(([code,label])=>{ %><option value="<%= code %>" <%= viewLocale===code?'selected':'' %>><%= label %></option><% }) %></select></form>
       <span class="small"><%= signedInUser?.username || '' %><%= signedInUser?.role === 'guest' ? ' · '+translate('consultation') : '' %></span>
       <form method="post" action="/logout" class="m-0 logout-form"><button class="btn btn-sm btn-outline-light" type="submit"><%= translate('signOut') %></button></form>
     </div>

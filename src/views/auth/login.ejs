@@ -16,7 +16,7 @@
           <input type="hidden" name="returnTo" value="/login<%= returnTo ? '?returnTo=' + encodeURIComponent(returnTo) : '' %>">
           <label class="form-label small" for="login-locale"><%= t('language') %></label>
           <select class="form-select form-select-sm" id="login-locale" name="locale" onchange="this.form.submit()">
-            <% [['ca','catalan'],['es','spanish'],['fr','french'],['en','english'],['ru','russian']].forEach(([code,key])=>{ %><option value="<%= code %>" <%= locale===code?'selected':'' %>><%= t(key) %></option><% }) %>
+            <% [['ca','catalan'],['es','spanish'],['fr','french'],['en','english'],['pt','portuguese'],['ru','russian']].forEach(([code,key])=>{ %><option value="<%= code %>" <%= locale===code?'selected':'' %>><%= t(key) %></option><% }) %>
           </select>
         </form>
         <h1 class="h3 mb-2"><%= t('loginTitle') %></h1>
