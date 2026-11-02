@@ -214,12 +214,17 @@
 </head>
 <body>
   <div class="controls">
-    <label for="bestOf">Partits al millor de</label>
-    <select id="bestOf" onchange="changeBestOf(this.value)">
-      <option value="3" <%= bestOf === 3 ? 'selected' : '' %>>3 jocs</option>
-      <option value="5" <%= bestOf === 5 ? 'selected' : '' %>>5 jocs</option>
-      <option value="7" <%= bestOf === 7 ? 'selected' : '' %>>7 jocs</option>
-    </select>
+    <% const matchFormats = [...new Set(matches.map(match => match.bestOf || bestOf))]; %>
+    <% if (matchFormats.length === 1) { %>
+      <label for="bestOf">Partits al millor de</label>
+      <select id="bestOf" onchange="changeBestOf(this.value)">
+        <option value="3" <%= bestOf === 3 ? 'selected' : '' %>>3 jocs</option>
+        <option value="5" <%= bestOf === 5 ? 'selected' : '' %>>5 jocs</option>
+        <option value="7" <%= bestOf === 7 ? 'selected' : '' %>>7 jocs</option>
+      </select>
+    <% } else { %>
+      <strong>Format de jocs segons la categoria</strong>
+    <% } %>
     <button type="button" onclick="window.print()">🖨 Imprimir</button>
     <span class="hint"><%= matches.length %> acta(es) · 6 per full A4</span>
   </div>
@@ -235,6 +240,7 @@
     <section class="page">
       <% pageMatches.forEach(match => {
            const tableLabel = match.taula_nom || (match.taula_numero ? ('Taula ' + match.taula_numero) : '____');
+           const matchBestOf = match.bestOf || bestOf;
            const timeLabel = match.data_hora
              ? new Date(match.data_hora).toLocaleTimeString('ca-ES', { hour: '2-digit', minute: '2-digit' })
              : '____';
@@ -247,7 +253,7 @@
           <div class="title">
             <div class="competition"><%= round.competicio_nom %></div>
             <div class="category-round">
-              <%= round.categoria_nom %> · <%= round.fase_nom %> · <%= round.ronda_nom %>
+              <%= match.categoria_nom || round.categoria_nom %> · <%= match.fase_nom || round.fase_nom %> · <%= match.ronda_nom || round.ronda_nom %>
             </div>
           </div>
 
@@ -268,19 +274,19 @@
             <thead>
               <tr>
                 <th class="label">Joc</th>
-                <% for (let game = 1; game <= bestOf; game++) { %><th><%= game %></th><% } %>
+                <% for (let game = 1; game <= matchBestOf; game++) { %><th><%= game %></th><% } %>
                 <th class="final">Resultat</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="label">A</td>
-                <% for (let game = 1; game <= bestOf; game++) { %><td></td><% } %>
+                <% for (let game = 1; game <= matchBestOf; game++) { %><td></td><% } %>
                 <td></td>
               </tr>
               <tr>
                 <td class="label">B</td>
-                <% for (let game = 1; game <= bestOf; game++) { %><td></td><% } %>
+                <% for (let game = 1; game <= matchBestOf; game++) { %><td></td><% } %>
                 <td></td>
               </tr>
             </tbody>
