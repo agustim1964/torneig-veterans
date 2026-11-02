@@ -10,3 +10,4 @@ body {
 .table th {
   vertical-align: middle;
 }
+.read-only form[method="post"]:not(.logout-form),.read-only a[href*="/new"],.read-only a[href*="/edit"],.read-only a[href*="/adjust"]{display:none!important}
