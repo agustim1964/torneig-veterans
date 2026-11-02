@@ -1,9 +1,9 @@
-<%- include('../partials/header', { title: 'Fase final - ' + category.nom }) %>
+<%- include('../partials/header', { title: t('finalPhase') + ' - ' + category.nom }) %>
 
 <div class="d-flex justify-content-between align-items-start gap-3 mb-4 flex-wrap">
   <div>
     <a href="/matches/category/<%= category.idcategoria %>" class="text-decoration-none">← Partits i classificació</a>
-    <h1 class="mt-2">Fase final · <%= category.nom %></h1>
+    <h1 class="mt-2"><%= t('finalPhase') %> · <%= category.nom %></h1>
     <p class="text-muted mb-0"><%= category.competicio_nom %></p>
   </div>
 
@@ -29,7 +29,7 @@
     <a href="/phases/category/<%= category.idcategoria %>/print-brackets"
        target="_blank"
        class="btn btn-dark">
-      🖨 Imprimir quadres A i B
+      🖨 <%= t('printBrackets') %>
     </a>
   </div>
 <% } %>
@@ -67,7 +67,7 @@
       <div>
         <h2 class="mb-0"><%= phase.nom %></h2>
         <div class="text-muted small">
-          <%= phase.positions.filter(p => p.idparticipant).length %> participants ·
+          <%= phase.positions.filter(p => p.idparticipant).length %> <%= t('participants').toLowerCase() %> ·
           quadre de <%= phase.positions.length %>
         </div>
       </div>
@@ -76,7 +76,7 @@
         <a href="/phases/<%= phase.idfase %>/print-bracket"
            target="_blank"
            class="btn btn-outline-dark btn-sm">
-          🖨 Imprimir quadre
+          🖨 <%= t('printBracket') %>
         </a>
         <% if (phase.locked) { %>
           <span class="badge text-bg-danger fs-6">Sorteig bloquejat: ja hi ha resultats</span>
@@ -178,22 +178,22 @@
 
             <% round.matches.forEach(match => {
                  const scheduleComplete = Boolean(match.idtaula && match.data_hora_input);
-                 const tableText = match.taula_nom || (match.taula_numero ? ('Taula ' + match.taula_numero) : 'Taula pendent');
+                 const tableText = match.taula_nom || (match.taula_numero ? (t('table') + ' ' + match.taula_numero) : (t('table') + ' · ' + t('pending')));
                  const dateTimeText = match.data_hora_input
                    ? (match.data_hora_input.substring(8,10) + '/' + match.data_hora_input.substring(5,7) + '/' + match.data_hora_input.substring(0,4) + ' · ' + match.data_hora_input.substring(11,16))
                    : 'Hora pendent';
             %>
               <div class="match-card <%= match.bye ? 'bye-card' : '' %>">
                 <div class="d-flex justify-content-between gap-2 small text-muted mb-1">
-                  <span>Partit <%= match.numero_partit %></span>
+                  <span><%= t('match') %> <%= match.numero_partit %></span>
                 </div>
 
                 <div class="player-row <%= Number(match.guanyador) === Number(match.participant1) ? 'winner' : '' %>">
-                  <span><%= match.participant1_nom || (match.bye ? 'BYE' : 'Pendent') %></span>
+                  <span><%= match.participant1_nom || (match.bye ? 'BYE' : t('pending')) %></span>
                   <% if (match.resultat1 !== null) { %><strong><%= match.resultat1 %></strong><% } %>
                 </div>
                 <div class="player-row <%= Number(match.guanyador) === Number(match.participant2) ? 'winner' : '' %>">
-                  <span><%= match.participant2_nom || (match.bye ? 'BYE' : 'Pendent') %></span>
+                  <span><%= match.participant2_nom || (match.bye ? 'BYE' : t('pending')) %></span>
                   <% if (match.resultat2 !== null) { %><strong><%= match.resultat2 %></strong><% } %>
                 </div>
 

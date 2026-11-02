@@ -1,10 +1,12 @@
 <!doctype html>
-<html lang="ca">
+<% const viewLocale = typeof locale !== 'undefined' ? locale : 'ca';
+   const tr = typeof t !== 'undefined' ? t : key => key; %>
+<html lang="<%= viewLocale %>">
 <head>
   <% const printBrackets = Array.isArray(brackets) && brackets.length ? brackets : [{ phase, rounds, bracketSize }]; %>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quadres · <%= printBrackets[0].phase.competicio_nom %> · <%= printBrackets[0].phase.categoria_nom %></title>
+  <title><%= tr('brackets') %> · <%= printBrackets[0].phase.competicio_nom %> · <%= printBrackets[0].phase.categoria_nom %></title>
   <style>
     @page {
       size: A4 portrait;
@@ -283,7 +285,7 @@
 </head>
 <body>
   <div class="controls">
-    <button type="button" onclick="window.print()">🖨 Imprimir <%= printBrackets.length > 1 ? 'quadres A i B' : 'quadre' %></button>
+    <button type="button" onclick="window.print()">🖨 <%= printBrackets.length > 1 ? tr('printBrackets') : tr('printBracket') %></button>
     <span style="margin-left:10px">
       <%= printBrackets.map(item => item.phase.fase_nom).join(' + ') %> · els noms pendents queden en blanc
     </span>

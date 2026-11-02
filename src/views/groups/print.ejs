@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="ca">
+<% const viewLocale = typeof locale !== 'undefined' ? locale : 'ca';
+   const tr = typeof t !== 'undefined' ? t : key => key; %>
+<html lang="<%= viewLocale %>">
 <head>
   <meta charset="utf-8">
   <title><%= pageTitle %></title>
@@ -74,12 +76,12 @@
 </head>
 <body>
   <div class="controls">
-    <button type="button" onclick="window.print()">🖨 Imprimir</button>
-    <span style="margin-left:8px"><%= sheets.length %> acta(es) · una acta per grup</span>
+    <button type="button" onclick="window.print()">🖨 <%= tr('print') %></button>
+    <span style="margin-left:8px"><%= sheets.length %> · <%= tr('groups') %></span>
   </div>
 
   <% if (!sheets.length) { %>
-    <div class="empty"><h1>No hi ha grups per imprimir</h1></div>
+    <div class="empty"><h1><%= tr('noGroups') %></h1></div>
   <% } %>
 
   <% sheets.forEach(sheet => {
@@ -100,21 +102,22 @@
           <%= group.categoria_nom %> ·
           <%= group.format_competicio === 'GRUP_UNIC'
             ? ('Top ' + participants.length + ' · Grup únic')
-            : ('Grup ' + group.numero) %>
+            : (tr('group') + ' ' + group.numero) %>
         </h2>
       </div>
 
       <div class="meta">
-        <% const matchDays = [...new Set(matches.filter(m => m.data_hora).map(m => new Date(m.data_hora).toLocaleDateString('ca-ES')))];
+        <% const localeCode = {ca:'ca-ES',es:'es-ES',fr:'fr-FR',en:'en-GB',ru:'ru-RU'}[viewLocale] || 'ca-ES';
+           const matchDays = [...new Set(matches.filter(m => m.data_hora).map(m => new Date(m.data_hora).toLocaleDateString(localeCode)))];
            const matchTables = [...new Set(matches.map(m => m.taula_numero).filter(Boolean))]; %>
-        <div class="box"><strong>Dates</strong><br><%= matchDays.length ? matchDays.join(' · ') : (group.data ? new Date(group.data).toLocaleDateString('ca-ES') : '—') %></div>
-        <div class="box"><strong>Taules</strong><br><%= matchTables.length ? matchTables.join(', ') : (group.taula_numero || '—') %></div>
-        <div class="box"><strong>Inici</strong><br><%= matchDays.length > 1 ? 'Vegeu cada partit' : (group.hora_inici ? String(group.hora_inici).substring(0,5) : '—') %></div>
-        <div class="box"><strong>Final prevista</strong><br><%= matchDays.length > 1 ? 'Vegeu cada partit' : (group.hora_final ? String(group.hora_final).substring(0,5) : '—') %></div>
+        <div class="box"><strong><%= tr('dates') %></strong><br><%= matchDays.length ? matchDays.join(' · ') : (group.data ? new Date(group.data).toLocaleDateString(localeCode) : '—') %></div>
+        <div class="box"><strong><%= tr('tables') %></strong><br><%= matchTables.length ? matchTables.join(', ') : (group.taula_numero || '—') %></div>
+        <div class="box"><strong><%= tr('start') %></strong><br><%= group.hora_inici ? String(group.hora_inici).substring(0,5) : '—' %></div>
+        <div class="box"><strong><%= tr('end') %></strong><br><%= group.hora_final ? String(group.hora_final).substring(0,5) : '—' %></div>
       </div>
 
       <table>
-        <thead><tr><th>Pos.</th><th>Participant</th><th>País</th><th>Club</th><th>Rànquing</th></tr></thead>
+        <thead><tr><th><%= tr('position') %></th><th><%= tr('participant') %></th><th><%= tr('country') %></th><th><%= tr('club') %></th><th><%= tr('ranking') %></th></tr></thead>
         <tbody>
         <% participants.forEach(participant => { %>
           <tr>
@@ -132,11 +135,11 @@
         <thead>
           <tr>
             <% if (group.format_competicio === 'GRUP_UNIC' || group.mode_taules_grups === 'MAXIM') { %><th>Franja</th><% } %>
-            <th>Dia</th><th>Hora</th><th>Taula</th><th>Partit</th><th>Àrbitre</th>
+            <th><%= tr('date') %></th><th><%= tr('time') %></th><th><%= tr('table') %></th><th><%= tr('match') %></th><th><%= tr('referee') %></th>
             <% for (let gameNumber = 1; gameNumber <= bestOf; gameNumber++) { %>
               <th>J<%= gameNumber %></th>
             <% } %>
-            <th>Resultat</th>
+            <th><%= tr('result') %></th>
           </tr>
         </thead>
         <tbody>
@@ -175,11 +178,11 @@
       </table>
 
       <div class="classification">
-        <h3><%= sheet.classificationFinal ? 'Classificació final' : 'Classificació provisional' %></h3>
+        <h3><%= tr('classification') %><%= sheet.classificationFinal ? '' : ' *' %></h3>
         <table>
           <thead>
             <tr>
-              <th>Pos.</th><th>Participant</th><th>V</th><th>D</th><th>F. jocs</th><th>F. punts</th>
+              <th><%= tr('position') %></th><th><%= tr('participant') %></th><th><%= tr('wins') %></th><th><%= tr('losses') %></th><th><%= tr('gamesRatio') %></th><th><%= tr('pointsRatio') %></th>
             </tr>
           </thead>
           <tbody>
@@ -214,7 +217,7 @@
       </div>
 
       <p style="margin-top:14px;font-size:11px">
-        Desempats: només partits entre els participants empatats; primer factor de jocs guanyats/perduts i després factor de punts guanyats/perduts.
+        <%= tr('tieBreak') %>
       </p>
     </article>
   <% }) %>

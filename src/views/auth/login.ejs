@@ -1,8 +1,41 @@
-<!doctype html><html lang="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Accés · Torneig Veterans</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="/css/app.css" rel="stylesheet"></head>
-<body class="bg-light"><main class="container py-5" style="max-width:460px"><div class="card shadow-sm border-0 mt-lg-5"><div class="card-body p-4 p-md-5">
-<img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula" class="img-fluid mb-4"><h1 class="h3 mb-2">Accés al campionat</h1><p class="text-muted mb-4">Introdueix l’usuari i la contrasenya.</p>
-<% if(error){ %><div class="alert alert-danger"><%= error %></div><% } %><form method="post" action="/login" autocomplete="on"><input type="hidden" name="returnTo" value="<%= returnTo||'/competitions' %>">
-<div class="mb-3"><label class="form-label" for="username">Usuari</label><input class="form-control" id="username" name="username" autocomplete="username" required autofocus></div>
-<div class="mb-4"><label class="form-label" for="password">Contrasenya</label><input class="form-control" type="password" id="password" name="password" autocomplete="current-password" required></div>
-<button class="btn btn-primary w-100" type="submit">Entrar</button></form></div></div></main></body></html>
+<!doctype html>
+<html lang="<%= locale %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= t('loginTitle') %> · <%= t('appName') %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/app.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <main class="container py-5" style="max-width:460px">
+    <div class="card shadow-sm border-0 mt-lg-5">
+      <div class="card-body p-4 p-md-5">
+        <img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula" class="img-fluid mb-4">
+        <form method="post" action="/language" class="language-form mb-4">
+          <input type="hidden" name="returnTo" value="/login<%= returnTo ? '?returnTo=' + encodeURIComponent(returnTo) : '' %>">
+          <label class="form-label small" for="login-locale"><%= t('language') %></label>
+          <select class="form-select form-select-sm" id="login-locale" name="locale" onchange="this.form.submit()">
+            <% [['ca','catalan'],['es','spanish'],['fr','french'],['en','english'],['ru','russian']].forEach(([code,key])=>{ %><option value="<%= code %>" <%= locale===code?'selected':'' %>><%= t(key) %></option><% }) %>
+          </select>
+        </form>
+        <h1 class="h3 mb-2"><%= t('loginTitle') %></h1>
+        <p class="text-muted mb-4"><%= t('loginHelp') %></p>
+        <% if (error) { %><div class="alert alert-danger"><%= error %></div><% } %>
+        <form method="post" action="/login" autocomplete="on">
+          <input type="hidden" name="returnTo" value="<%= returnTo || '/competitions' %>">
+          <div class="mb-3">
+            <label class="form-label" for="username"><%= t('username') %></label>
+            <input class="form-control" id="username" name="username" autocomplete="username" required autofocus>
+          </div>
+          <div class="mb-4">
+            <label class="form-label" for="password"><%= t('password') %></label>
+            <input class="form-control" type="password" id="password" name="password" autocomplete="current-password" required>
+          </div>
+          <button class="btn btn-primary w-100" type="submit"><%= t('signIn') %></button>
+        </form>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

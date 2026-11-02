@@ -1,9 +1,9 @@
-<%- include('../partials/header', { title: 'Categories' }) %>
+<%- include('../partials/header', { title: t('categories') }) %>
 
 <div class="d-flex justify-content-between align-items-start mb-4">
   <div>
-    <a href="/competitions" class="text-decoration-none">← Competicions</a>
-    <h1 class="mt-2">Categories</h1>
+    <a href="/competitions" class="text-decoration-none">← <%= t('competitions') %></a>
+    <h1 class="mt-2"><%= t('categories') %></h1>
     <% if (competition) { %><p class="text-muted"><%= competition.nom %></p><% } %>
   </div>
   <div class="d-flex gap-2 align-items-start">
@@ -99,7 +99,7 @@
                 <%= category.tipus %> · <%= category.sexe %>
                 <% if (category.edat_minima) { %> · +<%= category.edat_minima %><% } %>
               </div>
-              <p><strong><%= category.participants %></strong> participants actius</p>
+              <p><strong><%= category.participants %></strong> <%= t('participants').toLowerCase() %></p>
               <div class="d-flex gap-2 flex-wrap mb-3">
                 <span class="badge text-bg-secondary"><%= category.estat %></span>
                 <% if (category.format_competicio === 'GRUP_UNIC') { %>
@@ -145,10 +145,10 @@
               <% } %>
             </div>
             <div class="card-footer bg-white d-flex gap-2">
-              <a class="btn btn-primary btn-sm"
-                 href="/participants/category/<%= category.idcategoria %>">Participants</a>
+              <% if (currentUser?.role === 'admin') { %><a class="btn btn-primary btn-sm"
+                 href="/participants/category/<%= category.idcategoria %>"><%= t('participants') %></a><% } %>
               <a class="btn btn-outline-primary btn-sm"
-                 href="/groups/category/<%= category.idcategoria %>">Grups</a>
+                 href="/groups/category/<%= category.idcategoria %>"><%= t('groups') %></a>
             </div>
           </div>
         </div>
