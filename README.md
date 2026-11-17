@@ -1,5 +1,22 @@
 # Torneig Veterans
 
+## Altes manuals en grups ja sortejats
+
+A la pantalla de grups, «Afegir / horaris» permet incorporar un participant
+actiu de la mateixa categoria que encara no tingui grup. Primer cal donar-lo
+d'alta a Participants. La proposta mostra els nous enfrontaments i àrbitres;
+només es desa després de confirmar-la. Els partits existents es conserven.
+
+Es poden deixar els nous partits sense hora per assignar-los manualment,
+o buscar espais en una data, taula i franja indicades. La comprovació inclou
+partits de totes les competicions i reserves de grups sense partits, amb
+els jugadors vinculats i els àrbitres. No llegeix ni modifica l'Excel extern.
+El màster avisa dels partits sense programar i mostra els horaris individuals.
+
+Les altes es bloquegen quan hi ha resultats al grup o fases finals creades
+a la categoria. La pantalla també permet modificar taula, hora i àrbitre de
+cada partit pendent, sense tocar-ne els enfrontaments ni la resta de grups.
+
 ## Importar el màster Excel i imprimir grups de dos dies
 
 `node import-master.js ruta/Master.xlsx 6` valida les pestanyes DIMECRES i DIJOUS
