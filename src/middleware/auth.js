@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const users = require('../services/userService');
 
 const COOKIE_NAME = 'torneig_session';
 const SESSION_DURATION_SECONDS = 12 * 60 * 60;
@@ -28,6 +29,7 @@ function createToken(user) {
   const payload = encode(JSON.stringify({
     username: user.username,
     role: user.role,
+    version: user.version || null,
     expiresAt: Date.now() + SESSION_DURATION_SECONDS * 1000
   }));
   return `${payload}.${sign(payload)}`;
@@ -54,16 +56,8 @@ function cookies(req) {
   }).filter(([name]) => name));
 }
 
-function configuredUsers() {
-  return [
-    { username: process.env.ADMIN_USERNAME || '', password: process.env.ADMIN_PASSWORD || '', role: 'admin' },
-    { username: process.env.GUEST_USERNAME || 'guest', password: process.env.GUEST_PASSWORD || '', role: 'guest' }
-  ];
-}
-
 function authenticate(username, password) {
-  return configuredUsers().find(user => user.username && user.password &&
-    safeEqual(user.username, username) && safeEqual(user.password, password)) || null;
+  return users.authenticate(username, password);
 }
 
 function setSessionCookie(req, res, user) {
@@ -84,6 +78,10 @@ function clearSessionCookie(req, res) {
 
 function loadUser(req, res, next) {
   req.user = readToken(cookies(req)[COOKIE_NAME]);
+  if (req.user) {
+    const account = users.list().find(user => user.username === req.user.username);
+    if (!account || account.role !== req.user.role || (account.version || null) !== (req.user.version || null)) req.user = null;
+  }
   res.locals.currentUser = req.user;
   next();
 }

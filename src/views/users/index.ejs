@@ -1,0 +1,36 @@
+<%- include('../partials/header') %>
+<h1>Gestió d’usuaris</h1>
+<p>Els administradors poden gestionar el torneig i els usuaris. Els visitants només poden consultar les competicions.</p>
+<% if (error) { %><div class="alert alert-danger" role="alert"><%= error %></div><% } %>
+<h2 class="h4 mt-4">Crear un usuari</h2>
+<form method="post" action="/users" class="row g-3 mb-4">
+  <input type="hidden" name="csrf" value="<%= csrf %>">
+  <div class="col-md-4"><label class="form-label" for="new-username">Usuari</label><input id="new-username" class="form-control" name="username" required minlength="3" maxlength="64" autocomplete="off"></div>
+  <div class="col-md-4"><label class="form-label" for="new-password">Contrasenya (mínim 10 caràcters)</label><input id="new-password" class="form-control" type="password" name="password" required minlength="10" maxlength="256" autocomplete="new-password"></div>
+  <div class="col-md-4"><label class="form-label" for="new-role">Rol</label><select id="new-role" class="form-select" name="role"><option value="guest">Visitant (consulta)</option><option value="admin">Administrador</option></select></div>
+  <div><button class="btn btn-primary">Crear usuari</button></div>
+</form>
+<h2 class="h4">Usuaris actuals</h2>
+<p class="text-muted">Els comptes inicials del .env es conserven i es modifiquen a la configuració del servidor. Deixa la contrasenya en blanc per conservar-la. Canviar un compte tanca les seves sessions obertes.</p>
+<% users.forEach((user, index) => { %>
+<div class="card mb-3"><div class="card-body">
+<% if (user.configured) { %>
+  <strong><%= user.username %></strong> · <%= user.role === 'admin' ? 'Administrador' : 'Visitant (consulta)' %> <span class="badge text-bg-secondary">Configuració del servidor</span>
+<% } else { %>
+  <form method="post" action="/users" class="row g-3">
+    <input type="hidden" name="csrf" value="<%= csrf %>">
+    <input type="hidden" name="originalUsername" value="<%= user.username %>">
+    <div class="col-md-4"><label class="form-label" for="username-<%= index %>">Usuari</label><input id="username-<%= index %>" class="form-control" name="username" value="<%= user.username %>" required minlength="3" maxlength="64"></div>
+    <div class="col-md-4"><label class="form-label" for="password-<%= index %>">Nova contrasenya</label><input id="password-<%= index %>" class="form-control" type="password" name="password" minlength="10" maxlength="256" autocomplete="new-password"></div>
+    <div class="col-md-4"><label class="form-label" for="role-<%= index %>">Rol</label><select id="role-<%= index %>" class="form-select" name="role"><option value="guest" <%= user.role === 'guest' ? 'selected' : '' %>>Visitant (consulta)</option><option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Administrador</option></select></div>
+    <div><button class="btn btn-primary">Desar canvis</button></div>
+  </form>
+  <% if (user.username !== currentUser.username) { %>
+  <form method="post" action="/users" class="mt-2" onsubmit="return confirm('Vols eliminar aquest usuari?')">
+    <input type="hidden" name="csrf" value="<%= csrf %>"><input type="hidden" name="originalUsername" value="<%= user.username %>"><input type="hidden" name="action" value="delete"><button class="btn btn-outline-danger">Eliminar usuari</button>
+  </form>
+  <% } %>
+<% } %>
+</div></div>
+<% }) %>
+<%- include('../partials/footer') %>

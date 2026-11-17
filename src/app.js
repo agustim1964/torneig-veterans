@@ -61,6 +61,7 @@ app.use('/matches', matchRoutes);
 app.use('/schedule', scheduleRoutes);
 app.use('/phases', phaseRoutes);
 app.use('/tables', tableRoutes);
+app.use('/users', require('./routes/userRoutes'));
 
 app.use((err, req, res, next) => {
   console.error(err);

@@ -1,5 +1,22 @@
 # Torneig Veterans
 
+## Gestió d’usuaris
+
+Els administradors disposen de l’opció **Usuaris** al menú per crear comptes
+d’administrador o de visitant (només consulta), editar-ne el nom i el rol,
+canviar contrasenyes i eliminar comptes. Les contrasenyes noves han de tenir
+com a mínim 10 caràcters i es desen amb salt aleatori i scrypt. Els canvis
+de compte invaliden les sessions anteriors. No es pot eliminar el propi
+compte ni retirar-se el rol d’administrador.
+
+Els comptes inicials `ADMIN_*` i `GUEST_*` del `.env` continuen funcionant;
+es mostren com a comptes de configuració i es modifiquen al servidor.
+Els comptes nous es desen a `data/users.json`, fora de Git. Es pot definir
+`USERS_FILE` per utilitzar una altra ruta persistent. Cal conservar aquest
+fitxer en desplegaments i incloure’l en les còpies de seguretat: les còpies
+SQL no inclouen aquests comptes. La còpia completa de l’script d’actualització
+Oracle sí que inclou el directori `data`.
+
 ## Altes manuals en grups ja sortejats
 
 A la pantalla de grups, «Afegir / horaris» permet incorporar un participant
