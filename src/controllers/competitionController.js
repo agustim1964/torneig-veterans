@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { loadPlacements } = require('../services/placementService');
 
 exports.list = async (req, res) => {
   const [competitions] = await db.query(`
@@ -192,26 +193,32 @@ exports.honorBoard = async (req, res) => {
         AND f.nom IN ('Final A','Consolació')
       JOIN rondes r ON r.idfase=f.idfase
       JOIN partits p ON p.idronda=r.idronda
+      LEFT JOIN classificacio_partits cp ON cp.idpartit = p.idpartit
       LEFT JOIN participants p1 ON p1.idparticipant=p.participant1
       LEFT JOIN participants p2 ON p2.idparticipant=p.participant2
-     WHERE c.idcompeticio=?
+     WHERE c.idcompeticio=? AND cp.idpartit IS NULL
      ORDER BY c.tipus,c.sexe,c.edat_minima,c.nom,f.ordre,r.ordre,p.numero_partit,p.idpartit
   `, [id]);
   const categories = new Map();
   for (const row of rows) {
     if (!categories.has(row.idcategoria)) categories.set(row.idcategoria, { name: row.categoria_nom, phases: new Map() });
     const category = categories.get(row.idcategoria);
-    if (!category.phases.has(row.idfase)) category.phases.set(row.idfase, { name: row.fase_nom, rounds: new Map() });
+    if (!category.phases.has(row.idfase)) category.phases.set(row.idfase, { idfase: row.idfase, name: row.fase_nom, rounds: new Map() });
     const phase = category.phases.get(row.idfase);
     if (!phase.rounds.has(row.idronda)) phase.rounds.set(row.idronda, { ordre: Number(row.ronda_ordre), matches: [] });
     phase.rounds.get(row.idronda).matches.push(row);
   }
-  const honor = [...categories.values()].map(category => {
+  const honor = await Promise.all([...categories.values()].map(async category => {
     const phases = [...category.phases.values()];
     const main = phases.find(phase => phase.name === 'Final A');
     const consolation = phases.find(phase => phase.name === 'Consolació');
-    return { name: category.name, main: main ? phasePodium(main) : null, consolation: consolation ? phasePodium(consolation) : null };
-  });
+    const mainPodium = main ? phasePodium(main) : null;
+    if (mainPodium) {
+      const placement = await loadPlacements(main.idfase);
+      if (placement.configured && placement.limit > 2) mainPodium.positions = placement.positions;
+    }
+    return { name: category.name, main: mainPodium, consolation: consolation ? phasePodium(consolation) : null };
+  }));
   res.render('competitions/honor-board', { competition, honor });
 };
 

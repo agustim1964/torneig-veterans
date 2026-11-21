@@ -81,7 +81,8 @@
       <% honor.slice(pageIndex, pageIndex + 2).forEach(category => {
            const isDoubles = /DB|DOBLES/i.test(category.name || '');
            const renderPlace = (rank, person) => ({ rank, person });
-           const mainPlaces = category.main ? [
+           const mainPlaces = category.main?.positions ? category.main.positions.slice(0, 4).map(row =>
+             renderPlace(String(row.posicio), row.idparticipant ? { name: row.nom_mostrar, country: row.pais } : null)) : category.main ? [
              renderPlace('1r', category.main.winner),
              renderPlace('2n', category.main.runnerUp),
              renderPlace('3r', category.main.thirds[0]),
@@ -132,5 +133,14 @@
       <% }); %>
     </main>
   <% } %>
+  <% honor.filter(category => category.main?.positions?.length > 4).forEach(category => { %>
+    <main class="page">
+      <h1><%= competition.nom %></h1>
+      <h2><%= category.name %> · Classificació del Quadre A</h2>
+      <% category.main.positions.forEach(row => { %>
+        <div class="place"><div class="rank"><%= row.posicio %></div><div class="name"><%= row.nom_mostrar || tr('pending') %></div></div>
+      <% }) %>
+    </main>
+  <% }) %>
 </body>
 </html>

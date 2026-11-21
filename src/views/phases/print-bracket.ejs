@@ -48,6 +48,11 @@
     }
 
     .page.page-break { page-break-after: always; }
+    .placement-page { height: auto; min-height: 287mm; overflow: visible; padding: 5mm 0; }
+    .placement-table { width: 100%; border-collapse: collapse; margin: 5mm 0; font-size: 10pt; }
+    .placement-table th, .placement-table td { border: 1px solid #777; padding: 2mm; text-align: left; }
+    .placement-table tr { break-inside: avoid; }
+    .placement-table thead { display: table-header-group; }
 
     .page-header {
       height: 22mm;
@@ -296,7 +301,7 @@
        const rounds = item.rounds;
        const bracketSize = item.bracketSize;
   %>
-  <main class="page <%= bracketIndex < printBrackets.length - 1 ? 'page-break' : '' %>">
+  <main class="page <%= bracketIndex < printBrackets.length - 1 || item.placement?.configured ? 'page-break' : '' %>">
     <header class="page-header">
       <div class="brand">
         <img src="/images/capcalera-fctt.png" alt="Federació Catalana de Tennis de Taula">
@@ -390,6 +395,29 @@
       <% }); %>
     </section>
   </main>
+  <% if (item.placement?.configured) { %>
+    <main class="page placement-page <%= bracketIndex < printBrackets.length - 1 ? 'page-break' : '' %>">
+      <h1><%= phase.competicio_nom %></h1>
+      <h2><%= phase.categoria_nom %> · Quadre A</h2>
+      <h3>Classificació fins a la posició <%= item.placement.limit %></h3>
+      <table class="placement-table">
+        <thead><tr><th>Posició</th><th>Participant</th></tr></thead>
+        <tbody><% item.placement.positions.forEach(row => { %>
+          <tr><td><%= row.posicio %></td><td><%= row.nom_mostrar || tr('pending') %></td></tr>
+        <% }) %></tbody>
+      </table>
+      <% (item.classificationRounds || []).forEach(round => { %>
+        <h3><%= round.nom %></h3>
+        <table class="placement-table">
+          <thead><tr><th>Acta</th><th>Participants</th><th>Resultat</th><th>Taula / horari</th></tr></thead>
+          <tbody><% round.matches.forEach(match => { %>
+            <tr><td><%= match.acta_numero %></td><td><%= match.participant1_nom || match.origen1_text || tr('pending') %> – <%= match.participant2_nom || match.origen2_text || tr('pending') %></td>
+              <td><%= match.resultat %></td><td><%= match.taula_numero ? ('Taula ' + match.taula_numero) : '' %> <%= match.dia_hora_partit || '' %></td></tr>
+          <% }) %></tbody>
+        </table>
+      <% }) %>
+    </main>
+  <% } %>
   <% }); %>
 </body>
 </html>

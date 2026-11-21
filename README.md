@@ -1,5 +1,37 @@
 # Torneig Veterans
 
+## Classificació per posicions en individuals (Quadre A)
+
+Abans d'arrencar aquesta versió, executa sobre la base de dades de l'aplicació:
+
+```sql
+SOURCE mysql/014_classificacio_individuals.sql;
+```
+
+La migració és repetible i només afegeix tres taules: no canvia cap resultat
+ni quadre existent. Cal aplicar-la abans de reiniciar l'aplicació.
+
+A **Fase final**, indica **Classificar fins a la posició** en generar el
+Quadre A individual o aplica-ho a un quadre A existent. El valor 2 manté la
+final habitual; 4 afegeix el partit pel 3r/4t; 8 afegeix també els partits
+pel 5è–8è. S'accepta qualsevol enter entre 2 i el nombre real de participants
+del Quadre A. Amb un límit senar, el darrer partit pot decidir també el lloc
+següent, però la classificació publicada arriba al límit indicat.
+
+Els participants eliminats continuen pels partits de classificació que els
+corresponen. Els BYE no generen perdedors ni posicions fictícies. Els partits
+afegits permeten assignar taula i horari, introduir resultats i imprimir actes
+com la resta de partits. La classificació exacta es mostra al quadre, a la
+impressió del quadre i al quadre d'honor (amb pàgines addicionals si cal).
+
+Aplicar la configuració a un quadre existent conserva el quadre principal,
+els seus resultats i els horaris. Canviar el límit reconstrueix els partits
+de classificació; per això no es permet quan aquests ja tenen cap resultat
+complet o parcial. Aplicar el mateix límit conserva els partits tal com estan.
+Una correcció o retirada d'un resultat propaga guanyador i perdedor i es
+bloqueja si altera un partit posterior que ja té resultats. Els dobles,
+la Consolació i els grups únics mantenen el format habitual.
+
 ## Gestió d’usuaris
 
 Els administradors disposen de l’opció **Usuaris** al menú per crear comptes

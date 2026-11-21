@@ -12,6 +12,12 @@
       <form action="/phases/category/<%= category.idcategoria %>/generate" method="post"
             onsubmit="return confirm('Generar o tornar a sortejar el Quadre A? Si no hi ha resultats eliminatoris, el quadre actual serà substituït.')">
         <input type="hidden" name="kind" value="A">
+        <% if (category.tipus === 'INDIVIDUAL') { %>
+          <label for="classification-limit" class="form-label">Classificar fins a la posició</label>
+          <input id="classification-limit" type="number" name="classificationLimit" class="form-control mb-2"
+                 min="2" step="1" required value="<%= phases.find(phase => phase.nom === 'Final A')?.placement?.limit || 2 %>">
+          <div class="form-text mb-2">2: final habitual. 4: també 3r/4t. 8: també del 5è al 8è.</div>
+        <% } %>
         <button class="btn btn-primary">Generar / sortejar Quadre A</button>
       </form>
 
@@ -86,6 +92,32 @@
       </div>
     </div>
 
+    <% if (category.tipus === 'INDIVIDUAL' && phase.nom === 'Final A') { %>
+      <div class="card card-body bg-light mb-3">
+        <form action="/phases/<%= phase.idfase %>/classification" method="post" class="row g-2 align-items-end"
+              onsubmit="return this.classificationLimit.value === '<%= phase.placement.limit %>' || confirm('Aplicar el nou límit? Es reconstruiran els partits de classificació i caldrà reassignar-ne els horaris. El quadre principal es conserva.')">
+          <div class="col-sm-6">
+            <label class="form-label" for="limit-<%= phase.idfase %>">Classificar fins a la posició</label>
+            <input id="limit-<%= phase.idfase %>" class="form-control" type="number" name="classificationLimit"
+                   min="2" max="<%= phase.positions.filter(p => p.idparticipant).length %>" step="1" required value="<%= phase.placement.limit %>" <%= phase.placement.locked ? 'disabled' : '' %>>
+          </div>
+          <div class="col-sm-auto"><button class="btn btn-primary" <%= phase.placement.locked ? 'disabled' : '' %>>Aplicar classificació</button></div>
+        </form>
+        <div class="form-text">Conserva el quadre principal, els seus resultats i horaris. Els partits afegits tenen l’horari pendent.
+          La posició límit queda bloquejada quan s’introdueix un resultat de classificació.
+          Per límits senars, el darrer partit també decideix la posició següent.</div>
+      </div>
+      <% if (phase.placement.configured) { %>
+        <h3 class="h5">Classificació del Quadre A · fins a la posició <%= phase.placement.limit %></h3>
+        <div class="table-responsive mb-3"><table class="table table-sm table-bordered">
+          <thead><tr><th scope="col">Posició</th><th scope="col">Participant</th></tr></thead>
+          <tbody><% phase.placement.positions.forEach(row => { %>
+            <tr><td><%= row.posicio %></td><td><%= row.nom_mostrar || 'Pendent' %></td></tr>
+          <% }) %></tbody>
+        </table></div>
+      <% } %>
+    <% } %>
+
     <details class="mb-3">
       <summary class="fw-semibold">Veure posicions inicials i origen</summary>
       <div class="table-responsive mt-2">
@@ -117,7 +149,7 @@
         <form action="/phases/<%= phase.idfase %>/swap-players"
               method="post"
               class="card card-body bg-light mt-3"
-              onsubmit="return confirm('Intercanviar aquests dos jugadors? Es reconstruiran els enfrontaments del quadre i els BYE, però es conservaran les taules i els horaris assignats.')">
+              onsubmit="return confirm('Intercanviar aquests dos jugadors? Es conservaran les taules i els horaris del quadre principal. Els partits de classificació es reconstruiran i caldrà reassignar-ne els horaris.')">
           <div class="fw-semibold mb-2">Correcció manual del sorteig</div>
           <div class="row g-2 align-items-end">
             <div class="col-md-5">
@@ -157,6 +189,7 @@
       <div class="bracket">
         <% phase.rounds.forEach(round => { %>
           <div class="round-column">
+            <% if (Number(round.es_classificacio)) { %><div class="badge text-bg-info mb-2">Partits de classificació</div><% } %>
             <h3><%= round.nom %></h3>
 
             <div class="text-center mb-2">
@@ -189,11 +222,11 @@
                 </div>
 
                 <div class="player-row <%= Number(match.guanyador) === Number(match.participant1) ? 'winner' : '' %>">
-                  <span><%= match.participant1_nom || (match.bye ? 'BYE' : t('pending')) %></span>
+                  <span><%= match.participant1_nom || (match.bye ? 'BYE' : match.origen1_text || t('pending')) %></span>
                   <% if (match.resultat1 !== null) { %><strong><%= match.resultat1 %></strong><% } %>
                 </div>
                 <div class="player-row <%= Number(match.guanyador) === Number(match.participant2) ? 'winner' : '' %>">
-                  <span><%= match.participant2_nom || (match.bye ? 'BYE' : t('pending')) %></span>
+                  <span><%= match.participant2_nom || (match.bye ? 'BYE' : match.origen2_text || t('pending')) %></span>
                   <% if (match.resultat2 !== null) { %><strong><%= match.resultat2 %></strong><% } %>
                 </div>
 

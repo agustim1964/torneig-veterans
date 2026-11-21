@@ -1,5 +1,6 @@
 const db = require('../config/db');
 const { classifyGroup } = require('./classificationService');
+const { configurePlacement, synchronizePhase, validateLimit } = require('./placementService');
 
 function nextPowerOfTwo(n) {
   let p = 2;
@@ -283,77 +284,12 @@ function drawEntries(entries, primaryPosition) {
 
 async function propagateWinner(connection, matchId, winnerId) {
   const [[match]] = await connection.query(`
-    SELECT
-      p.idpartit,
-      p.idfase,
-      p.idronda,
-      p.numero_partit,
-      r.ordre AS ronda_ordre
-    FROM partits p
-    INNER JOIN rondes r ON r.idronda = p.idronda
-    WHERE p.idpartit = ?
+    SELECT idfase FROM partits WHERE idpartit = ?
   `, [matchId]);
-
-  if (!match?.idfase || !match?.idronda) return;
-
-  const [[nextRound]] = await connection.query(`
-    SELECT idronda, ordre
-    FROM rondes
-    WHERE idfase = ?
-      AND ordre = ?
-  `, [match.idfase, Number(match.ronda_ordre) + 1]);
-
-  if (!nextRound) return; // final
-
-  const [currentRoundMatches] = await connection.query(`
-    SELECT idpartit
-    FROM partits
-    WHERE idronda = ?
-    ORDER BY numero_partit, idpartit
-  `, [match.idronda]);
-
-  const index = currentRoundMatches.findIndex(
-    m => Number(m.idpartit) === Number(matchId)
-  );
-
-  if (index < 0) return;
-
-  const nextIndex = Math.floor(index / 2);
-
-  const [nextMatches] = await connection.query(`
-    SELECT *
-    FROM partits
-    WHERE idronda = ?
-    ORDER BY numero_partit, idpartit
-  `, [nextRound.idronda]);
-
-  const nextMatch = nextMatches[nextIndex];
-  if (!nextMatch) return;
-
-  if (
-    nextMatch.estat === 'FINALITZAT' &&
-    Number(nextMatch.guanyador || 0) > 0
-  ) {
-    throw new Error(
-      'No es pot canviar aquest resultat perquè la ronda següent ja té un resultat desat.'
-    );
-  }
-
-  const field = index % 2 === 0 ? 'participant1' : 'participant2';
-
-  await connection.query(`
-    UPDATE partits
-    SET ${field} = ?,
-        estat = CASE
-          WHEN participant1 IS NOT NULL OR participant2 IS NOT NULL
-          THEN 'PENDENT'
-          ELSE estat
-        END
-    WHERE idpartit = ?
-  `, [winnerId, nextMatch.idpartit]);
+  if (match?.idfase) await synchronizePhase(connection, match.idfase);
 }
 
-async function createPhase(categoryId, phaseKind) {
+async function createPhase(categoryId, phaseKind, classificationLimit) {
   const standings = await loadGroupStandings(categoryId);
 
   if (!standings.length) {
@@ -383,6 +319,11 @@ async function createPhase(categoryId, phaseKind) {
     throw new Error(`No hi ha prou participants per generar ${phaseName}.`);
   }
 
+  if (classificationLimit !== undefined && classificationLimit !== '') {
+    const [[category]] = await db.query('SELECT tipus FROM categories WHERE idcategoria = ?', [categoryId]);
+    validateLimit(classificationLimit, entries.length, category?.tipus, phaseName);
+  }
+
   const { bracketSize, slots } = drawEntries(entries, primaryPosition);
 
   const connection = await db.getConnection();
@@ -395,6 +336,7 @@ async function createPhase(categoryId, phaseKind) {
       FROM fases
       WHERE idcategoria = ?
         AND nom = ?
+      FOR UPDATE
     `, [categoryId, phaseName]);
 
     if (existingPhase) {
@@ -402,8 +344,9 @@ async function createPhase(categoryId, phaseKind) {
         SELECT COUNT(*) AS total
         FROM partits
         WHERE idfase = ?
-          AND estat = 'FINALITZAT'
           AND COALESCE(bye,0) = 0
+          AND (estat = 'FINALITZAT' OR resultat1 IS NOT NULL OR resultat2 IS NOT NULL
+            OR EXISTS(SELECT 1 FROM partit_jocs pj WHERE pj.idpartit = partits.idpartit))
       `, [existingPhase.idfase]);
 
       if (Number(played.total || 0) > 0) {
@@ -540,23 +483,10 @@ async function createPhase(categoryId, phaseKind) {
       }
     }
 
-    // Propaguem els BYEs de primera ronda.
-    const [byeMatches] = await connection.query(`
-      SELECT idpartit, guanyador
-      FROM partits
-      WHERE idfase = ?
-        AND idronda = ?
-        AND bye = 1
-        AND guanyador IS NOT NULL
-      ORDER BY numero_partit
-    `, [phaseId, roundIds[0]]);
-
-    for (const match of byeMatches) {
-      await propagateWinner(
-        connection,
-        match.idpartit,
-        match.guanyador
-      );
+    // Resol també BYE interiors i branques buides sense confondre'ls amb pendents.
+    await synchronizePhase(connection, phaseId);
+    if (classificationLimit !== undefined && classificationLimit !== '') {
+      await configurePlacement(connection, phaseId, classificationLimit);
     }
 
     await connection.query(`

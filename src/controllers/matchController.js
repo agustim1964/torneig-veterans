@@ -417,6 +417,10 @@ exports.saveResult = async (req, res) => {
 
   if (!match) return res.status(404).send('Partit no trobat.');
 
+  if (!match.participant1 || !match.participant2) {
+    return sendValidationError('No es pot desar el resultat fins que estiguin definits els dos participants.');
+  }
+
   const bestOf = groupBestOf(match.categoria_nom);
   const winsNeeded = gamesToWin(bestOf);
 
@@ -490,6 +494,14 @@ exports.saveResult = async (req, res) => {
   try {
     await connection.beginTransaction();
 
+    if (match.idfase) {
+      await connection.query('SELECT idfase FROM fases WHERE idfase = ? FOR UPDATE', [match.idfase]);
+      const [[current]] = await connection.query('SELECT participant1, participant2, bye FROM partits WHERE idpartit = ? FOR UPDATE', [matchId]);
+      if (!current || Number(current.bye) || Number(current.participant1) !== Number(match.participant1) || Number(current.participant2) !== Number(match.participant2)) {
+        throw new Error('Els participants han canviat. Torna a carregar el quadre abans de desar el resultat.');
+      }
+    }
+
     await connection.query(`
       DELETE FROM partit_jocs
       WHERE idpartit = ?
@@ -524,13 +536,14 @@ exports.saveResult = async (req, res) => {
       matchId
     ]);
 
-    if (winner && match.idfase) {
+    if (match.idfase) {
       await propagateWinner(connection, matchId, winner);
     }
 
     await connection.commit();
   } catch (e) {
     await connection.rollback();
+    if (wantsJson) return sendValidationError(e.message);
     throw e;
   } finally {
     connection.release();

@@ -1,6 +1,7 @@
 const db = require('../config/db');
 const { createPhase, propagateWinner } = require('../services/phaseService');
 const { groupBestOf } = require('../services/gameFormatService');
+const { configurePlacement, loadPlacements } = require('../services/placementService');
 
 async function loadCategory(categoryId) {
   const [[category]] = await db.query(`
@@ -57,10 +58,11 @@ exports.show = async (req, res) => {
 
   for (const phase of phases) {
     const [rounds] = await db.query(`
-      SELECT *
-      FROM rondes
-      WHERE idfase = ?
-      ORDER BY ordre
+      SELECT r.*, EXISTS(SELECT 1 FROM partits p JOIN classificacio_partits cp ON cp.idpartit = p.idpartit
+        WHERE p.idronda = r.idronda) AS es_classificacio
+      FROM rondes r
+      WHERE r.idfase = ?
+      ORDER BY r.ordre, r.idronda
     `, [phase.idfase]);
 
     for (const round of rounds) {
@@ -70,6 +72,8 @@ exports.show = async (req, res) => {
           DATE_FORMAT(p.data_hora, '%Y-%m-%dT%H:%i') AS data_hora_input,
           p1.nom_mostrar AS participant1_nom,
           p2.nom_mostrar AS participant2_nom,
+          CONCAT(IF(cp.origen1_resultat = 'PERDEDOR', 'Perdedor', 'Guanyador'), ' · ', ro1.nom, ' · partit ', po1.numero_partit) AS origen1_text,
+          CONCAT(IF(cp.origen2_resultat = 'PERDEDOR', 'Perdedor', 'Guanyador'), ' · ', ro2.nom, ' · partit ', po2.numero_partit) AS origen2_text,
           w.nom_mostrar AS guanyador_nom,
           t.numero AS taula_numero,
           t.nom AS taula_nom
@@ -78,6 +82,11 @@ exports.show = async (req, res) => {
         LEFT JOIN participants p2 ON p2.idparticipant = p.participant2
         LEFT JOIN participants w ON w.idparticipant = p.guanyador
         LEFT JOIN taules t ON t.idtaula = p.idtaula
+        LEFT JOIN classificacio_partits cp ON cp.idpartit = p.idpartit
+        LEFT JOIN partits po1 ON po1.idpartit = cp.origen1_partit
+        LEFT JOIN rondes ro1 ON ro1.idronda = po1.idronda
+        LEFT JOIN partits po2 ON po2.idpartit = cp.origen2_partit
+        LEFT JOIN rondes ro2 ON ro2.idronda = po2.idronda
         WHERE p.idronda = ?
         ORDER BY p.numero_partit, p.idpartit
       `, [round.idronda]);
@@ -119,6 +128,9 @@ exports.show = async (req, res) => {
 
     phase.locked = Number(played.total || 0) > 0;
     phase.rounds = rounds;
+    phase.placement = await loadPlacements(phase.idfase);
+    phase.placement.locked = rounds.some(round => Number(round.es_classificacio) && round.matches.some(match =>
+      !Number(match.bye) && (match.estat === 'FINALITZAT' || match.resultat1 !== null || match.resultat2 !== null || match.jocs.length)));
 
     const [positions] = await db.query(`
       SELECT
@@ -273,7 +285,6 @@ exports.swapPlayers = async (req, res) => {
     const slotMap = new Map(
       slots.map(slot => [Number(slot.posicio), slot.idparticipant])
     );
-    const byeMatches = [];
 
     for (let index = 0; index < firstRoundMatches.length; index++) {
       const match = firstRoundMatches[index];
@@ -299,11 +310,16 @@ exports.swapPlayers = async (req, res) => {
         match.idpartit
       ]);
 
-      if (isBye && winner) byeMatches.push({ idpartit: match.idpartit, winner });
     }
 
-    for (const match of byeMatches) {
-      await propagateWinner(connection, match.idpartit, match.winner);
+    // Reconstrueix les fonts de classificació perquè els nous BYE poden canviar
+    // quantes posicions es decideixen en cada ronda.
+    const placement = await loadPlacements(phaseId, connection);
+    if (placement.configured) {
+      await connection.query('DELETE FROM classificacio_fases WHERE idfase = ?', [phaseId]);
+      await configurePlacement(connection, phaseId, placement.limit);
+    } else if (firstRoundMatches.length) {
+      await propagateWinner(connection, firstRoundMatches[0].idpartit, null);
     }
 
     await connection.query(`
@@ -522,10 +538,12 @@ async function loadPrintableBracket(phaseId) {
   if (!phase) return null;
 
   const [rounds] = await db.query(`
-    SELECT idronda, nom, ordre, mida_quadre
-    FROM rondes
-    WHERE idfase = ?
-    ORDER BY ordre, idronda
+    SELECT r.idronda, r.nom, r.ordre, r.mida_quadre,
+      EXISTS(SELECT 1 FROM partits p JOIN classificacio_partits cp ON cp.idpartit = p.idpartit
+        WHERE p.idronda = r.idronda) AS es_classificacio
+    FROM rondes r
+    WHERE r.idfase = ?
+    ORDER BY r.ordre, r.idronda
   `, [phaseId]);
 
   let matchSequence = 1;
@@ -541,6 +559,8 @@ async function loadPrintableBracket(phaseId) {
         p.resultat2,
         p.guanyador,
         p.bye,
+        CONCAT(IF(cp.origen1_resultat = 'PERDEDOR', 'Perdedor', 'Guanyador'), ' · ', ro1.nom, ' · partit ', po1.numero_partit) AS origen1_text,
+        CONCAT(IF(cp.origen2_resultat = 'PERDEDOR', 'Perdedor', 'Guanyador'), ' · ', ro2.nom, ' · partit ', po2.numero_partit) AS origen2_text,
         DATE_FORMAT(p.data_hora, '%H:%i') AS hora_partit,
         CONCAT(
           CASE DAYOFWEEK(p.data_hora)
@@ -570,6 +590,11 @@ async function loadPrintableBracket(phaseId) {
       LEFT JOIN participants p1 ON p1.idparticipant = p.participant1
       LEFT JOIN participants p2 ON p2.idparticipant = p.participant2
       LEFT JOIN taules t ON t.idtaula = p.idtaula
+      LEFT JOIN classificacio_partits cp ON cp.idpartit = p.idpartit
+      LEFT JOIN partits po1 ON po1.idpartit = cp.origen1_partit
+      LEFT JOIN rondes ro1 ON ro1.idronda = po1.idronda
+      LEFT JOIN partits po2 ON po2.idpartit = cp.origen2_partit
+      LEFT JOIN rondes ro2 ON ro2.idronda = po2.idronda
       WHERE p.idronda = ?
       ORDER BY p.numero_partit, p.idpartit
     `, [round.idronda]);
@@ -593,7 +618,9 @@ async function loadPrintableBracket(phaseId) {
 
   return {
     phase,
-    rounds,
+    rounds: rounds.filter(round => !Number(round.es_classificacio)),
+    classificationRounds: rounds.filter(round => Number(round.es_classificacio)),
+    placement: await loadPlacements(phaseId),
     bracketSize
   };
 }
@@ -658,7 +685,7 @@ exports.generate = async (req, res) => {
   }
 
   try {
-    await createPhase(categoryId, kind);
+    await createPhase(categoryId, kind, req.body.classificationLimit);
     res.redirect(`/phases/category/${categoryId}`);
   } catch (e) {
     res.status(400).send(`
@@ -668,5 +695,23 @@ exports.generate = async (req, res) => {
         <p><a href="/phases/category/${categoryId}">Tornar a la fase final</a></p>
       </div>
     `);
+  }
+};
+
+exports.configurePlacement = async (req, res) => {
+  const phaseId = Number(req.params.phaseId);
+  if (!Number.isInteger(phaseId) || phaseId <= 0) return res.status(400).send('Quadre no vàlid.');
+  const connection = await db.getConnection();
+  try {
+    await connection.beginTransaction();
+    await configurePlacement(connection, phaseId, req.body.classificationLimit);
+    const [[phase]] = await connection.query('SELECT idcategoria FROM fases WHERE idfase = ?', [phaseId]);
+    await connection.commit();
+    res.redirect(`/phases/category/${phase.idcategoria}`);
+  } catch (error) {
+    await connection.rollback();
+    res.status(400).render('phases/placement-error', { title: 'Classificació per posicions', error: error.message });
+  } finally {
+    connection.release();
   }
 };
